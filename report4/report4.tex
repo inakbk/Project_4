@@ -1,0 +1,290 @@
+\documentclass[11pt,a4wide]{article}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{a4wide}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[dvips]{epsfig}
+\usepackage[T1]{fontenc}
+\usepackage{cite} % [2,3,4] --> [2--4]
+\usepackage{shadow}
+\usepackage{hyperref}
+
+\setcounter{tocdepth}{2}
+
+\usepackage{subcaption}
+
+\lstset{language=c++}
+\lstset{alsolanguage=[90]Fortran}
+\lstset{basicstyle=\small}
+\lstset{backgroundcolor=\color{white}}
+\lstset{frame=single}
+\lstset{stringstyle=\ttfamily}
+\lstset{keywordstyle=\color{red}\bfseries}
+\lstset{commentstyle=\itshape\color{blue}}
+\lstset{showspaces=false}
+\lstset{showstringspaces=false}
+\lstset{showtabs=false}
+\lstset{breaklines}
+
+
+
+%lager heftig forside:
+\newcommand*{\titleAT}{\begingroup % Create the command for including the title page in the document
+\newlength{\drop} % Command for generating a specific amount of whitespace
+\drop=0.1\textheight % Define the command as 10% of the total text height
+
+\rule{\textwidth}{1pt}\par % Thick horizontal line
+\vspace{2pt}\vspace{-\baselineskip} % Whitespace between lines
+\rule{\textwidth}{0.4pt}\par % Thin horizontal line
+
+\vspace{0.5\drop} % Whitespace between the top lines and title
+\centering % Center all text
+\textcolor{black}{ % Red font color
+{\Huge Cool Title bla bla bla by using the .... algorithm}\\[0.75\baselineskip] % Title line 1
+%{\Large Tema:}\\[0.75\baselineskip] % Title line 2
+%{\Huge Lydmåling og hørselstesting} % Title line 3
+} 
+
+\vspace{0.25\drop} % Whitespace between the title and short horizontal line
+\rule{0.3\textwidth}{0.4pt}\par % Short horizontal line under the title
+\vspace{0.25\drop} % Whitespace between the thin horizontal line and the author name
+
+{\Large \textsc{Project 4, FYS-3150\\[0.75\baselineskip] \normalsize{Ina K. B. Kullmann}
+}}\par % Author name
+
+%\vfill % Whitespace between the author name and publisher text
+
+\vspace{0.25\drop} % Whitespace between the title and short horizontal line
+\rule{0.3\textwidth}{0.4pt}\par % Short horizontal line under the title
+\vspace{0.25\drop} % Whitespace between the thin horizontal line and the author name
+
+\begin{abstract}
+The aim of this project is to numerically solve ..... by using the .... algorithm. 
+
+
+the Ising model in two dimensions, without an external magnetic 
+field
+
+Title: Studying phase transitions (critical T) using the ising model (metropolis alg)?
+
+compare teory, lars onsager
+
+
+
+%Before solving the problem for two electrons we will look at a simpler system, one electron in a three-dimensional harmonic oscillator potential. Then we will move on to the two electrons in a three-dimensional harmonic oscillator, but first without the Coulomb interaction. For each case we will reformulate the Schr\"odingers equation for this system to a dimentionless form and then to a descrete eigenvalue equation. This eigenvalue problem will we solve numerically with the Jacobi rotation algorithm and compare with the Armadillo library functions for the one electron system. 
+
+%The Jacobi rotation algorithm will be implemented numerically on a general form so that it can be applied to any eigenvalue problem with a symetrix matix. We will test the implementation of the Jacobi method on an arbitrary symetric matrix before moving on to solve the physical problems. 
+
+%When the procedure used on the two simplest cases are tested and understood we will apply the metods on the two electron system with a Coulomb interaction and plot the probability distrubution for different strengths of the interaction. 
+\end{abstract}
+\vspace*{0.25\drop} % Whitespace under the publisher text
+
+\begin{center}
+{ \scriptsize \noindent All source codes can be found at: \texttt{https://github.com/inakbk/Project\_2}. }
+\end{center}
+
+\rule{\textwidth}{0.4pt}\par % Thin horizontal line
+\vspace{2pt}\vspace{-\baselineskip} % Whitespace between lines
+\rule{\textwidth}{1pt}\par % Thick horizontal line
+
+\endgroup}
+%kode slutt for heftig forside
+
+
+\begin{document}
+%\maketitle
+\titleAT % This command includes the title page
+
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Motivation and purpose}
+
+
+\section{Numerical methods}
+bla bla theory and the programs
+
+\subsection{Metropolis algorithm}
+
+\section{The Ising model in two dimentions}
+
+The Ising model is a simple model for ferromagnetism in statistical physics. The model consists of magnetic spins that are allowed to interact with its neigbours. The magnetic dipole moments are allowed to have two values, 1 and -1.
+
+In this project we will study the ising model i two dimentions wich allows the identification of phase transitions (define). We will also set the external magnetic field to zero troughout this paper.
+% in two dimensions second order phase transition. 
+
+%\subsection{Phase transitions} %?
+
+
+The Ising model gives that the energy (for the whole system?) can be expressed as
+\begin{equation}
+  E=-J\sum_{<kl>}^{N}s_ks_l
+\end{equation}
+where the value of the spins are  $s_k=\pm 1$ and $N$ is the total number of spins. The variable $J$ is a coupling constant expressing the strength of the interaction between neighboring spins.
+
+The symbol $<kl>$ indicates that we sum over nearest neighbors only. We will assume that we have a ferromagnetic ordering, viz $J> 0$ and use periodic boundary conditions. 
+
+(invlude matrix of spins and define variable $L$, $N$ and $M$)
+
+%analytical values to test:
+First we assume that there is only two spins in each dimention (x and y), we set $L=2$. Then the closed form expression for the partition function is given by:
+\[
+Z = \sum_{i=1}^M e^{-\beta E_i}
+\]
+where $M$ is the number of microstates or combinations of spins.
+
+
+
+\newpage
+
+\begin{enumerate}
+
+\item[a)] Assume we have only two spins in each dimension, that is $L=2$.
+Find the closed form expression for the partition function and the corresponding
+expectations values for
+for $E$, $|{\cal M}|$, the specific heat $C_V$ and the susceptibility $\chi$ 
+as functions of  $T$ using periodic boundary conditions.
+
+
+
+\item[b)] 
+Write now a code for the Ising model which computes the mean energy 
+$E$, mean magnetization 
+$|{\cal M}|$, the specific heat $C_V$ and the susceptibility $\chi$ 
+as functions of  $T$ using periodic boundary conditions for 
+$L=2$ in the $x$ and $y$ directions. 
+Compare your results with the expressions from a)
+for  a  temperature $T=1.0$ (in units of $kT/J$). 
+
+How many Monte Carlo cycles do you need in order to achieve a good agreeement?
+
+
+\item[c)]
+ 
+We choose now a square lattice with $L=20$ spins in the $x$ and $y$ directions. 
+
+In [b) we did not study carefully how many Monte Carlo cycles were needed in order to reach the most likely state. Here
+we want to perform a study of the time (here it corresponds to the number 
+of Monte Carlo cycles) one needs before one reaches an equilibrium situation 
+and can start computing various expectations values. Our 
+first attempt is a rough and plain graphical
+one, where we plot various expectations values as functions of the number of Monte Carlo cycles.
+
+Choose first a temperature of $T=1.0$ (in units of $kT/J$) and study the 
+mean energy and magnetisation (absolute value) as functions of the number of Monte Carlo cycles.
+Use both an ordered (all spins pointing in one direction) and a random
+spin orientation as starting configuration. 
+How many Monte Carlo cycles do you need before you reach an equilibrium situation?
+Repeat this analysis for $T=2.4$. 
+
+Make also a plot of the total number of accepted configurations 
+as function of the total number of Monte Carlo cycles. How does the number of
+accepted configurations behave as function of temperature $T$?
+
+
+\item[d)] Compute thereafter the probability 
+$P(E)$ for the previous system with $L=20$ and the same temperatures.
+You compute this probability by simply counting the number of times a 
+given energy appears in your computation. Start the computation after 
+the steady state situation has been reached.
+Compare your results with the computed variance in energy 
+$\sigma^2_E$ and discuss the behavior you observe. 
+\end{enumerate}
+
+Near $T_C$ we can characterize the behavior of many physical quantities
+by a power law behavior.
+As an example the mean magnetization is given by
+\begin{equation}
+  \langle {\cal M}(T) \rangle \sim \left(T-T_C\right)^{\beta},
+\end{equation}
+where $\beta=1/8$ is a so-called critical exponent. A similar relation
+applies to the heat capacity 
+\begin{equation}
+  C_V(T) \sim \left|T_C-T\right|^{\alpha},
+\end{equation}
+and the susceptibility
+\begin{equation}
+  \chi(T) \sim \left|T_C-T\right|^{\gamma},
+\end{equation}
+with $\alpha = 0$ and $\gamma = 7/4$.
+Another important quantity is the correlation length, which is expected
+to be of the order of the lattice spacing for $T>> T_C$. Because the spins
+become more and more correlated as $T$ approaches $T_C$, the correlation
+length increases as we get closer to the critical temperature. The divergent
+behavior of $\xi$ near $T_C$ 
+is
+\begin{equation}
+  \xi(T) \sim \left|T_C-T\right|^{-\nu}.
+  \label{eq:xi}
+\end{equation}
+A second-order phase transition is characterized by a
+correlation length which spans the whole system.
+Since we are always limited to a finite lattice, $\xi$ will
+be proportional with the size of the lattice. 
+Through so-called finite size scaling relations
+it is possible to relate the behavior at finite lattices with the 
+results for an infinitely large lattice.
+The critical temperature scales then as
+\begin{equation}
+ T_C(L)-T_C(L=\infty) = aL^{-1/\nu},
+ \label{eq:tc}
+\end{equation}
+with  $a$ a constant and  $\nu$ defined in Eq.~(\ref{eq:xi}).
+We set $T=T_C$ and obtain a mean magnetisation
+\begin{equation}
+  \langle {\cal M}(T) \rangle \sim \left(T-T_C\right)^{\beta}
+  \rightarrow L^{-\beta/\nu},
+  \label{eq:scale1}
+\end{equation}
+a heat capacity
+\begin{equation}
+  C_V(T) \sim \left|T_C-T\right|^{-\gamma} \rightarrow L^{\alpha/\nu},
+  \label{eq:scale2}
+\end{equation}
+and susceptibility
+\begin{equation}
+  \chi(T) \sim \left|T_C-T\right|^{-\alpha} \rightarrow L^{\gamma/\nu}.
+  \label{eq:scale3}
+\end{equation}
+
+\begin{enumerate}
+\item [e)]  We wish to study the behavior of the Ising model in two dimensions close to the 
+critical temperature as a function of the lattice size $L\times L$.
+Calculate the expectation values 
+for $\langle E\rangle$ and $\langle |{\cal M}|\rangle$,
+the specific heat $C_V$ and the susceptibility $\chi$
+as functions  of $T$ for $L=20$, $L=40$, $L=60$ and $L=80$ for $T\in [2.0,2.4]$
+with a step in temperature $\Delta T=0.05$ or smaller. 
+Plot  $\langle E\rangle$, $\langle 1{\cal M}1\rangle$, $C_V$ and $\chi$ 
+as functions of $T$. Can you see an indication of a phase transition?
+
+Use the absolute value $\langle |{\cal M}|\rangle$ when you evaluate $\chi$.
+
+You should parallelize the code using either OpenMP or MPI.
+\item[f)]  Use Eq.~(\ref{eq:tc}) and the exact result
+$\nu=1$ in order to estimate $T_C$ in the thermodynamic limit $L\rightarrow \infty$
+using your simulations with $L=20$, $L=40$, $L=60$ and $L=80$
+The exact result for the critical temperature (after Lars Onsager) is
+$kT_C/J=2/ln(1+\sqrt{2})\approx 2.269$ with $\nu=1$.
+\end{enumerate}
+
+\section*{Background literature}
+If you wish to read more about the Ising model and statistical physics here are two suggestions.
+\begin{enumerate}
+\item M.~Plischke and B.~Bergersen, Equilibrium Statistical Physics,
+Prentice-Hall, see chapters 5 and 6.
+\item M.~E.~J.~Newman and T.~Barkema, Monte Carlo methods in statistical physics, Oxford, see chapters 3 and 4.
+
+\end{enumerate}
+\end{document}
+
+
+
+
+
+
