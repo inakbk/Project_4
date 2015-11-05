@@ -1,10 +1,10 @@
 #include "metropolis.h"
 
-void oneFlop(mat &state, int &E, double T, int L)
+void oneFlip(Random &random_nr, mat &state, int &E, double beta_tilde, int L, int &number_of_accepted_cycles)
 {
     //finding index of one random spin
-    int ix=0; //make random later
-    int iy=0;
+    int ix=L*random_nr.nextDouble();
+    int iy=L*random_nr.nextDouble();
 
     //flopping spin
     mat new_state = state;
@@ -29,18 +29,23 @@ void oneFlop(mat &state, int &E, double T, int L)
     {
         state = new_state;
         E = E + dE;
+        ++number_of_accepted_cycles;
+        cout << "hello you" << endl;
+        cout << "dE: " << dE << endl;
     }
     if(dE>0)
     {
-        double w = exp(-T*dE);
-        double r = 0; //random nr. really
+        double w = exp(-beta_tilde*dE);
+        //cout << w << endl;
+        double r = random_nr.nextDouble();
+        //cout << r << endl;
         if(r<=w)
         {
             state = new_state;
             E = E + dE;
+            ++number_of_accepted_cycles;
             cout << "hello" << endl;
         }
     }
-    cout << E << endl;
-    state.print();
+
 }

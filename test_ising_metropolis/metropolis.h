@@ -1,10 +1,11 @@
 #ifndef METROPOLIS_H
 #define METROPOLIS_H
 #include <armadillo>
+#include "random.h"
 
 using namespace arma;
 
-void oneFlop(mat &spin_state, int &energy, double T, int L);
+void oneFlip(Random &random_nr, mat &spin_state, int &energy, double beta_tilde, int L, int &number_of_accepted_cycles);
 
 //periodic bond. cond.
 inline int periodic(int i, int limit, int add)
