@@ -5,9 +5,6 @@
 using namespace std;
 using namespace arma;
 
-//periodic bond. cond.
-inline int periodic(int i, int limit, int add)
-{ return (i+limit+add) % (limit);}
 
 int main()
 {
@@ -22,9 +19,8 @@ int main()
 
     //initial state goes here, random or ordered
     mat state = 1*ones<mat>(L,L);
-    state(0,0) = -1;
+    state(0,1) = -1;
     //state(0,1) = 1;
-
 
     //energy of state:
     int E = 0; //in unist of J? J=1
@@ -37,7 +33,10 @@ int main()
     }
 
     cout << E << endl;
+    state.print();
 
+    cout << "---" << endl;
+    oneFlop(state, E, T, L);
 
 
     return 0;
