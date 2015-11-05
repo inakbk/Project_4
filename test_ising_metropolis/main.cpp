@@ -1,10 +1,11 @@
 #include <iostream>
 #include <armadillo>
+#include "metropolis.h"
 
 using namespace std;
 using namespace arma;
 
-
+//periodic bond. cond.
 inline int periodic(int i, int limit, int add)
 { return (i+limit+add) % (limit);}
 
@@ -15,21 +16,18 @@ int main()
 
     int maximum_nr_of_cycles = 100000;
 
-
     //this can be calculated when needed
     int N = L*L;
     //microstates
 
     //initial state goes here, random or ordered
-    mat state = -1*ones<mat>(L,L);
-    state(1,0) = 1;
-    state(0,1) = 1;
-
-    //periodic bond. cond.
+    mat state = 1*ones<mat>(L,L);
+    state(0,0) = -1;
+    //state(0,1) = 1;
 
 
     //energy of state:
-    double E = 0; //in unist of J? J=1
+    int E = 0; //in unist of J? J=1
     for(int i=0; i<L;++i)
     {
         for(int j=0; j<L; ++j)

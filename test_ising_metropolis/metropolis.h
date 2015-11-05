@@ -1,9 +1,10 @@
 #ifndef METROPOLIS_H
 #define METROPOLIS_H
+#include <armadillo>
 
+using namespace arma;
 
-int lol(int jhfguy);
-
+void oneFlop(vec &spin_state, int &energy );
 
 
 
