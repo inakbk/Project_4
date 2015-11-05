@@ -5,7 +5,6 @@
 using namespace std;
 using namespace arma;
 
-
 int main()
 {
     double T = 1.0;
@@ -19,7 +18,7 @@ int main()
 
     //initial state goes here, random or ordered
     mat state = 1*ones<mat>(L,L);
-    state(0,1) = -1;
+    //state(0,1) = -1;
     //state(0,1) = 1;
 
     //energy of state:
@@ -37,6 +36,7 @@ int main()
 
     cout << "---" << endl;
     oneFlop(state, E, T, L);
+
 
 
     return 0;
