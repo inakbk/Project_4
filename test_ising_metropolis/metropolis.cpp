@@ -1,6 +1,6 @@
 #include "metropolis.h"
 
-void oneFlip(Random &random_nr, mat &state, int &E, double beta_tilde, int L, int &number_of_accepted_cycles)
+void oneFlip(Random &random_nr, mat &state, int &E, int &M, double beta_tilde, int L, int &number_of_accepted_cycles)
 {
     //finding index of one random spin
     int ix=L*random_nr.nextDouble();
@@ -10,17 +10,19 @@ void oneFlip(Random &random_nr, mat &state, int &E, double beta_tilde, int L, in
     mat new_state = state;
     new_state(iy,ix) = state(iy,ix)*-1;
 
-    //the amount of energy that will change if accepted
+    //the amount of energy and magnetization that will change if accepted
     int e_new = new_state(iy,ix)*( new_state(iy,periodic(ix, L, 1)) + new_state(periodic(iy, L, 1),ix) )
         + new_state(iy,periodic(ix,L,1))*( new_state(iy,periodic(ix, L, 2)) + new_state(periodic(iy, L, 1),periodic(ix,L,1)) )
         + new_state(periodic(iy,L,1),ix)*( new_state(iy,periodic(ix, L, 2)) + new_state(periodic(iy, L, 1),periodic(ix,L,1)) );
     //cout << "e_new = " << e_new << endl;
+    int m_new = new_state(iy,ix);
 
     //the amount of energy that was changed from
     int e_init = state(iy,ix)*( state(iy,periodic(ix, L, 1)) + state(periodic(iy, L, 1),ix) )
         + state(iy,periodic(ix,L,1))*( state(iy,periodic(ix, L, 2)) + state(periodic(iy, L, 1),periodic(ix,L,1)) )
         + state(periodic(iy,L,1),ix)*( state(iy,periodic(ix, L, 2)) + state(periodic(iy, L, 1),periodic(ix,L,1)) );
     //cout << "e_init = " << e_init << endl;
+    int m_init = state(iy,ix);
 
     //computing diff. in energy and deciding to change spin or not
     int dE = e_init - e_new;
@@ -29,6 +31,7 @@ void oneFlip(Random &random_nr, mat &state, int &E, double beta_tilde, int L, in
     {
         state = new_state;
         E = E + dE;
+        M = M - m_init + m_new;
         ++number_of_accepted_cycles;
         //cout << "hello you" << endl;
         //cout << "dE: " << dE << endl;
@@ -43,6 +46,7 @@ void oneFlip(Random &random_nr, mat &state, int &E, double beta_tilde, int L, in
         {
             state = new_state;
             E = E + dE;
+            M = M - m_init + m_new;
             ++number_of_accepted_cycles;
             cout << "hello" << endl;
         }
