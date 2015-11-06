@@ -23,7 +23,7 @@ int main()
     int E = 0; //in unist of J=1
     int M = 0;
     mat state = 1*ones<mat>(L,L);
-    int chosen_initial_state = 0;
+    int chosen_initial_state = 0; //integer; -1 for random state, 0 for L=2 highest energy and 1 for all spins up.
     initialState(state, E, M, L, chosen_initial_state);
 
     allMCcycles(state, E, M, T, L, maximum_nr_of_cycles, chosen_initial_state);

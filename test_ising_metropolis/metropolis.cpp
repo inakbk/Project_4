@@ -97,44 +97,45 @@ void allMCcycles(mat &state, int &E, int &M, double T, int L, int maximum_nr_of_
     double mean_M = 0;
     double mean_absM = 0;
     double mean_M2 = 0;
+    double C_v = 0;
+    double chi = 0;
     int number_of_accepted_cycles = 0;
-
-    //string filename = "EigenValVecSolver_" + FileName + "_pMax" + to_string(index) + "_nStep" + to_string(n_step) + ".txt";
 
     string filename = "metropolis_L" + to_string(L) + "_T" + to_string(int(T)) + "initial" + to_string(chosen_initial_state) + ".txt";
     ofstream myfile;
     myfile.open(filename);
 
-
-    //open file here
     for(int i=0; i<maximum_nr_of_cycles;++i)
     {
         //one MC cycle:
         for(int n=0; n<N; ++n)
         {
             oneFlip(random_nr, state, E, M, T, L, number_of_accepted_cycles);
+
         }
+
         mean_E += E;
         mean_E2 += E*E;
         mean_absM += abs(M);
         mean_M += M;
         mean_M2 += M*M;
-
         //print E and stuff to file here
+
+
     }
 
     //calculating mean values:
     mean_E = mean_E/maximum_nr_of_cycles;
     mean_E2 = mean_E2/maximum_nr_of_cycles;
-    double C_v = (mean_E2 - mean_E*mean_E)/(T*T); // in units of
+    C_v = (mean_E2 - mean_E*mean_E)/(T*T); // in units of
 
     mean_absM = mean_absM/maximum_nr_of_cycles;
     mean_M = mean_M/maximum_nr_of_cycles;
     mean_M2 = mean_M2/maximum_nr_of_cycles;
-    double chi = (mean_M2 - mean_M*mean_M)/T; // in units of
+    chi = (mean_M2 - mean_M*mean_M)/T; // in units of
 
     //print mean_E and mean_E2 and stuff to file here
-    //close file here
+
     myfile.close();
 
 //----------------------------------------------------------------
