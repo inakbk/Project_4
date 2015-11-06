@@ -1,6 +1,6 @@
 #include "metropolis.h"
 
-void oneFlip(Random &random_nr, mat &state, int &E, int &M, double beta_tilde, int L, int &number_of_accepted_cycles)
+void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, int &number_of_accepted_cycles)
 {
     //finding index of one random spin
     int ix=L*random_nr.nextDouble();
@@ -38,7 +38,7 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double beta_tilde, i
     }
     if(dE>0)
     {
-        double w = exp(-beta_tilde*dE);
+        double w = exp(-dE/T);
         //cout << w << endl;
         double r = random_nr.nextDouble();
         //cout << r << endl;
@@ -54,13 +54,14 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double beta_tilde, i
 }
 
 
-void allMCcycles(mat &state, int &E, int &M, double beta_tilde, int L, int maximum_nr_of_cycles)
+void allMCcycles(mat &state, int &E, int &M, double T, int L, int maximum_nr_of_cycles)
 {
     int N = L*L;
     Random random_nr(-2);
     double mean_E = 0;
     double mean_E2 = 0;
     double mean_M = 0;
+    double mean_absM = 0;
     double mean_M2 = 0;
     int number_of_accepted_cycles = 0;
     //open file here
@@ -69,11 +70,12 @@ void allMCcycles(mat &state, int &E, int &M, double beta_tilde, int L, int maxim
         //one MC cycle:
         for(int n=0; n<N; ++n)
         {
-            oneFlip(random_nr, state, E, M, beta_tilde, L, number_of_accepted_cycles);
+            oneFlip(random_nr, state, E, M, T, L, number_of_accepted_cycles);
         }
         mean_E += E;
         mean_E2 += E*E;
-        mean_M += abs(M);
+        mean_absM += abs(M);
+        mean_M += M;
         mean_M2 += M*M;
 
         //print E and stuff to file here
@@ -82,11 +84,12 @@ void allMCcycles(mat &state, int &E, int &M, double beta_tilde, int L, int maxim
     //calculating mean values:
     mean_E = mean_E/maximum_nr_of_cycles;
     mean_E2 = mean_E2/maximum_nr_of_cycles;
-    double C_v = mean_E2 - mean_E*mean_E; // in units of [1/(k_b T**2)]
+    double C_v = (mean_E2 - mean_E*mean_E)/(T*T); // in units of [1/(k_b*T**2)]
 
+    mean_absM = mean_absM/maximum_nr_of_cycles;
     mean_M = mean_M/maximum_nr_of_cycles;
     mean_M2 = mean_M2/maximum_nr_of_cycles;
-    double chi = mean_M2 - mean_M*mean_M; // in units of [1/(k_b T**2)]
+    double chi = (mean_M2 - mean_M*mean_M)/T; // in units of [1/(k_b*T)]
 
     //print mean_E and mean_E2 and stuff to file here
     //close file here
@@ -96,9 +99,9 @@ void allMCcycles(mat &state, int &E, int &M, double beta_tilde, int L, int maxim
     cout << mean_E2 << endl;
     cout << C_v << endl;
     cout << "----" << endl;
-    cout << mean_M*mean_M << endl;
+    cout << "mean_m*mean_m: " << mean_M*mean_M << endl;
     cout << mean_M2 << endl;
-    cout << chi << endl;
+    cout << "chi: " << chi << endl;
 
     state.print();
     cout << "nr of accepted cycles: " << number_of_accepted_cycles << endl;

@@ -8,11 +8,9 @@ using namespace arma;
 
 int main()
 {
-    double beta_tilde = 1.0;
+    double T = 1.0;
     int L = 2.0;
-    int maximum_nr_of_cycles = 100;//100000;
-
-
+    int maximum_nr_of_cycles = 10000;//100000;
 
     //Random random_nr(-2);
 //    std::vector<Random*> randoms;
@@ -41,9 +39,7 @@ int main()
     cout << "---" << endl;
 
 //----------------------------------------------------------------
-
-    allMCcycles(state, E, M, beta_tilde, L, maximum_nr_of_cycles);
-
+    allMCcycles(state, E, M, T, L, maximum_nr_of_cycles);
 
     return 0;
 }
