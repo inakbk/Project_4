@@ -14,12 +14,10 @@ int main()
     int N = L*L;
 
 
-    Random random_nr(-2);
+    //Random random_nr(-2);
 //    std::vector<Random*> randoms;
 //    randoms.push_back(new Random(-omp_get_thread_number()));
 //    randoms[omp_get_thread_number()].nextRandom()
-
-
 
 //----------------------------------------------------------------
     //initial state goes here, random or ordered
@@ -44,6 +42,7 @@ int main()
 
 //----------------------------------------------------------------
 
+    Random random_nr(-2);
     double mean_E = 0;
     double mean_E2 = 0;
     double mean_M = 0;
@@ -64,6 +63,8 @@ int main()
 
         //print E and stuff to file here
     }
+
+    //calculating mean values:
     mean_E = mean_E/maximum_nr_of_cycles;
     mean_E2 = mean_E2/maximum_nr_of_cycles;
     double C_v = mean_E2 - mean_E*mean_E; // in units of [1/(k_b T**2)]
