@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 #include <armadillo>
 #include "metropolis.h"
 #include "random.h"
@@ -40,6 +41,9 @@ int main()
 
 //----------------------------------------------------------------
     allMCcycles(state, E, M, T, L, maximum_nr_of_cycles);
+
+    cout << "------" << endl;
+    theoreticalValues(T);
 
     return 0;
 }

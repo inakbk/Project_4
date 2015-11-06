@@ -13,6 +13,7 @@ void oneFlip(Random &random_nr, mat &spin_state, int &energy, int &magnetization
 
 void allMCcycles(mat &spin_state, int &E, int &M, double T, int L, int maximum_nr_of_cycles);
 
-void theoreticalValues();
+//theoretical values for L=2:
+void theoreticalValues(double T);
 
 #endif // METROPOLIS_H
