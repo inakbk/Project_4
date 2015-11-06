@@ -1,28 +1,64 @@
 #include "metropolis.h"
 
+void initialState(mat state, int &E, int &M, int &L, int chosen_initial_state)
+{
+    if(abs(chosen_initial_state) > 1)
+    {
+        cout << "Wrong input!" << endl;
+        cout << "Function to initiate state must have last argument chosen_initial_state as a integer, -1 for random state, 0 for L=2 highest energy and 1 for all spins up. "  << endl;
+    }
+
+    //highest energy state for test case, L=2
+    if(chosen_initial_state == 0)
+    {
+        if(L!=2)
+        {
+            cout << "Wrong input! Set chosen_initial_state=0 only when L=0! Aborting, L is: " << L << endl;
+            exit(1);
+        }
+        state(0,1) = -1;
+        state(1,0) = -1;
+        cout << "e" << endl;
+    }
+
+    //random state:
+    if(chosen_initial_state == -1)
+    {
+        //create random state
+        cout << "eh" << endl;
+    }
+    //energy and magnetization of initial state:
+    for(int i=0; i<L;++i)
+    {
+        for(int j=0; j<L; ++j)
+        {
+            E += -1*state(i,j)*( state(i,periodic(j, L, 1)) + state(periodic(i, L, 1),j) );
+            M += state(i,j);
+        }
+    }
+}
+
 void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, int &number_of_accepted_cycles)
 {
     //finding index of one random spin
     int ix=L*random_nr.nextDouble();
     int iy=L*random_nr.nextDouble();
 
-    //flopping spin
-    mat new_state = state;
-    new_state(iy,ix) = state(iy,ix)*-1;
-
-    //the amount of energy and magnetization that will change if accepted
-    int e_new = new_state(iy,ix)*( new_state(iy,periodic(ix, L, 1)) + new_state(periodic(iy, L, 1),ix) )
-        + new_state(iy,periodic(ix,L,1))*( new_state(iy,periodic(ix, L, 2)) + new_state(periodic(iy, L, 1),periodic(ix,L,1)) )
-        + new_state(periodic(iy,L,1),ix)*( new_state(iy,periodic(ix, L, 2)) + new_state(periodic(iy, L, 1),periodic(ix,L,1)) );
-    //cout << "e_new = " << e_new << endl;
-    int m_new = new_state(iy,ix);
-
-    //the amount of energy that was changed from
+    //the energy caused by the one chosen spin before flip
     int e_init = state(iy,ix)*( state(iy,periodic(ix, L, 1)) + state(periodic(iy, L, 1),ix) )
         + state(iy,periodic(ix,L,1))*( state(iy,periodic(ix, L, 2)) + state(periodic(iy, L, 1),periodic(ix,L,1)) )
         + state(periodic(iy,L,1),ix)*( state(iy,periodic(ix, L, 2)) + state(periodic(iy, L, 1),periodic(ix,L,1)) );
-    //cout << "e_init = " << e_init << endl;
     int m_init = state(iy,ix);
+
+    //flipping spin, trial state:
+    mat new_state = state;
+    new_state(iy,ix) = -1*state(iy,ix);
+
+    //the energy caused by the one chosen spin if flip accepted
+    int e_new = new_state(iy,ix)*( new_state(iy,periodic(ix, L, 1)) + new_state(periodic(iy, L, 1),ix) )
+        + new_state(iy,periodic(ix,L,1))*( new_state(iy,periodic(ix, L, 2)) + new_state(periodic(iy, L, 1),periodic(ix,L,1)) )
+        + new_state(periodic(iy,L,1),ix)*( new_state(iy,periodic(ix, L, 2)) + new_state(periodic(iy, L, 1),periodic(ix,L,1)) );
+    int m_new = new_state(iy,ix);
 
     //computing diff. in energy and deciding to change spin or not
     int dE = e_init - e_new;
@@ -109,7 +145,7 @@ void allMCcycles(mat &state, int &E, int &M, double T, int L, int maximum_nr_of_
 }
 
 
-void theoreticalValues(double T)
+void theoreticalValues(double T, int chosen_initial_state)
 {
     double exp_E = -8*sinh(8./T)/(cosh(8./T) + 3);
     double exp_E2 = 64*cosh(8./T)/(cosh(8./T) + 3);
