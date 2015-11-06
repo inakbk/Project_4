@@ -26,7 +26,7 @@ int main()
     int chosen_initial_state = 0;
     initialState(state, E, M, L, chosen_initial_state);
 
-    allMCcycles(state, E, M, T, L, maximum_nr_of_cycles);
+    allMCcycles(state, E, M, T, L, maximum_nr_of_cycles, chosen_initial_state);
 
     cout << "------" << endl;
     theoreticalValues(T, chosen_initial_state);

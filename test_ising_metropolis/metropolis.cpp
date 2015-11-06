@@ -1,6 +1,8 @@
 #include "metropolis.h"
 #include <string>
 
+using namespace std;
+
 void initialState(mat state, int &E, int &M, int &L, int chosen_initial_state)
 {
     if(abs(chosen_initial_state) > 1)
