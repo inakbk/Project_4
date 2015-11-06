@@ -51,5 +51,57 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double beta_tilde, i
             cout << "hello" << endl;
         }
     }
+}
+
+
+void allMCcycles(mat &state, int &E, int &M, double beta_tilde, int L, int maximum_nr_of_cycles)
+{
+    int N = L*L;
+    Random random_nr(-2);
+    double mean_E = 0;
+    double mean_E2 = 0;
+    double mean_M = 0;
+    double mean_M2 = 0;
+    int number_of_accepted_cycles = 0;
+    //open file here
+    for(int i=0; i<maximum_nr_of_cycles;++i)
+    {
+        //one MC cycle:
+        for(int n=0; n<N; ++n)
+        {
+            oneFlip(random_nr, state, E, M, beta_tilde, L, number_of_accepted_cycles);
+        }
+        mean_E += E;
+        mean_E2 += E*E;
+        mean_M += abs(M);
+        mean_M2 += M*M;
+
+        //print E and stuff to file here
+    }
+
+    //calculating mean values:
+    mean_E = mean_E/maximum_nr_of_cycles;
+    mean_E2 = mean_E2/maximum_nr_of_cycles;
+    double C_v = mean_E2 - mean_E*mean_E; // in units of [1/(k_b T**2)]
+
+    mean_M = mean_M/maximum_nr_of_cycles;
+    mean_M2 = mean_M2/maximum_nr_of_cycles;
+    double chi = mean_M2 - mean_M*mean_M; // in units of [1/(k_b T**2)]
+
+    //print mean_E and mean_E2 and stuff to file here
+    //close file here
+
+//----------------------------------------------------------------
+    cout << mean_E*mean_E << endl;
+    cout << mean_E2 << endl;
+    cout << C_v << endl;
+    cout << "----" << endl;
+    cout << mean_M*mean_M << endl;
+    cout << mean_M2 << endl;
+    cout << chi << endl;
+
+    state.print();
+    cout << "nr of accepted cycles: " << number_of_accepted_cycles << endl;
 
 }
+
