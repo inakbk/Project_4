@@ -1,4 +1,5 @@
 #include "metropolis.h"
+#include <string>
 
 void initialState(mat state, int &E, int &M, int &L, int chosen_initial_state)
 {
@@ -85,7 +86,7 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, int
     }
 }
 
-void allMCcycles(mat &state, int &E, int &M, double T, int L, int maximum_nr_of_cycles)
+void allMCcycles(mat &state, int &E, int &M, double T, int L, int maximum_nr_of_cycles, int chosen_initial_state)
 {
     int N = L*L;
     Random random_nr(-2);
@@ -95,6 +96,13 @@ void allMCcycles(mat &state, int &E, int &M, double T, int L, int maximum_nr_of_
     double mean_absM = 0;
     double mean_M2 = 0;
     int number_of_accepted_cycles = 0;
+
+    //string filename = "EigenValVecSolver_" + FileName + "_pMax" + to_string(index) + "_nStep" + to_string(n_step) + ".txt";
+
+    string filename = "metropolis_L" + to_string(L) + "_T" + to_string(int(T)) + "initial" + to_string(chosen_initial_state) + ".txt";
+    ofstream myfile;
+    myfile.open(filename);
+
 
     //open file here
     for(int i=0; i<maximum_nr_of_cycles;++i)
@@ -125,6 +133,7 @@ void allMCcycles(mat &state, int &E, int &M, double T, int L, int maximum_nr_of_
 
     //print mean_E and mean_E2 and stuff to file here
     //close file here
+    myfile.close();
 
 //----------------------------------------------------------------
     cout << "mean_E: "<< mean_E << endl;

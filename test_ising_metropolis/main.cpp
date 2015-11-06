@@ -34,3 +34,17 @@ int main()
     return 0;
 }
 
+
+
+
+//ofstream myfile;
+//string filename = "EigenValVecSolver_" + FileName + "_pMax" + to_string(index) + "_nStep" + to_string(n_step) + ".txt";
+//myfile.open (filename);
+//myfile << "Equations solved with the " << FileName << " algorithm." << endl;
+//myfile << "Dimention of matrix + 1, n_step = " << n_step << endl;
+//myfile << "Index of p_max: " << index << endl;
+//myfile << "Execution time: " << time << endl;
+
+//myfile << "Number of iterations for jacobi algoritm: " << number_of_iterations << endl;
+
+//myfile.close();
