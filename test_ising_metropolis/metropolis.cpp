@@ -30,8 +30,8 @@ void oneFlip(Random &random_nr, mat &state, int &E, double beta_tilde, int L, in
         state = new_state;
         E = E + dE;
         ++number_of_accepted_cycles;
-        cout << "hello you" << endl;
-        cout << "dE: " << dE << endl;
+        //cout << "hello you" << endl;
+        //cout << "dE: " << dE << endl;
     }
     if(dE>0)
     {
