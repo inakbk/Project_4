@@ -18,15 +18,15 @@ void initialState(mat state, int &E, int &M, int &L, int chosen_initial_state)
         }
         state(0,1) = -1;
         state(1,0) = -1;
-        cout << "e" << endl;
     }
 
     //random state:
     if(chosen_initial_state == -1)
     {
         //create random state
-        cout << "eh" << endl;
+        cout << "Code to generate random state not ready!" << endl;
     }
+
     //energy and magnetization of initial state:
     for(int i=0; i<L;++i)
     {
@@ -69,26 +69,21 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, int
         E = E + dE;
         M = M - m_init + m_new;
         ++number_of_accepted_cycles;
-        //cout << "hello you" << endl;
-        //cout << "dE: " << dE << endl;
     }
     if(dE>0)
     {
         double w = exp(-dE/T);
-        //cout << w << endl;
         double r = random_nr.nextDouble();
-        //cout << r << endl;
         if(r<=w)
         {
             state = new_state;
             E = E + dE;
             M = M - m_init + m_new;
             ++number_of_accepted_cycles;
-            cout << "hello" << endl;
+            cout << "Hello, unlikely state chosen. " << endl;
         }
     }
 }
-
 
 void allMCcycles(mat &state, int &E, int &M, double T, int L, int maximum_nr_of_cycles)
 {
@@ -100,6 +95,7 @@ void allMCcycles(mat &state, int &E, int &M, double T, int L, int maximum_nr_of_
     double mean_absM = 0;
     double mean_M2 = 0;
     int number_of_accepted_cycles = 0;
+
     //open file here
     for(int i=0; i<maximum_nr_of_cycles;++i)
     {
@@ -141,9 +137,7 @@ void allMCcycles(mat &state, int &E, int &M, double T, int L, int maximum_nr_of_
 
     state.print();
     cout << "nr of accepted cycles: " << number_of_accepted_cycles << endl;
-
 }
-
 
 void theoreticalValues(double T, int chosen_initial_state)
 {
@@ -154,6 +148,7 @@ void theoreticalValues(double T, int chosen_initial_state)
     double exp_M2 = 8*(exp(8./T) + 1)/(cosh(8./T) + 3);
     double chi = (8./T)*(exp(8./T) + 1)/(cosh(8./T) + 3);
 
+    //print to file
     cout << "Here comes theoretical values:" << endl;
     cout << "exp_E: "<< exp_E << endl;
     cout << "exp_E2: " << exp_E2 << endl;
@@ -162,6 +157,5 @@ void theoreticalValues(double T, int chosen_initial_state)
     cout << "exp_absM: " << exp_absM << endl;
     cout << "exp_M2: " << exp_M2 << endl;
     cout << "chi: " << chi << endl;
-
 }
 

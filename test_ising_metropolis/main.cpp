@@ -10,7 +10,7 @@ using namespace arma;
 int main()
 {
     double T = 1.0;
-    int L = 3;
+    int L = 2;
     int maximum_nr_of_cycles = 10000;//100000;
 
     //Random random_nr(-2);
@@ -19,15 +19,14 @@ int main()
 //    randoms[omp_get_thread_number()].nextRandom()
 
 //----------------------------------------------------------------
-    //initial state
-    mat state = 1*ones<mat>(L,L);
-    int E = 0; //in unist of J? J=1
-    int M = 0;
 
+    int E = 0; //in unist of J=1
+    int M = 0;
+    mat state = 1*ones<mat>(L,L);
     int chosen_initial_state = 0;
     initialState(state, E, M, L, chosen_initial_state);
 
-    //allMCcycles(state, E, M, T, L, maximum_nr_of_cycles);
+    allMCcycles(state, E, M, T, L, maximum_nr_of_cycles);
 
     cout << "------" << endl;
     theoreticalValues(T, chosen_initial_state);
