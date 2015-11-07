@@ -83,7 +83,7 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, int
             E = E + dE;
             M = M - m_init + m_new;
             ++number_of_accepted_cycles;
-            cout << "Hello, unlikely state chosen. " << endl;
+            //cout << "Hello, unlikely state chosen. " << endl;
         }
     }
 }
@@ -139,7 +139,6 @@ void allMCcycles(mat &state, int &E, int &M, double T, int L, int maximum_nr_of_
 
 
 //----------------------------------------------------------------
-    state.print();
     myfile << "nr_of_accepted_cycles= " << number_of_accepted_cycles << endl;
 
     myfile << "mean_E= "<< mean_E << endl;

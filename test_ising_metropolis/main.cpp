@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 //----------------------------------------------------------------
     allMCcycles(state, E, M, T, L, nr_of_cycles, chosen_initial_state);
 
-    cout << "------" << endl;
+    //cout << "------" << endl;
     //theoreticalValues(T, chosen_initial_state);
 
     return 0;
