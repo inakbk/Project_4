@@ -101,7 +101,7 @@ void allMCcycles(mat &state, int &E, int &M, double T, int L, int maximum_nr_of_
     double chi = 0;
     int number_of_accepted_cycles = 0;
 
-    string filename = "metropolis_L" + to_string(L) + "_T" + to_string(int(T)) + "_initial" + to_string(chosen_initial_state) + ".txt";
+    string filename = "metropolis_L" + to_string(L) + "_T" + to_string(int(T)) + "_initial" + to_string(chosen_initial_state) + "_MC" + to_string(maximum_nr_of_cycles) + ".txt";
     ofstream myfile;
     myfile.open(filename);
 

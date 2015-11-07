@@ -28,13 +28,13 @@ int main(int argc, char *argv[])
 //    randoms[omp_get_thread_number()].nextRandom()
 
 //----------------------------------------------------------------
-
     // initial state:
     int E = 0; //in unist of J=1
     int M = 0;
     mat state = 1*ones<mat>(L,L);
     initialState(state, E, M, L, chosen_initial_state);
 
+//----------------------------------------------------------------
     allMCcycles(state, E, M, T, L, nr_of_cycles, chosen_initial_state);
 
     cout << "------" << endl;
