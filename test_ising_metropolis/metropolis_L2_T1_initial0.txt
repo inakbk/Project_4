@@ -1,0 +1,8 @@
+nr_of_accepted_cycles= 100
+mean_E= 8.02
+mean_E2= 64.48
+C_V= 0.1596
+----
+mean_absM= 4.274
+mean_M2= 34.16
+chi= 15.8929

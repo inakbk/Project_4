@@ -101,7 +101,7 @@ void allMCcycles(mat &state, int &E, int &M, double T, int L, int maximum_nr_of_
     double chi = 0;
     int number_of_accepted_cycles = 0;
 
-    string filename = "metropolis_L" + to_string(L) + "_T" + to_string(int(T)) + "initial" + to_string(chosen_initial_state) + ".txt";
+    string filename = "metropolis_L" + to_string(L) + "_T" + to_string(int(T)) + "_initial" + to_string(chosen_initial_state) + ".txt";
     ofstream myfile;
     myfile.open(filename);
 
@@ -140,15 +140,15 @@ void allMCcycles(mat &state, int &E, int &M, double T, int L, int maximum_nr_of_
 
 //----------------------------------------------------------------
     state.print();
-    myfile << "nr of accepted cycles: " << number_of_accepted_cycles << endl;
+    myfile << "nr_of_accepted_cycles= " << number_of_accepted_cycles << endl;
 
-    myfile << "mean_E: "<< mean_E << endl;
-    myfile << "mean_E2: " << mean_E2 << endl;
-    myfile << "C_V = " << C_v << endl;
+    myfile << "mean_E= "<< mean_E << endl;
+    myfile << "mean_E2= " << mean_E2 << endl;
+    myfile << "C_V= " << C_v << endl;
     myfile << "----" << endl;
-    myfile << "mean_absM: " << mean_absM << endl;
-    myfile << "mean_M2: " << mean_M2 << endl;
-    myfile << "chi: " << chi << endl;
+    myfile << "mean_absM= " << mean_absM << endl;
+    myfile << "mean_M2= " << mean_M2 << endl;
+    myfile << "chi= " << chi << endl;
 
     myfile.close();
 }
@@ -162,6 +162,9 @@ void theoreticalValues(double T, int chosen_initial_state)
     double exp_M2 = 8*(exp(8./T) + 1)/(cosh(8./T) + 3);
     double chi = (8./T)*(exp(8./T) + 1)/(cosh(8./T) + 3);
 
+//    string filename = "analytical_L" + to_string(L) + "_T" + to_string(int(T)) + "initial" + to_string(chosen_initial_state) + ".txt";
+//    ofstream myfile;
+//    myfile.open(filename);
     //print to file
     cout << "Here comes theoretical values:" << endl;
     cout << "exp_E: "<< exp_E << endl;
