@@ -136,19 +136,21 @@ void allMCcycles(mat &state, int &E, int &M, double T, int L, int maximum_nr_of_
 
     //print mean_E and mean_E2 and stuff to file here
 
-    myfile.close();
+
 
 //----------------------------------------------------------------
-    cout << "mean_E: "<< mean_E << endl;
-    cout << "mean_E2: " << mean_E2 << endl;
-    cout << "C_V = " << C_v << endl;
-    cout << "----" << endl;
-    cout << "mean_absM: " << mean_absM << endl;
-    cout << "mean_M2: " << mean_M2 << endl;
-    cout << "chi: " << chi << endl;
-
     state.print();
-    cout << "nr of accepted cycles: " << number_of_accepted_cycles << endl;
+    myfile << "nr of accepted cycles: " << number_of_accepted_cycles << endl;
+
+    myfile << "mean_E: "<< mean_E << endl;
+    myfile << "mean_E2: " << mean_E2 << endl;
+    myfile << "C_V = " << C_v << endl;
+    myfile << "----" << endl;
+    myfile << "mean_absM: " << mean_absM << endl;
+    myfile << "mean_M2: " << mean_M2 << endl;
+    myfile << "chi: " << chi << endl;
+
+    myfile.close();
 }
 
 void theoreticalValues(double T, int chosen_initial_state)
