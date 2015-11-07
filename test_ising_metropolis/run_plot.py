@@ -44,28 +44,33 @@ def chi_theory(T):
 
 T = 1.0
 L = 2
-max_nr_of_cycles = 10000
+max_nr_of_cycles = 100000
 initial = 0
 
-os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include')
+#compiling once:
+#os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include')
 
-step = 10
-start_cycle = 10
-N = linspace(start_cycle, max_nr_of_cycles, (max_nr_of_cycles-start_cycle)/step)
+step = 1000
+cycles = linspace(step, max_nr_of_cycles, max_nr_of_cycles/step)
 
-nr_of_accepted_cycles = zeros(start_cycle, max_nr_of_cycles, (max_nr_of_cycles-start_cycle)/step)
-mean_E = zeros(start_cycle, max_nr_of_cycles, (max_nr_of_cycles-start_cycle)/step)
-mean_E2 = zeros(start_cycle, max_nr_of_cycles, (max_nr_of_cycles-start_cycle)/step)
-C_V = zeros(start_cycle, max_nr_of_cycles, (max_nr_of_cycles-start_cycle)/step)
-mean_absM = zeros(start_cycle, max_nr_of_cycles, (max_nr_of_cycles-start_cycle)/step)
-mean_M2 = zeros(start_cycle, max_nr_of_cycles, (max_nr_of_cycles-start_cycle)/step)
-chi = zeros(start_cycle, max_nr_of_cycles, (max_nr_of_cycles-start_cycle)/step)
+nr_of_accepted_cycles = zeros(len(cycles))
+mean_E = zeros(len(cycles))
+mean_E2 = zeros(len(cycles))
+C_V = zeros(len(cycles))
+mean_absM = zeros(len(cycles))
+mean_M2 = zeros(len(cycles))
+chi = zeros(len(cycles))
 
-for i in range(len(N)):
-    os.system('./main %s %s %s %s' %(T, L, N[i], initial))
-    filename = 'metropolis_L%s_T%s_initial%s_MC%s.txt' %(L, int(T), initial, N[i])
+for i in range(len(cycles)):
+    os.system('./main %s %s %s %s' %(T, L, cycles[i], initial))
+    filename = 'metropolis_L%s_T%s_initial%s_MC%s.txt' %(L, int(T), initial, int(cycles[i]))
     nr_of_accepted_cycles[i], mean_E[i], mean_E2[i], C_V[i], mean_absM[i], mean_M2[i], chi[i] = read_file(filename)
 
+#plot(cycles, abs(mean_E - exp_E_theory(T)))
+plot(cycles, mean_E)
+hold('on')
+plot(cycles, exp_E_theory(T)*ones(len(cycles)))
+show()
 
 
 
