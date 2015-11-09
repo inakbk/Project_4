@@ -44,7 +44,7 @@ def read_file(filename):
 
 T = 1.0
 L = 2
-max_nr_of_cycles = 500000
+max_nr_of_cycles = 1000000
 initial = 0
 
 #compiling once:
@@ -105,7 +105,6 @@ title('chi')
 """
 
 
-#plot(cycles, abs(mean_E - exp_E_theory(T)))
 figure(1)
 plot(cycles, abs(mean_E - exp_E_theory(T)))
 title('mean_E')
@@ -129,6 +128,8 @@ title('mean_M2')
 figure(6)
 plot(cycles, abs(chi - chi_theory(T)*ones(len(cycles))))
 title('chi')
+
+
 show()
 
 

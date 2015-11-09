@@ -31,20 +31,22 @@ int main(int argc, char *argv[])
     // initial state:
     int E = 0; //in unist of J=1
     int M = 0;
+    vec dE = {4, 8}; //w is only used when de>0
+    vec w = exp(-dE/T);
     mat state = 1*ones<mat>(L,L);
     initialState(state, E, M, L, chosen_initial_state);
 
-//    state.print();
-//    cout << "2" << E << endl;
+    state.print();
+    cout << "2" << E << endl;
 
 //----------------------------------------------------------------
-    allMCcycles(state, E, M, T, L, nr_of_cycles, chosen_initial_state);
+    allMCcycles(state, E, M, T, L, w, nr_of_cycles, chosen_initial_state);
 
     //cout << "------" << endl;
     //theoreticalValues(T, chosen_initial_state);
 
-//    state.print();
-//    cout << E << endl;
+    state.print();
+    cout << E << endl;
 
     return 0;
 }

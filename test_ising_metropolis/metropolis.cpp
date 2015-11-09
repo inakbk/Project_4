@@ -43,7 +43,7 @@ void initialState(mat &state, int &E, int &M, int &L, int chosen_initial_state)
 //    cout << E << endl;
 }
 
-void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, int &number_of_accepted_cycles)
+void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec w, int &number_of_accepted_cycles)
 {
     //finding index of one random spin
     int ix=L*random_nr.nextDouble();
@@ -77,20 +77,20 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, int
     }
     if(dE>0)
     {
-        double w = exp(-dE/T);
+        //double w = exp(-dE/T); //w[(dE-4)/4]
         double r = random_nr.nextDouble();
-        if(r<=w)
+        if(r<=w[(dE-4)/4])
         {
             state = new_state;
             E = E + dE;
             M = M - m_init + m_new;
             ++number_of_accepted_cycles;
-            //cout << "Hello, unlikely state chosen. " << endl;
+            //cout << "Hello, unlikely state chosen. dE:" << dE << " w: " << w[(dE-4)/4] << endl;
         }
     }
 }
 
-void allMCcycles(mat &state, int &E, int &M, double T, int L, int maximum_nr_of_cycles, int chosen_initial_state)
+void allMCcycles(mat &state, int &E, int &M, double T, int L, vec w, int maximum_nr_of_cycles, int chosen_initial_state)
 {
     int N = L*L;
     Random random_nr(-2);
@@ -112,7 +112,7 @@ void allMCcycles(mat &state, int &E, int &M, double T, int L, int maximum_nr_of_
         //one MC cycle:
         for(int n=0; n<N; ++n)
         {
-            oneFlip(random_nr, state, E, M, T, L, number_of_accepted_cycles);
+            oneFlip(random_nr, state, E, M, T, L, w, number_of_accepted_cycles);
 
         }
 
