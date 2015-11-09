@@ -44,7 +44,7 @@ def read_file(filename):
 
 T = 1.0
 L = 2
-max_nr_of_cycles = 500000
+max_nr_of_cycles = 100000
 initial = 0
 
 #compiling once:

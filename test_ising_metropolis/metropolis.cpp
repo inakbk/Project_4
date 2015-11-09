@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void initialState(mat state, int &E, int &M, int &L, int chosen_initial_state)
+void initialState(mat &state, int &E, int &M, int &L, int chosen_initial_state)
 {
     if(abs(chosen_initial_state) > 1)
     {
@@ -39,6 +39,8 @@ void initialState(mat state, int &E, int &M, int &L, int chosen_initial_state)
             M += state(i,j);
         }
     }
+    state.print();
+    cout << E << endl;
 }
 
 void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, int &number_of_accepted_cycles)
