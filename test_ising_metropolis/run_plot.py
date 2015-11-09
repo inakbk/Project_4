@@ -44,7 +44,7 @@ def read_file(filename):
 
 T = 1.0
 L = 2
-max_nr_of_cycles = 100000
+max_nr_of_cycles = 500000
 initial = 0
 
 #compiling once:
@@ -66,7 +66,7 @@ for i in range(len(cycles)):
     filename = 'metropolis_L%s_T%s_initial%s_MC%s.txt' %(L, int(T), initial, int(cycles[i]))
     nr_of_accepted_config[i], mean_E[i], mean_E2[i], C_v[i], mean_absM[i], mean_M2[i], chi[i] = read_file(filename)
 
-#plot(cycles, abs(mean_E - exp_E_theory(T)))
+"""
 figure(1)
 plot(cycles, mean_E)
 hold('on')
@@ -102,7 +102,33 @@ plot(cycles, chi)
 hold('on')
 plot(cycles, chi_theory(T)*ones(len(cycles)))
 title('chi')
+"""
 
+
+#plot(cycles, abs(mean_E - exp_E_theory(T)))
+figure(1)
+plot(cycles, abs(mean_E - exp_E_theory(T)))
+title('mean_E')
+
+figure(2)
+plot(cycles, abs(mean_E2 - exp_E2_theory(T)*ones(len(cycles))))
+title('mean_E2')
+
+figure(3)
+plot(cycles, abs(C_v - C_v_theory(T)*ones(len(cycles))))
+title('C_v')
+
+figure(4)
+plot(cycles, abs(mean_absM - exp_absM_theory(T)*ones(len(cycles))))
+title('mean_absM')
+
+figure(5)
+plot(cycles, abs(mean_M2 - exp_M2_theory(T)*ones(len(cycles))))
+title('mean_M2')
+
+figure(6)
+plot(cycles, abs(chi - chi_theory(T)*ones(len(cycles))))
+title('chi')
 show()
 
 
