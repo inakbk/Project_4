@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     }
     double T = atof(argv[1]);//1.0;
     int L = atoi(argv[2]);//2;
-    int nr_of_cycles = atoi(argv[3]);//10000;//100000;
+    int nr_of_cycles = atoi(argv[3]);//100000;
     int chosen_initial_state = atoi(argv[4]);; //integer; -1 for random state, 0 for L=2 highest energy and 1 for all spins up.
 
 
@@ -31,13 +31,13 @@ int main(int argc, char *argv[])
     // initial state:
     int E = 0; //in unist of J=1
     int M = 0;
-    vec dE = {4, 8}; //w is only used when de>0
+    vec dE = {4, 8}; //w is only used when dE>0
     vec w = exp(-dE/T);
     mat state = 1*ones<mat>(L,L);
     initialState(state, E, M, L, chosen_initial_state);
 
-    state.print();
-    cout << "2" << E << endl;
+//    state.print();
+//    cout << "2 " << E << endl;
 
 //----------------------------------------------------------------
     allMCcycles(state, E, M, T, L, w, nr_of_cycles, chosen_initial_state);
@@ -45,8 +45,8 @@ int main(int argc, char *argv[])
     //cout << "------" << endl;
     //theoreticalValues(T, chosen_initial_state);
 
-    state.print();
-    cout << E << endl;
+//    state.print();
+//    cout << E << endl;
 
     return 0;
 }
