@@ -163,10 +163,6 @@ void theoreticalValues(double T, int chosen_initial_state)
     double exp_M2 = 8*(exp(8./T) + 1)/(cosh(8./T) + 3);
     double chi = (8./T)*(exp(8./T) + 1)/(cosh(8./T) + 3);
 
-//    string filename = "analytical_L" + to_string(L) + "_T" + to_string(int(T)) + "initial" + to_string(chosen_initial_state) + ".txt";
-//    ofstream myfile;
-//    myfile.open(filename);
-    //print to file
     cout << "Here comes theoretical values:" << endl;
     cout << "exp_E: "<< exp_E << endl;
     cout << "exp_E2: " << exp_E2 << endl;

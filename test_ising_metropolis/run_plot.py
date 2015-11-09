@@ -44,13 +44,13 @@ def read_file(filename):
 
 T = 1.0
 L = 2
-max_nr_of_cycles = 1000000
+max_nr_of_cycles = 10000
 initial = 0
 
 #compiling once:
 os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include')
 
-step = 3000
+step = 300
 cycles = linspace(step, max_nr_of_cycles, max_nr_of_cycles/step)
 
 nr_of_accepted_config = zeros(len(cycles))
