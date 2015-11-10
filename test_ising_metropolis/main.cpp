@@ -36,8 +36,8 @@ int main(int argc, char *argv[])
     mat state = 1*ones<mat>(L,L);
     initialState(state, E, M, L, chosen_initial_state);
 
-//    state.print();
-//    cout << "2 " << E << endl;
+    state.print();
+    cout << "2 " << E << endl;
 
 //----------------------------------------------------------------
     allMCcycles(state, E, M, T, L, w, nr_of_cycles, chosen_initial_state);
@@ -45,8 +45,8 @@ int main(int argc, char *argv[])
     //cout << "------" << endl;
     //theoreticalValues(T, chosen_initial_state);
 
-//    state.print();
-//    cout << E << endl;
+    state.print();
+    cout << E << endl;
 
     return 0;
 }

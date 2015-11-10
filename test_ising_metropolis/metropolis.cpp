@@ -50,29 +50,30 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
     int iy=L*random_nr.nextDouble();
 
     //the energy caused by the one chosen spin before flip
-    int e_init = state(iy,ix)*( state(iy,periodic(ix, L, 1)) + state(periodic(iy, L, 1),ix) )
-        + state(iy,periodic(ix,L,1))*( state(iy,periodic(ix, L, 2)) + state(periodic(iy, L, 1),periodic(ix,L,1)) )
-        + state(periodic(iy,L,1),ix)*( state(iy,periodic(ix, L, 2)) + state(periodic(iy, L, 1),periodic(ix,L,1)) );
-    int m_init = state(iy,ix);
+//    int e_init = state(iy,ix)*( state(iy,periodic(ix, L, 1)) + state(periodic(iy, L, 1),ix) )
+//        + state(iy,periodic(ix,L,1))*( state(iy,periodic(ix, L, 2)) + state(periodic(iy, L, 1),periodic(ix,L,1)) )
+//        + state(periodic(iy,L,1),ix)*( state(iy,periodic(ix, L, 2)) + state(periodic(iy, L, 1),periodic(ix,L,1)) );
+//    int m_init = state(iy,ix);
 
     //flipping spin, trial state:
-    mat new_state = state;
-    new_state(iy,ix) = -1*state(iy,ix);
+//    mat new_state = state;
+//    new_state(iy,ix) = -1*state(iy,ix);
 
     //the energy caused by the one chosen spin if flip accepted
-    int e_new = new_state(iy,ix)*( new_state(iy,periodic(ix, L, 1)) + new_state(periodic(iy, L, 1),ix) )
-        + new_state(iy,periodic(ix,L,1))*( new_state(iy,periodic(ix, L, 2)) + new_state(periodic(iy, L, 1),periodic(ix,L,1)) )
-        + new_state(periodic(iy,L,1),ix)*( new_state(iy,periodic(ix, L, 2)) + new_state(periodic(iy, L, 1),periodic(ix,L,1)) );
-    int m_new = new_state(iy,ix);
+//    int e_new = new_state(iy,ix)*( new_state(iy,periodic(ix, L, 1)) + new_state(periodic(iy, L, 1),ix) )
+//        + new_state(iy,periodic(ix,L,1))*( new_state(iy,periodic(ix, L, 2)) + new_state(periodic(iy, L, 1),periodic(ix,L,1)) )
+//        + new_state(periodic(iy,L,1),ix)*( new_state(iy,periodic(ix, L, 2)) + new_state(periodic(iy, L, 1),periodic(ix,L,1)) );
+//    int m_new = new_state(iy,ix);
 
     //computing diff. in energy and deciding to change spin or not
-    int dE = e_init - e_new;
+    int dE = 2*state(iy,ix)*( state(iy, periodic(ix, L, 1)) + state(periodic(iy, L, 1), ix)
+                            + state(iy, periodic(ix, L, -1)) + state(periodic(iy, L, -1), ix) );  //e_init - e_new;    2*s_l^1
     //cout << "dE: " << dE << endl;
     if(dE<=0)
     {
-        state = new_state;
+        state(iy,ix) = -1*state(iy,ix);
         E = E + dE;
-        M = M - m_init + m_new;
+        M = M + -2*state(iy,ix);
         ++number_of_accepted_cycles;
     }
     if(dE>0)
@@ -81,11 +82,11 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
         double r = random_nr.nextDouble();
         if(r<=w[(dE-4)/4])
         {
-            state = new_state;
+            state(iy,ix) = -1*state(iy,ix);
             E = E + dE;
-            M = M - m_init + m_new;
+            M = M + -2*state(iy,ix);
             ++number_of_accepted_cycles;
-            //cout << "Hello, unlikely state chosen. dE:" << dE << " w: " << w[(dE-4)/4] << endl;
+            cout << "Hello, unlikely state chosen. dE:" << dE << " w: " << w[(dE-4)/4] << endl;
         }
     }
 }
