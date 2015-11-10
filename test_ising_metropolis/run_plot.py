@@ -44,13 +44,13 @@ def read_file(filename):
 
 T = 1.0
 L = 2
-max_nr_of_cycles = 10000
+max_nr_of_cycles = 1000000
 initial = -1
 
 #compiling once:
 os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
 
-step = 300
+step = 3000
 cycles = linspace(step, max_nr_of_cycles, max_nr_of_cycles/step)
 
 nr_of_accepted_config = zeros(len(cycles))
@@ -66,7 +66,7 @@ for i in range(len(cycles)):
     filename = 'metropolis_L%s_T%s_initial%s_MC%s.txt' %(L, int(T), initial, int(cycles[i]))
     nr_of_accepted_config[i], mean_E[i], mean_E2[i], C_v[i], mean_absM[i], mean_M2[i], chi[i] = read_file(filename)
 
-"""
+
 figure(1)
 plot(cycles, mean_E)
 hold('on')
@@ -128,7 +128,7 @@ title('mean_M2')
 figure(6)
 plot(cycles, abs(chi - chi_theory(T)*ones(len(cycles))))
 title('chi')
-
+"""
 
 show()
 

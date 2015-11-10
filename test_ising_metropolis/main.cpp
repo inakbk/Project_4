@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     int E = 0; //in unist of J=1
     int M = 0;
     mat state = 1*ones<mat>(L,L);
-    Random random_init_nr(-4);
+    Random random_init_nr(-6); //-1, -2, -3, -4 reserved for MPI (4 cores), -5 in use in allMCcycles
     initialState(random_init_nr, state, E, M, L, chosen_initial_state);
 
     state.print();
@@ -51,18 +51,3 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-
-
-
-
-//ofstream myfile;
-//string filename = "EigenValVecSolver_" + FileName + "_pMax" + to_string(index) + "_nStep" + to_string(n_step) + ".txt";
-//myfile.open (filename);
-//myfile << "Equations solved with the " << FileName << " algorithm." << endl;
-//myfile << "Dimention of matrix + 1, n_step = " << n_step << endl;
-//myfile << "Index of p_max: " << index << endl;
-//myfile << "Execution time: " << time << endl;
-
-//myfile << "Number of iterations for jacobi algoritm: " << number_of_iterations << endl;
-
-//myfile.close();
