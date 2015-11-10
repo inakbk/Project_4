@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void initialState(mat &state, int &E, int &M, int &L, int chosen_initial_state)
+void initialState(Random &random_init_nr, mat &state, int &E, int &M, int &L, int chosen_initial_state)
 {
     if(abs(chosen_initial_state) > 1)
     {
@@ -26,8 +26,14 @@ void initialState(mat &state, int &E, int &M, int &L, int chosen_initial_state)
     //random state:
     if(chosen_initial_state == -1)
     {
-        //create random state
-        cout << "Code to generate random state not ready!" << endl;
+        for(int i=0; i<L;++i)
+        {
+            for(int j=0; j<L; ++j)
+            {
+
+                state(i,j) = int(L*random_init_nr.nextDouble());
+            }
+        }
     }
 
     //energy and magnetization of initial state:
@@ -39,8 +45,8 @@ void initialState(mat &state, int &E, int &M, int &L, int chosen_initial_state)
             M += state(i,j);
         }
     }
-//    state.print();
-//    cout << E << endl;
+    state.print();
+    cout << E << endl;
 }
 
 void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec w, int &number_of_accepted_cycles)
@@ -86,7 +92,7 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
             E = E + dE;
             M = M + -2*state(iy,ix);
             ++number_of_accepted_cycles;
-            cout << "Hello, unlikely state chosen. dE:" << dE << " w: " << w[(dE-4)/4] << endl;
+            //cout << "Hello, unlikely state chosen. dE:" << dE << " w: " << w[(dE-4)/4] << endl;
         }
     }
 }
@@ -94,7 +100,7 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
 void allMCcycles(mat &state, int &E, int &M, double T, int L, vec w, int maximum_nr_of_cycles, int chosen_initial_state)
 {
     int N = L*L;
-    Random random_nr(-2);
+    Random random_nr(-5);
     double mean_E = 0;
     double mean_E2 = 0;
     double mean_M = 0;

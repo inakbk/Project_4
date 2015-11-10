@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     int chosen_initial_state = atoi(argv[4]);; //integer; -1 for random state, 0 for L=2 highest energy and 1 for all spins up.
 
 
-    //Random random_nr(-2);
+
 //    std::vector<Random*> randoms;
 //    randoms.push_back(new Random(-omp_get_thread_number()));
 //    randoms[omp_get_thread_number()].nextRandom()
@@ -31,15 +31,16 @@ int main(int argc, char *argv[])
     // initial state:
     int E = 0; //in unist of J=1
     int M = 0;
-    vec dE = {4, 8}; //w is only used when dE>0
-    vec w = exp(-dE/T);
     mat state = 1*ones<mat>(L,L);
-    initialState(state, E, M, L, chosen_initial_state);
+    Random random_init_nr(-4);
+    initialState(random_init_nr, state, E, M, L, chosen_initial_state);
 
     state.print();
-    cout << "2 " << E << endl;
+    cout << "after initializing " << E << endl;
 
 //----------------------------------------------------------------
+    vec dE = {4, 8}; //w is only used when dE>0
+    vec w = exp(-dE/T);
     allMCcycles(state, E, M, T, L, w, nr_of_cycles, chosen_initial_state);
 
     //cout << "------" << endl;

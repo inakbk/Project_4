@@ -10,7 +10,7 @@ using namespace arma;
 inline int periodic(int i, int limit, int add)
 { return (i+limit+add) % (limit);}
 
-void initialState(mat &initial_state, int &energy, int &magnetization, int &L, int chosen_initial_state);
+void initialState(Random &random_init_nr, mat &initial_state, int &energy, int &magnetization, int &L, int chosen_initial_state);
 
 void oneFlip(Random &random_nr, mat &spin_state, int &energy, int &magnetization, double T, int L, vec w, int &number_of_accepted_cycles);
 
