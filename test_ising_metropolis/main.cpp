@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
     int nr_of_cycles = atoi(argv[3]);//100000;
     int chosen_initial_state = atoi(argv[4]);; //integer; -1 for random state, 0 for L=2 highest energy and 1 for all spins up.
 
+    cout << chosen_initial_state << endl;
 //    std::vector<Random*> randoms;
 //    randoms.push_back(new Random(-omp_get_thread_number()));
 //    randoms[omp_get_thread_number()].nextRandom()

@@ -33,7 +33,7 @@ void initialState(Random &random_init_nr, mat &state, int &E, int &M, int &L, in
                 if(random_init_nr.nextDouble() < 0.5) // changing elements randomly, same prob. to be < og > 0.5?
                 {
                     state(i,j) = -1;
-                    cout << "hello!!! random elem. (" << i << ", " << j << ")" << endl;
+                    //cout << "hello!!! random elem. (" << i << ", " << j << ")" << endl;
                 }
             }
         }
@@ -48,8 +48,8 @@ void initialState(Random &random_init_nr, mat &state, int &E, int &M, int &L, in
             M += state(i,j);
         }
     }
-//    state.print();
-//    cout << E << endl;
+    state.print();
+    cout << M << endl;
 }
 
 void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec w, int &number_of_accepted_cycles)
@@ -65,8 +65,10 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
     if(dE<=0) //could also have let the positive values go to the metropolis test as exp(-dE/T) > r when dE<=0, then we would not need this if test
     {
         state(iy,ix) = -1*state(iy,ix);
-        E = E + dE;
-        M = M + -2*state(iy,ix);
+        E += dE;
+        //cout << M << endl;
+        M = -2*state(iy,ix);
+        //cout << M << endl;
         ++number_of_accepted_cycles;
     }
     if(dE>0)
@@ -77,7 +79,9 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
         {
             state(iy,ix) = -1*state(iy,ix);
             E += dE;
-            M += -2*state(iy,ix);
+            cout << "M before: " << M << endl;
+            M = -2*state(iy,ix);
+            cout << "M after: " << M << endl;
             ++number_of_accepted_cycles;
             //cout << "Hello, unlikely state chosen. dE:" << dE << " w: " << w[(dE-4)/4] << endl;
         }
@@ -116,9 +120,11 @@ void allMCcycles(mat &state, int &E, int &M, double T, int L, vec w, int maximum
     mean_E2 = mean_E2/maximum_nr_of_cycles;
     C_v = (mean_E2 - mean_E*mean_E)/(T*T); // divide by N also?
 
-    mean_absM = mean_absM/maximum_nr_of_cycles;
+    mean_absM = mean_absM/maximum_nr_of_cycles/N;
+    //cout << mean_absM << endl;
+
     //mean_M = mean_M/maximum_nr_of_cycles;
-    mean_M2 = mean_M2/maximum_nr_of_cycles;
+    mean_M2 = mean_M2/maximum_nr_of_cycles/N;
     chi = (mean_M2 - mean_absM*mean_absM)/T; // divide by N also?
 
 //----------------------------------------------------------------
@@ -131,7 +137,7 @@ void allMCcycles(mat &state, int &E, int &M, double T, int L, vec w, int maximum
     myfile << "mean_E= "<< mean_E << endl;
     myfile << "mean_E2= " << mean_E2 << endl;
     myfile << "C_V= " << C_v << endl;
-    myfile << "----" << endl;
+
     myfile << "mean_absM= " << mean_absM << endl;
     myfile << "mean_M2= " << mean_M2 << endl;
     myfile << "chi= " << chi << endl;
@@ -146,7 +152,7 @@ void theoreticalValues(double T, int chosen_initial_state)
     double C_v = ( 64./(T*T) )*( 1 + 3*cosh(8./T) )/( (cosh(8./T) + 3)*(cosh(8./T) + 3) );
     double exp_absM = 2*(exp(8./T) + 2)/(cosh(8./T) + 3);
     double exp_M2 = 8*(exp(8./T) + 1)/(cosh(8./T) + 3);
-    double chi = (8./T)*(exp(8./T) + 1)/(cosh(8./T) + 3);
+    double chi = 0;// (8./T)*(exp(8./T) + 1)/(cosh(8./T) + 3); this is wrong
 
     cout << "Here comes theoretical values:" << endl;
     cout << "exp_E: "<< exp_E << endl;
