@@ -66,9 +66,9 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
     {
         state(iy,ix) = -1*state(iy,ix);
         E += dE;
-        //cout << M << endl;
+        //cout << "M before: " << M << endl;
         M += 2*state(iy,ix);
-        //cout << M << endl;
+        cout << "M after: " << M << endl;
         ++number_of_accepted_cycles;
     }
     if(dE>0)
@@ -79,7 +79,7 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
         {
             state(iy,ix) = -1*state(iy,ix);
             E += dE;
-            cout << "M before: " << M << endl;
+            //cout << "M before: " << M << endl;
             M += 2*state(iy,ix);
             cout << "M after: " << M << endl;
             ++number_of_accepted_cycles;
