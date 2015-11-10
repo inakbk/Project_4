@@ -16,12 +16,11 @@ int main(int argc, char *argv[])
         cout << "Eks: >> ./main 1 2 10000" << endl;
         exit(1);
     }
+
     double T = atof(argv[1]);//1.0;
     int L = atoi(argv[2]);//2;
     int nr_of_cycles = atoi(argv[3]);//100000;
     int chosen_initial_state = atoi(argv[4]);; //integer; -1 for random state, 0 for L=2 highest energy and 1 for all spins up.
-
-
 
 //    std::vector<Random*> randoms;
 //    randoms.push_back(new Random(-omp_get_thread_number()));
