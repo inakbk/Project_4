@@ -62,7 +62,7 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
     int dE = 2*state(iy,ix)*( state(iy, periodic(ix, L, 1)) + state(periodic(iy, L, 1), ix)
                             + state(iy, periodic(ix, L, -1)) + state(periodic(iy, L, -1), ix) );  //e_init - e_new;    2*s_l^1
     //cout << "dE: " << dE << endl;
-    if(dE<=0)
+    if(dE<=0) //could also have let the positive values go to the metropolis test as exp(-dE/T) > r when dE<=0
     {
         state(iy,ix) = -1*state(iy,ix);
         E = E + dE;
@@ -71,13 +71,13 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
     }
     if(dE>0)
     {
-        //double w = exp(-dE/T); //w[(dE-4)/4]
+        //metropolis test
         double r = random_nr.nextDouble();
         if(r<=w[(dE-4)/4])
         {
             state(iy,ix) = -1*state(iy,ix);
-            E = E + dE;
-            M = M + -2*state(iy,ix);
+            E += dE;
+            M += -2*state(iy,ix);
             ++number_of_accepted_cycles;
             //cout << "Hello, unlikely state chosen. dE:" << dE << " w: " << w[(dE-4)/4] << endl;
         }
