@@ -139,6 +139,205 @@ Z = \sum_{i=1}^M e^{-\beta E_i}
 where $M$ is the number of microstates or combinations of spins.
 
 
+\subsection{L=2 analytical values}
+
+$N = L\cdot L = 4$
+
+There is $M= L^N = 2^N = 16$ microstates, or possible combinations and energies of the spin system. So to calculate the partition function we have to find the energies:
+\[
+Z = e^{-\beta E_1} + ... e^{-\beta E_{16}}
+\]
+
+The spin system can be visualized as 16 matrices on the form:
+$\left[ \begin{array}{cc} s(0,0) & s(0,1) \\
+                             	    s(1,0)  & s(1,1) \\
+\end{array} \right]$
+with corresponding energies. 
+
+Periodic boundaryconditions give that every spin has a neighbour. The neighbours of the spin $s(1,1)$ is  $s(0,1)$ twice (above and below) and $s(1,0)$ twice (above and below). To find the energy we have to sum over the nearest neighbours for all the spins in the system. The product $s_ls_k$ of two neighbours should only be calculated once. This is solved if the index of $s_l$ is fixed while $s_k$ has one higher index in each direction at a time:
+
+\begin{align}
+E &= -J\bigg( s(0,0)\cdot \big[s(1,0) + s(0,1) \big] + s(0,1)\cdot\big[s(1,1) + s(0,0) \big] \nonumber   \\ 
+ &+ s(1,0)\cdot\big[s(0,0) + s(1,1) \big] + s(1,1)\cdot\big[s(0,1) + s(1,0) \big] \bigg)
+ \label{eq: energy spins}
+\end{align}
+
+The 16 states with corresponding energies calculated with equation \ref{eq: energy spins} is then: \\
+\begin{tabular}{cccc}
+$E_1 = 0$ & $E_2 = 0$ & $E_3 = 0$& $E_4 = 0$ \\ 
+$\left[ \begin{array}{cc} 1 & 1 \\
+                             	    -1  & -1 \\
+\end{array} \right]$ & 
+$
+\left[ \begin{array}{cc} 1 & -1 \\
+                             	    1  & -1 \\
+\end{array} \right]$ &
+$
+\left[ \begin{array}{cc} -1 & 1 \\
+                             	    -1  & 1 \\
+\end{array} \right]$ & 
+$
+\left[ \begin{array}{cc} -1 & -1 \\
+                             	    1  & 1 \\
+\end{array} \right] $ \\
+$E_5 = 0$ & $E_6 = 0$ & $E_7 = 0$& $E_8 = 0$ \\ 
+$
+\left[ \begin{array}{cc} 1 & 1 \\
+                             	    1  & -1 \\
+\end{array} \right]$ &
+$
+\left[ \begin{array}{cc} 1 & 1 \\
+                             	    -1  & 1 \\
+\end{array} \right]$ &
+$
+\left[ \begin{array}{cc} 1 & -1 \\
+                             	    1  & 1 \\
+\end{array} \right]$ &
+$
+\left[ \begin{array}{cc} -1 & 1 \\
+                             	    1  & 1 \\
+\end{array} \right]$ \\
+$E_9 = 0$ & $E_{10} = 0$ & $E_{11} = 0$& $E_{12} = 0$ \\ 
+$
+\left[ \begin{array}{cc} -1 & -1 \\
+                             	    -1  & 1 \\
+\end{array} \right]$ &
+$
+\left[ \begin{array}{cc} -1 & -1 \\
+                             	    1  & -1 \\
+\end{array} \right]$ &
+$
+\left[ \begin{array}{cc} 1 & -1 \\
+                             	    -1  & -1 \\
+\end{array} \right]$ &
+$
+\left[ \begin{array}{cc} -1 & 1 \\
+                             	    -1  & -1 \\
+\end{array} \right]$ \\
+$E_{13} = 8J$ & $E_{14} = 8J$ & $E_{15} = -8J$& $E_{16} = -8J$ \\ 
+$
+\left[ \begin{array}{cc} 1 & -1 \\
+                             	    -1  & 1 \\
+\end{array} \right]$ &
+$
+\left[ \begin{array}{cc} -1 & 1 \\
+                             	    1  & -1 \\
+\end{array} \right]$ &
+$
+\left[ \begin{array}{cc} -1 & -1 \\
+                             	    -1  & 1 \\
+\end{array} \right]$ &
+$
+\left[ \begin{array}{cc} 1 & 1 \\
+                             	    1  & 1 \\
+\end{array} \right]$
+\end{tabular}
+\\
+We then see that there is only three possible values for the energies, $E \in \{-8J, 0, 8J\}$ with corresponding multiplicity $\{2, 12, 2\}$. The partition function can then be calculated:
+\begin{align*}
+Z &= 2e^{-\beta (-8J)} + 12e^{-\beta \cdot 0} + 2 e^{-\beta \cdot 8J} = 2(e^{\beta \cdot 8J}  + e^{-\beta \cdot 8J}) + 12 \\
+&= 4\cosh(8J\beta) + 12
+\end{align*}
+using that $\cosh(x) = \frac{1}{2}(e^{-x} + e^x)$.
+
+Now that we have the partition function various expectation variables can be calculated. We start with the expectation value for the energy:
+\begin{align*}
+\langle E \rangle &= \frac{1}{Z} \sum_{i=1}^M E_ie^{-\beta E_i} = \frac{1}{Z} \big[ 2\cdot (-8J)e^{8J\beta} + 0 + 2\cdot 8Je^{-8J\beta}\big] = \frac{1}{Z} \big[-16Je^{8J\beta} + 16Je^{-8J\beta}\big] \\
+&= -\frac{16J}{Z}\big[-e{-8J\beta} + e^{8J\beta}\big] = -\frac{32J}{Z}\sinh(8J\beta) = -\frac{8J\sinh(8J\beta)}{\cosh(8J\beta) + 3}
+\end{align*}
+using that $\sinh(x) = \frac{1}{2}(-e^{-x} + e^x)$. We will now calculate the heat capacity 
+\[
+C_v = \frac{1}{k_bT}\big(\langle E^2 \rangle - \langle E \rangle^2\big)
+\]
+where
+\begin{align*}
+\langle E^2 \rangle &= \frac{1}{Z} \sum_{i=1}^M E_i^2 e^{-\beta E_i} = \frac{1}{Z} \big[ 2\cdot (-8J)^2 e^{8J\beta} + 0 + 2\cdot (8J)^2 e^{-8J\beta}\big] = \frac{128J^2}{Z} \big[ e^{8J\beta} + e^{-8J\beta}\big] \\
+&= \frac{128J^2 \cdot 2\cosh(8J\beta)}{4\cosh(8J\beta) + 12} =  \frac{64J^2 \cosh(8J\beta)}{\cosh(8J\beta) + 3}
+\end{align*}
+so that 
+\begin{align*}
+C_v &= \frac{1}{k_bT}\bigg[ \frac{64J^2 \cosh(8J\beta)}{\cosh(8J\beta) + 3} - \bigg(  -\frac{8J\sinh(8J\beta)}{\cosh(8J\beta) + 3} \bigg)^2 \bigg] = \frac{1}{k_bT}\bigg[ \frac{64J^2 \cosh(8J\beta)}{\cosh(8J\beta) + 3} - \frac{64J^2 \sinh^2(8J\beta)}{(\cosh(8J\beta) + 3)^2} \bigg] \\
+&= \frac{64J^2}{k_bT}\bigg[ \frac{ \cosh(8J\beta)(\cosh(8J\beta) + 3)-  \sinh^2(8J\beta)}{(\cosh(8J\beta) + 3)^2} \bigg] = \frac{64J^2}{k_bT}\bigg[ \frac{\cosh^2(8J\beta) + 3\cosh^2(8J\beta) - \sinh^2(8J\beta)}{(\cosh(8J\beta) + 3)^2} \bigg] \\
+&= \frac{64J^2\beta}{T} \bigg[\frac{1 + 3\cosh(8J\beta)}{(\cosh(8J\beta) + 3)^2} \bigg]
+\end{align*}
+
+The magnetization is given by:
+\[
+\mathcal{M} = \sum_{i=1}^M s
+\]
+we quicly see that there are only 5 possible values for the magnetization, $\mathcal{M} \in \{-4, -2, 0, 2, 4\}$. The information on multiplicity for a given energy and magnetization is given in table \ref{tab: multiplic}.
+
+\begin{tabular}{|c|c|c|c|}
+\hline 
+\# spins up & Multiplicy & Energy & Magnetization \\ 
+\hline 
+4 & 1 & -8J & 4 \\ 
+\hline 
+3 & 4 & 0 & 2 \\ 
+\hline 
+2 & 4 & 0 & 0 \\ 
+\hline 
+2 & 2 & 8J & 0 \\ 
+\hline 
+1 & 4 & 0 & -2 \\ 
+\hline 
+0 & 1 & -8J & -4 \\ 
+\hline 
+\end{tabular} \label{tab: multiplic}
+( abs val table? in \ref{tab: multiplic2})
+\\
+\\
+\begin{tabular}{|c|c|c|}
+\hline 
+abs Magnetization & Energy &  Multiplicy\\ 
+\hline 
+4 & -8J & 2 \\ 
+\hline 
+2 & 0 & 8 \\ 
+\hline 
+0 & 0 & 4 \\ 
+\hline 
+0 & 8J & 2 \\ 
+\hline 
+\end{tabular} \label{tab: multiplic2}
+
+The expectation value of the magetization is then:
+\begin{align*}
+\langle |\mathcal{M}| \rangle
+\end{align*}
+absolute value???
+
+We then want to calculate the suceptibility
+\[
+\chi = \frac{1}{k_bT}\big( \langle \mathcal{M}^2 \rangle - \langle \mathcal{M} \rangle^2 \big)
+\]
+where 
+\begin{align*}
+\langle \mathcal{M}^2 \rangle &= \sum_{i=1}^M \mathcal{M}^2 \frac{1}{Z}e^{-\beta E_i} = \frac{1}{Z}\big( 2\cdot 4^2 e^{-\beta (-8J)} + 8\cdot 2^2e^0 + 0 + 0 \big) = \frac{32}{Z}\big( e^{8J\beta} + 1 \big) \\
+&= \frac{8\big(e^{8J\beta} + 1\big)}{\cosh(8J\beta) + 3}
+\end{align*}
+so that 
+\begin{align*}
+\chi = \frac{1}{k_bT}\big( \langle \mathcal{M}^2 \rangle - \langle \mathcal{M} \rangle^2 \big) = 
+\end{align*}
+wat? abs value or not?
+
+\subsection{Units, scaled unitless parameters}
+Introducing: 
+\begin{align*}
+T' = T \frac{k_b}{J} \Rightarrow T = T'\frac{J}{k_b}\\
+\beta = \frac{1}{k_bT} = \frac{1}{k_b\cdot T'\frac{J}{k_b}} = \frac{1}{T'J}
+\end{align*}
+
+We then set $J=1$ so that:
+\[
+\beta = \frac{1}{T'}
+\]
+
+where $T'$ is the unitless parameter that will be used in the calculations (do with $C_v'$ also and so on ??)
+
+\subsection{Coding dE  and w efficiently}
+
 
 \section{"Experiment"}
 \subsection{Testing the implementation og model and algorithm}
