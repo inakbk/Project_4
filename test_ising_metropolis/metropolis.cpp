@@ -67,7 +67,7 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
         state(iy,ix) = -1*state(iy,ix);
         E += dE;
         //cout << M << endl;
-        M = -2*state(iy,ix);
+        M += 2*state(iy,ix);
         //cout << M << endl;
         ++number_of_accepted_cycles;
     }
@@ -80,7 +80,7 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
             state(iy,ix) = -1*state(iy,ix);
             E += dE;
             cout << "M before: " << M << endl;
-            M = -2*state(iy,ix);
+            M += 2*state(iy,ix);
             cout << "M after: " << M << endl;
             ++number_of_accepted_cycles;
             //cout << "Hello, unlikely state chosen. dE:" << dE << " w: " << w[(dE-4)/4] << endl;
@@ -120,11 +120,11 @@ void allMCcycles(mat &state, int &E, int &M, double T, int L, vec w, int maximum
     mean_E2 = mean_E2/maximum_nr_of_cycles;
     C_v = (mean_E2 - mean_E*mean_E)/(T*T); // divide by N also?
 
-    mean_absM = mean_absM/maximum_nr_of_cycles/N;
+    mean_absM = mean_absM/maximum_nr_of_cycles;
     //cout << mean_absM << endl;
 
     //mean_M = mean_M/maximum_nr_of_cycles;
-    mean_M2 = mean_M2/maximum_nr_of_cycles/N;
+    mean_M2 = mean_M2/maximum_nr_of_cycles;
     chi = (mean_M2 - mean_absM*mean_absM)/T; // divide by N also?
 
 //----------------------------------------------------------------
