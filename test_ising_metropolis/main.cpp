@@ -46,8 +46,8 @@ int main(int argc, char *argv[])
     //cout << "------" << endl;
     //theoreticalValues(T, chosen_initial_state);
 
-    state.print();
-    cout << E << endl;
+//    state.print();
+//    cout << E << endl;
 
     return 0;
 }

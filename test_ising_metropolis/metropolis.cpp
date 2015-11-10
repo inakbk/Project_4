@@ -30,8 +30,11 @@ void initialState(Random &random_init_nr, mat &state, int &E, int &M, int &L, in
         {
             for(int j=0; j<L; ++j)
             {
-
-                state(i,j) = int(L*random_init_nr.nextDouble());
+                if(random_init_nr.nextDouble() < 0.5) // changing elements randomly, same prob. to be < og > 0.5?
+                {
+                    state(i,j) = -1;
+                    cout << "hello!!! random (" << i << ", " << j << ")" << endl;
+                }
             }
         }
     }
@@ -45,8 +48,8 @@ void initialState(Random &random_init_nr, mat &state, int &E, int &M, int &L, in
             M += state(i,j);
         }
     }
-    state.print();
-    cout << E << endl;
+//    state.print();
+//    cout << E << endl;
 }
 
 void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec w, int &number_of_accepted_cycles)
@@ -54,22 +57,6 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
     //finding index of one random spin
     int ix=L*random_nr.nextDouble();
     int iy=L*random_nr.nextDouble();
-
-    //the energy caused by the one chosen spin before flip
-//    int e_init = state(iy,ix)*( state(iy,periodic(ix, L, 1)) + state(periodic(iy, L, 1),ix) )
-//        + state(iy,periodic(ix,L,1))*( state(iy,periodic(ix, L, 2)) + state(periodic(iy, L, 1),periodic(ix,L,1)) )
-//        + state(periodic(iy,L,1),ix)*( state(iy,periodic(ix, L, 2)) + state(periodic(iy, L, 1),periodic(ix,L,1)) );
-//    int m_init = state(iy,ix);
-
-    //flipping spin, trial state:
-//    mat new_state = state;
-//    new_state(iy,ix) = -1*state(iy,ix);
-
-    //the energy caused by the one chosen spin if flip accepted
-//    int e_new = new_state(iy,ix)*( new_state(iy,periodic(ix, L, 1)) + new_state(periodic(iy, L, 1),ix) )
-//        + new_state(iy,periodic(ix,L,1))*( new_state(iy,periodic(ix, L, 2)) + new_state(periodic(iy, L, 1),periodic(ix,L,1)) )
-//        + new_state(periodic(iy,L,1),ix)*( new_state(iy,periodic(ix, L, 2)) + new_state(periodic(iy, L, 1),periodic(ix,L,1)) );
-//    int m_new = new_state(iy,ix);
 
     //computing diff. in energy and deciding to change spin or not
     int dE = 2*state(iy,ix)*( state(iy, periodic(ix, L, 1)) + state(periodic(iy, L, 1), ix)
