@@ -48,7 +48,7 @@ max_nr_of_cycles = 10000
 initial = 0
 
 #compiling once:
-os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include')
+os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
 
 step = 300
 cycles = linspace(step, max_nr_of_cycles, max_nr_of_cycles/step)

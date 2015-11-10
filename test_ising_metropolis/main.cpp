@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     if(argc < 5)
     {
         cout << "Not enough command line arguments given. "
-                "Give 3, in the following order: T, L, number_of_cycles, on command line." << endl;
+                "Give 3, in the following order: T, L, number_of_cycles, chosen_initial_state, on command line. (chosen_initial_state takes the values -1, 0, 1)" << endl;
         cout << "Eks: >> ./main 1 2 10000" << endl;
         exit(1);
     }
