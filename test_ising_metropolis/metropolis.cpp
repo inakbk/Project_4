@@ -62,7 +62,7 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
     int dE = 2*state(iy,ix)*( state(iy, periodic(ix, L, 1)) + state(periodic(iy, L, 1), ix)
                             + state(iy, periodic(ix, L, -1)) + state(periodic(iy, L, -1), ix) );  //e_init - e_new;    2*s_l^1
     //cout << "dE: " << dE << endl;
-    if(dE<=0) //could also have let the positive values go to the metropolis test as exp(-dE/T) > r when dE<=0
+    if(dE<=0) //could also have let the positive values go to the metropolis test as exp(-dE/T) > r when dE<=0, then we would not need this if test
     {
         state(iy,ix) = -1*state(iy,ix);
         E = E + dE;
@@ -101,23 +101,20 @@ void allMCcycles(mat &state, int &E, int &M, double T, int L, vec w, int maximum
     ofstream myfile;
     myfile.open(filename);
 
-    for(int i=0; i<maximum_nr_of_cycles;++i)
+    for(int i=1; i<=maximum_nr_of_cycles;++i)
     {
         //one MC cycle:
         for(int n=0; n<N; ++n)
         {
             oneFlip(random_nr, state, E, M, T, L, w, number_of_accepted_cycles);
-
         }
 
         mean_E += E;
         mean_E2 += E*E;
-        mean_absM += abs(M);
+        mean_absM += fabs(M);
         mean_M += M;
         mean_M2 += M*M;
         //print E and stuff to file here
-
-
     }
 
     //calculating mean values:
@@ -131,8 +128,6 @@ void allMCcycles(mat &state, int &E, int &M, double T, int L, vec w, int maximum
     chi = (mean_M2 - mean_M*mean_M)/T; // in units of
 
     //print mean_E and mean_E2 and stuff to file here
-
-
 
 //----------------------------------------------------------------
     myfile << "nr_of_accepted_cycles= " << number_of_accepted_cycles << endl;
