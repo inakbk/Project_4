@@ -34,8 +34,8 @@ int main(int argc, char *argv[])
     Random random_init_nr(-6); //-1, -2, -3, -4 reserved for MPI (4 cores), -5 in use in allMCcycles
     initialState(random_init_nr, state, E, M, L, chosen_initial_state);
 
-    state.print();
-    cout << "after initializing " << E << endl;
+//    state.print();
+//    cout << "after initializing " << E << endl;
 
 //----------------------------------------------------------------
     vec dE = {4, 8}; //w is only used when dE>0
