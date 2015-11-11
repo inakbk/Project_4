@@ -100,6 +100,10 @@ void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L,
     ofstream myfile;
     myfile.open(filename);
 
+    string filename2 = "metropolis_energies_L" + to_string(L) + "_Tcount" + to_string(Tcount) + "_initial" + to_string(chosen_initial_state) + "_MC" + to_string(maximum_nr_of_cycles) + ".txt";
+    ofstream myfile2;
+    myfile2.open(filename2);
+
     for(int i=1; i<=maximum_nr_of_cycles;++i)
     {
         //one MC cycle:
@@ -127,9 +131,15 @@ void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L,
         myfile << "chi= " << ( mean_M2*norm - (mean_absM*norm)*(mean_absM*norm) )/T/N << endl;
         myfile << "T= " << T << endl;
         myfile << "--------------" << endl;
-    }
 
+        //starting counting at 500, equilibrium, saving energies
+        if(i >= 500)
+        {
+            myfile2 << "E= " << E << endl;
+        }
+    }
     myfile.close();
+    myfile2.close();
 }
 
 void theoreticalValues(double T, int chosen_initial_state)
