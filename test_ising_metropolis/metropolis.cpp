@@ -116,13 +116,13 @@ void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L,
         myfile << "nr_of_cycles= " << i << endl;
         myfile << "nr_of_accepted_cycles= " << number_of_accepted_cycles << endl;
 
-        myfile << "mean_E= "<< mean_E*norm << endl;
-        myfile << "mean_E2= " << mean_E2*norm << endl;
-        myfile << "C_V= " << ( mean_E2*norm - (mean_E*norm)*(mean_E*norm) )/(T*T) << endl;
+        myfile << "mean_E= "<< mean_E*norm/N << endl;
+        myfile << "mean_E2= " << mean_E2*norm/N << endl;
+        myfile << "C_V= " << ( mean_E2*norm - (mean_E*norm)*(mean_E*norm) )/(T*T)/N << endl;
 
-        myfile << "mean_absM= " << mean_absM*norm << endl;
-        myfile << "mean_M2= " << mean_M2*norm << endl;
-        myfile << "chi= " << ( mean_M2*norm - (mean_absM*norm)*(mean_absM*norm) )/T << endl;
+        myfile << "mean_absM= " << mean_absM*norm/N << endl;
+        myfile << "mean_M2= " << mean_M2*norm/N << endl;
+        myfile << "chi= " << ( mean_M2*norm - (mean_absM*norm)*(mean_absM*norm) )/T/N << endl;
         myfile << "T= " << T << endl;
         myfile << "--------------" << endl;
     }

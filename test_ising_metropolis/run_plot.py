@@ -5,23 +5,23 @@ import os as os
 ------------------------------------------------------------------------------------------
 """
 def exp_E_theory(T, N):
-    return -8.*sinh(8./T)/(cosh(8./T) + 3)
+    return -8.*sinh(8./T)/(cosh(8./T) + 3)/N
 
 def exp_E2_theory(T, N):
-    return 64.*cosh(8./T)/(cosh(8./T) + 3)
+    return 64.*cosh(8./T)/(cosh(8./T) + 3)/N
 
 def C_v_theory(T, N):
-    return ( 64./(T*T) )*( 1 + 3*cosh(8./T) )/( (cosh(8./T) + 3)*(cosh(8./T) + 3) )
+    return ( 64./(T*T) )*( 1 + 3*cosh(8./T) )/( (cosh(8./T) + 3)*(cosh(8./T) + 3) )/N
 
 def exp_absM_theory(T, N):
-    return 2.*(exp(8./T) + 2)/(cosh(8./T) + 3)
+    return 2.*(exp(8./T) + 2)/(cosh(8./T) + 3)/N
 
 def exp_M2_theory(T, N):
-    return 8*(exp(8./T) + 1)/(cosh(8./T) + 3)
+    return 8*(exp(8./T) + 1)/(cosh(8./T) + 3)/N
 
 def chi_theory(T, N):
     #return (8./T)*(exp(8./T) + 1)/(cosh(8./T) + 3) #this one is only working for small L
-    return (4./T)*( ( 2*(exp(8./T) + 1)*(cosh(8./T) + 3) - (exp(8./T) + 2)**2 )/( cosh(8./T) + 3 )**2 )
+    return (4./T)*( ( 2*(exp(8./T) + 1)*(cosh(8./T) + 3) - (exp(8./T) + 2)**2 )/( cosh(8./T) + 3 )**2 )/N
 
 def read_file(filename):
     infile = open(filename, "r")
@@ -61,7 +61,7 @@ def read_file(filename):
 ------------------------------------------------------------------------------------------
 """
 
-T = linspace(1,9,9) #[1.0]
+T = linspace(1,9,9)
 
 L = 2
 N = L**2
