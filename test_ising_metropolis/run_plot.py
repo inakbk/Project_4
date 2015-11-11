@@ -61,7 +61,7 @@ def read_file(filename):
 ------------------------------------------------------------------------------------------
 """
 
-T = linspace(1,9,9) 
+T = [1.0]#linspace(1,9,9) 
 
 L = 2
 N = L**2
@@ -92,6 +92,7 @@ for i in range(len(T)):
     chi_plot[i] = chi[-1]
 
 #plot against T:
+
 
 figure(1)
 plot(T, mean_E_plot)
@@ -148,9 +149,9 @@ xlabel('T')
 ylabel('chi')
 
 
-
-
 """
+
+
 figure(1)
 plot(T, abs(mean_E_plot - exp_E_theory(T,N)))
 title('error mean_E')
@@ -249,7 +250,6 @@ title('chi')
 legend(['numerical', 'theory'])
 xlabel('MC cycles')
 ylabel('chi')
-
 
 
 
