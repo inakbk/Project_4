@@ -95,7 +95,7 @@ void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L,
     int number_of_accepted_cycles = 0;
 
 
-    cout << Tcount << endl;
+    //cout << Tcount << endl;
     string filename = "metropolis_L" + to_string(L) + "_Tcount" + to_string(Tcount) + "_initial" + to_string(chosen_initial_state) + "_MC" + to_string(maximum_nr_of_cycles) + ".txt";
     ofstream myfile;
     myfile.open(filename);

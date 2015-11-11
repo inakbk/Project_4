@@ -80,7 +80,6 @@ chi_plot = zeros(len(T))
 
 Tcount = 0
 for i in range(len(T)):
-    print Tcount
     os.system('./main %s %s %s %s %s' %(T[i], L, max_nr_of_cycles, initial, Tcount))
     filename = 'metropolis_L%s_Tcount%s_initial%s_MC%s.txt' %(L, Tcount, initial, max_nr_of_cycles)
     cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = read_file(filename)
