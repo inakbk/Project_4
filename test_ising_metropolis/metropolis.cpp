@@ -88,13 +88,13 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
     }
 }
 
-void allMCcycles(mat &state, int &E, int &M, double T, int L, vec w, int maximum_nr_of_cycles, int chosen_initial_state)
+void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec w, int maximum_nr_of_cycles, int chosen_initial_state)
 {
-    int N = L*L;
-    Random random_nr(-5);
+    double N = L*L;
+    // Random random_nr(-5);
     double mean_E = 0;
     double mean_E2 = 0;
-    //double mean_M = 0;
+    double mean_M = 0;
     double mean_absM = 0;
     double mean_M2 = 0;
     double C_v = 0;
@@ -112,20 +112,24 @@ void allMCcycles(mat &state, int &E, int &M, double T, int L, vec w, int maximum
         mean_E += E;
         mean_E2 += E*E;
         mean_absM += fabs(M);
-        //mean_M += M;
+        mean_M += M;
         mean_M2 += M*M;
+
     }
     //calculating mean values (normalizing):
-    mean_E = mean_E/maximum_nr_of_cycles/N;
-    mean_E2 = mean_E2/maximum_nr_of_cycles/N;
-    C_v = (mean_E2 - mean_E*mean_E)/(T*T)/N; // divide by N in theoretical values
+    mean_E = mean_E/maximum_nr_of_cycles;
+    //cout << mean_E << endl;
+    mean_E2 = mean_E2/maximum_nr_of_cycles;
+    C_v = (mean_E2 - mean_E*mean_E)/(T*T); // divide by N in theoretical values
+    //cout << C_v/N << endl;
 
-    mean_absM = mean_absM/maximum_nr_of_cycles/N;
+
+    mean_absM = mean_absM/maximum_nr_of_cycles;
     //cout << mean_absM << endl;
 
-    //mean_M = mean_M/maximum_nr_of_cycles;
-    mean_M2 = mean_M2/maximum_nr_of_cycles/N;
-    chi = (mean_M2 - mean_absM*mean_absM)/T/N;
+    mean_M = mean_M/maximum_nr_of_cycles;
+    mean_M2 = mean_M2/maximum_nr_of_cycles;
+    chi = (mean_M2 - mean_M*mean_M)/T;
 
 //----------------------------------------------------------------
     string filename = "metropolis_L" + to_string(L) + "_T" + to_string(int(T)) + "_initial" + to_string(chosen_initial_state) + "_MC" + to_string(maximum_nr_of_cycles) + ".txt";
@@ -141,6 +145,7 @@ void allMCcycles(mat &state, int &E, int &M, double T, int L, vec w, int maximum
     myfile << "mean_absM= " << mean_absM << endl;
     myfile << "mean_M2= " << mean_M2 << endl;
     myfile << "chi= " << chi << endl;
+    myfile << "T= " << T << endl;
 
     myfile.close();
 }
@@ -150,6 +155,7 @@ void theoreticalValues(double T, int chosen_initial_state)
     double exp_E = -8*sinh(8./T)/(cosh(8./T) + 3);
     double exp_E2 = 64*cosh(8./T)/(cosh(8./T) + 3);
     double C_v = ( 64./(T*T) )*( 1 + 3*cosh(8./T) )/( (cosh(8./T) + 3)*(cosh(8./T) + 3) );
+    cout << C_v/8 << endl;
     double exp_absM = 2*(exp(8./T) + 2)/(cosh(8./T) + 3);
     double exp_M2 = 8*(exp(8./T) + 1)/(cosh(8./T) + 3);
     double chi = 0;// (8./T)*(exp(8./T) + 1)/(cosh(8./T) + 3); this is wrong?

@@ -21,6 +21,8 @@ int main(int argc, char *argv[])
     int L = atoi(argv[2]);//2;
     int nr_of_cycles = atoi(argv[3]);//100000;
     int chosen_initial_state = atoi(argv[4]);; //integer; -1 for random state, 0 for L=2 highest energy and 1 for all spins up.
+    bool production = false;
+    if(argc>=6) production = atoi(argv[5]);
 
 //    cout << chosen_initial_state << endl;
 //    std::vector<Random*> randoms;
@@ -32,8 +34,11 @@ int main(int argc, char *argv[])
     int E = 0; //in unist of J=1
     int M = 0;
     mat state = 1*ones<mat>(L,L);
-    Random random_init_nr(-6); //-1, -2, -3, -4 reserved for MPI (4 cores), -5 in use in allMCcycles
-    initialState(random_init_nr, state, E, M, L, chosen_initial_state);
+    long seed = -1;
+    if(production) seed = -time(NULL); //time in the core in seconds to give new random number each run
+
+    Random random_nr(seed); //-1, -2, -3, -4 reserved for MPI (4 cores), -5 in use in allMCcycles
+    initialState(random_nr, state, E, M, L, chosen_initial_state);
 
 //    state.print();
 //    cout << "after initializing " << E << endl;
@@ -41,7 +46,7 @@ int main(int argc, char *argv[])
 //----------------------------------------------------------------
     vec dE = {4, 8}; //w is only used when dE>0
     vec w = exp(-dE/T);
-    allMCcycles(state, E, M, T, L, w, nr_of_cycles, chosen_initial_state);
+    allMCcycles(random_nr, state, E, M, T, L, w, nr_of_cycles, chosen_initial_state);
 
     //cout << "------" << endl;
     //theoreticalValues(T, chosen_initial_state);
