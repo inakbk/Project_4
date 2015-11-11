@@ -90,12 +90,16 @@ void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L,
     // Random random_nr(-5);
     double mean_E = 0;
     double mean_E2 = 0;
-    double mean_M = 0;
+    //double mean_M = 0;
     double mean_absM = 0;
     double mean_M2 = 0;
-    double C_v = 0;
-    double chi = 0;
+    //double C_v = 0;
+    //double chi = 0;
     int number_of_accepted_cycles = 0;
+
+    string filename = "metropolis_L" + to_string(L) + "_T" + to_string(int(T)) + "_initial" + to_string(chosen_initial_state) + "_MC" + to_string(maximum_nr_of_cycles) + ".txt";
+    ofstream myfile;
+    myfile.open(filename);
 
     for(int i=1; i<=maximum_nr_of_cycles;++i)
     {
@@ -108,34 +112,37 @@ void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L,
         mean_E += E;
         mean_E2 += E*E;
         mean_absM += fabs(M);
-        mean_M += M;
+        //mean_M += M;
         mean_M2 += M*M;
-    }
-    //calculating mean values (normalizing):
-    mean_E = mean_E/maximum_nr_of_cycles;
-    mean_E2 = mean_E2/maximum_nr_of_cycles;
-    C_v = (mean_E2 - mean_E*mean_E)/(T*T); // divide by N in theoretical values
-
-    mean_absM = mean_absM/maximum_nr_of_cycles;
-    mean_M = mean_M/maximum_nr_of_cycles;
-    mean_M2 = mean_M2/maximum_nr_of_cycles;
-    chi = (mean_M2 - mean_absM*mean_absM)/T;
 
 //----------------------------------------------------------------
-    string filename = "metropolis_L" + to_string(L) + "_T" + to_string(int(T)) + "_initial" + to_string(chosen_initial_state) + "_MC" + to_string(maximum_nr_of_cycles) + ".txt";
-    ofstream myfile;
-    myfile.open(filename);
+//        //calculating mean values (normalizing):
+//        mean_E = mean_E/i;
+//        mean_E2 = mean_E2/i;
+//        C_v = (mean_E2 - mean_E*mean_E)/(T*T); // divide by N in theoretical values
 
-    myfile << "nr_of_accepted_cycles= " << number_of_accepted_cycles << endl;
+//        mean_absM = mean_absM/i;
+//        mean_M = mean_M/i;
+//        mean_M2 = mean_M2/i;
+//        chi = (mean_M2 - mean_absM*mean_absM)/T;
 
-    myfile << "mean_E= "<< mean_E << endl;
-    myfile << "mean_E2= " << mean_E2 << endl;
-    myfile << "C_V= " << C_v << endl;
+//----------------------------------------------------------------
+        //normalizing mean values and printing to file
+        double norm = 1./i;
+        //cout << norm << endl;
+        myfile << "nr_of_cycles= " << i << endl;
+        myfile << "nr_of_accepted_cycles= " << number_of_accepted_cycles << endl;
 
-    myfile << "mean_absM= " << mean_absM << endl;
-    myfile << "mean_M2= " << mean_M2 << endl;
-    myfile << "chi= " << chi << endl;
-    myfile << "T= " << T << endl;
+        myfile << "mean_E= "<< mean_E*norm << endl;
+        myfile << "mean_E2= " << mean_E2*norm << endl;
+        myfile << "C_V= " << ( mean_E2*norm - (mean_E*norm)*(mean_E*norm) )/(T*T) << endl;
+
+        myfile << "mean_absM= " << mean_absM*norm << endl;
+        myfile << "mean_M2= " << mean_M2*norm << endl;
+        myfile << "chi= " << ( mean_M2*norm - (mean_absM*norm)*(mean_absM*norm) )/T << endl;
+        myfile << "T= " << T << endl;
+        myfile << "--------------" << endl;
+    }
 
     myfile.close();
 }
