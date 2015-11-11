@@ -74,36 +74,42 @@ plot(T, mean_E)
 hold('on')
 plot(T, exp_E_theory(T,N))
 title('mean_E')
+legend(['numerical', 'theory'])
 
 figure(2)
 plot(T, mean_E2)
 hold('on')
 plot(T, exp_E2_theory(T,N))
 title('mean_E2')
+legend(['numerical', 'theory'])
 
 figure(3)
 plot(T, C_v)
 hold('on')
 plot(T, C_v_theory(T,N))
 title('C_v')
+legend(['numerical', 'theory'])
 
 figure(4)
 plot(T, mean_absM)
 hold('on')
 plot(T, exp_absM_theory(T,N))
 title('mean_absM')
+legend(['numerical', 'theory'])
 
 figure(5)
 plot(T, mean_M2)
 hold('on')
 plot(T, exp_M2_theory(T,N))
 title('mean_M2')
+legend(['numerical', 'theory'])
 
 figure(6)
 plot(T, chi)
 hold('on')
 plot(T, chi_theory(T,N))
 title('chi')
+legend(['numerical', 'theory'])
 
 
 
