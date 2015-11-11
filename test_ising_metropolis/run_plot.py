@@ -20,8 +20,8 @@ def exp_M2_theory(T, N):
     return 8*(exp(8./T) + 1)/(cosh(8./T) + 3)
 
 def chi_theory(T, N):
-    return (8./T)*(exp(8./T) + 1)/(cosh(8./T) + 3)
-    #return (4./T)*( ( 2*(exp(8./T) + 2) - (exp(8./T) + 2)**2 )/( cosh(8./T) + 3 )**2 )/N
+    #return (8./T)*(exp(8./T) + 1)/(cosh(8./T) + 3)
+    return (4./T)*( ( 2*(exp(8./T) + 2)*(cosh(8./T) + 3) - (exp(8./T) + 2)**2 )/( cosh(8./T) + 3 )**2 )
 
 def read_file(filename):
     infile = open(filename, "r")
@@ -47,7 +47,7 @@ T = linspace(1,9,9) #[1.0]
 
 L = 2
 N = L**2
-max_nr_of_cycles = 1000
+max_nr_of_cycles = 50000
 initial = -1
 
 #compiling once:
@@ -78,7 +78,6 @@ legend(['numerical', 'theory'])
 xlabel('T')
 ylabel('exp E')
 
-
 figure(2)
 plot(T, mean_E2)
 hold('on')
@@ -87,7 +86,6 @@ title('mean_E2')
 legend(['numerical', 'theory'])
 xlabel('T')
 ylabel('exp E2')
-
 
 figure(3)
 plot(T, C_v)
@@ -115,7 +113,6 @@ title('mean_M2')
 legend(['numerical', 'theory'])
 xlabel('T')
 ylabel('exp M2')
-
 
 figure(6)
 plot(T, chi)

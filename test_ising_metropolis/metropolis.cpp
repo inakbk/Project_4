@@ -123,13 +123,12 @@ void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L,
     C_v = (mean_E2 - mean_E*mean_E)/(T*T); // divide by N in theoretical values
     //cout << C_v/N << endl;
 
-
     mean_absM = mean_absM/maximum_nr_of_cycles;
     //cout << mean_absM << endl;
 
     mean_M = mean_M/maximum_nr_of_cycles;
     mean_M2 = mean_M2/maximum_nr_of_cycles;
-    chi = (mean_M2 - mean_M*mean_M)/T;
+    chi = (mean_M2 - mean_absM*mean_absM)/T;
 
 //----------------------------------------------------------------
     string filename = "metropolis_L" + to_string(L) + "_T" + to_string(int(T)) + "_initial" + to_string(chosen_initial_state) + "_MC" + to_string(maximum_nr_of_cycles) + ".txt";
