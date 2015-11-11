@@ -84,7 +84,7 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
     }
 }
 
-void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec w, int maximum_nr_of_cycles, int chosen_initial_state)
+void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec w, int maximum_nr_of_cycles, int chosen_initial_state, int Tcount)
 {
     double N = L*L;
     // Random random_nr(-5);
@@ -94,7 +94,9 @@ void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L,
     double mean_M2 = 0;
     int number_of_accepted_cycles = 0;
 
-    string filename = "metropolis_L" + to_string(L) + "_T" + to_string(int(T)) + "_initial" + to_string(chosen_initial_state) + "_MC" + to_string(maximum_nr_of_cycles) + ".txt";
+
+    cout << Tcount << endl;
+    string filename = "metropolis_L" + to_string(L) + "_Tcount" + to_string(Tcount) + "_initial" + to_string(chosen_initial_state) + "_MC" + to_string(maximum_nr_of_cycles) + ".txt";
     ofstream myfile;
     myfile.open(filename);
 
@@ -111,7 +113,7 @@ void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L,
         mean_absM += fabs(M);
         mean_M2 += M*M;
 
-        //normalizing mean values and printing to file
+        //normalizing mean values and printing to file (values per spin, deviding by N)
         double norm = 1./i;
         myfile << "nr_of_cycles= " << i << endl;
         myfile << "nr_of_accepted_cycles= " << number_of_accepted_cycles << endl;

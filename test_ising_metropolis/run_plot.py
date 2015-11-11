@@ -61,7 +61,7 @@ def read_file(filename):
 ------------------------------------------------------------------------------------------
 """
 
-T = linspace(1,9,9)
+T = linspace(1,2.4,10)
 
 L = 2
 N = L**2
@@ -78,11 +78,13 @@ mean_absM_plot = zeros(len(T))
 mean_M2_plot = zeros(len(T))
 chi_plot = zeros(len(T))
 
-
+Tcount = 0
 for i in range(len(T)):
-    os.system('./main %s %s %s %s' %(T[i], L, max_nr_of_cycles, initial))
-    filename = 'metropolis_L%s_T%s_initial%s_MC%s.txt' %(L, int(T[i]), initial, max_nr_of_cycles)
+    print Tcount
+    os.system('./main %s %s %s %s %s' %(T[i], L, max_nr_of_cycles, initial, Tcount))
+    filename = 'metropolis_L%s_Tcount%s_initial%s_MC%s.txt' %(L, Tcount, initial, max_nr_of_cycles)
     cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = read_file(filename)
+    Tcount += 1    
 
     mean_E_plot[i] = mean_E[-1]
     mean_E2_plot[i] = mean_E2[-1]
@@ -92,7 +94,6 @@ for i in range(len(T)):
     chi_plot[i] = chi[-1]
 
 #plot against T:
-
 
 figure(1)
 plot(T, mean_E_plot)
