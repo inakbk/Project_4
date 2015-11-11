@@ -21,7 +21,7 @@ def exp_M2_theory(T, N):
 
 def chi_theory(T, N):
     #return (8./T)*(exp(8./T) + 1)/(cosh(8./T) + 3)
-    return (4./T)*( ( 2*(exp(8./T) + 2)*(cosh(8./T) + 3) - (exp(8./T) + 2)**2 )/( cosh(8./T) + 3 )**2 )
+    return (4./T)*( ( 2*(exp(8./T) + 1)*(cosh(8./T) + 3) - (exp(8./T) + 2)**2 )/( cosh(8./T) + 3 )**2 )
 
 def read_file(filename):
     infile = open(filename, "r")
