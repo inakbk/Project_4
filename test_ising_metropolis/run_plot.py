@@ -65,7 +65,7 @@ T = linspace(1,9,9)
 
 L = 2
 N = L**2
-max_nr_of_cycles = 50000 #must delelig 10
+max_nr_of_cycles = 10000 #must delelig 10
 initial = -1
 
 #compiling once:
