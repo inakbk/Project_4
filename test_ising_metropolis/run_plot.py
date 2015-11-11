@@ -61,7 +61,7 @@ def read_file(filename):
 ------------------------------------------------------------------------------------------
 """
 
-T = linspace(1,2.4,10)
+T = [2.4]#linspace(1,9,20) #[1.0]
 
 L = 2
 N = L**2
@@ -71,6 +71,7 @@ initial = -1
 #compiling once:
 os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
 
+nr_of_accepted_config_plot = zeros(len(T))
 mean_E_plot = zeros(len(T))
 mean_E2_plot = zeros(len(T))
 C_v_plot = zeros(len(T))
@@ -85,6 +86,7 @@ for i in range(len(T)):
     cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = read_file(filename)
     Tcount += 1    
 
+    nr_of_accepted_config_plot[i] = nr_of_accepted_config[-1]
     mean_E_plot[i] = mean_E[-1]
     mean_E2_plot[i] = mean_E2[-1]
     C_v_plot[i] = C_v[-1]
@@ -92,8 +94,21 @@ for i in range(len(T)):
     mean_M2_plot[i] = mean_M2[-1]
     chi_plot[i] = chi[-1]
 
+#plot against T, accepted:
+"""
+figure(1)
+plot(T, nr_of_accepted_config_plot)
+title('temp range: [%s,%s]' %(T[0],T[-1]) )
+xlabel('temp')
+ylabel('nr of accepted config')
+"""
+
+"""
+------------------------------------------------------------------------------------------
+"""
 #plot against T:
 
+"""
 figure(1)
 plot(T, mean_E_plot)
 hold('on')
@@ -149,7 +164,6 @@ xlabel('T')
 ylabel('chi')
 
 
-"""
 
 
 figure(1)
@@ -194,8 +208,20 @@ ylabel('error')
 """
 ------------------------------------------------------------------------------------------
 """
+#plot against MC cycles, accepted:
 
+figure(1)
+plot(cycles, nr_of_accepted_config)
+title('T=%s' %T[0])
+xlabel('MC cycles')
+ylabel('nr of accepted config')
+
+
+"""
+------------------------------------------------------------------------------------------
+"""
 #plot against MC cycles:
+
 """
 figure(1)
 plot(cycles, mean_E)
@@ -250,7 +276,6 @@ title('chi')
 legend(['numerical', 'theory'])
 xlabel('MC cycles')
 ylabel('chi')
-
 
 
 figure(1)
