@@ -66,9 +66,7 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
     {
         state(iy,ix) = -1*state(iy,ix);
         E += dE;
-        //cout << "M before: " << M << endl;
         M += 2*state(iy,ix);
-        //cout << "M after: " << M << endl;
         ++number_of_accepted_cycles;
     }
     if(dE>0)
@@ -79,9 +77,7 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
         {
             state(iy,ix) = -1*state(iy,ix);
             E += dE;
-            //cout << "M before: " << M << endl;
             M += 2*state(iy,ix);
-            //cout << "M after: " << M << endl;
             ++number_of_accepted_cycles;
             //cout << "Hello, unlikely state chosen. dE:" << dE << " w: " << w[(dE-4)/4] << endl;
         }
@@ -114,18 +110,13 @@ void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L,
         mean_absM += fabs(M);
         mean_M += M;
         mean_M2 += M*M;
-
     }
     //calculating mean values (normalizing):
     mean_E = mean_E/maximum_nr_of_cycles;
-    //cout << mean_E << endl;
     mean_E2 = mean_E2/maximum_nr_of_cycles;
     C_v = (mean_E2 - mean_E*mean_E)/(T*T); // divide by N in theoretical values
-    //cout << C_v/N << endl;
 
     mean_absM = mean_absM/maximum_nr_of_cycles;
-    //cout << mean_absM << endl;
-
     mean_M = mean_M/maximum_nr_of_cycles;
     mean_M2 = mean_M2/maximum_nr_of_cycles;
     chi = (mean_M2 - mean_absM*mean_absM)/T;
@@ -154,7 +145,6 @@ void theoreticalValues(double T, int chosen_initial_state)
     double exp_E = -8*sinh(8./T)/(cosh(8./T) + 3);
     double exp_E2 = 64*cosh(8./T)/(cosh(8./T) + 3);
     double C_v = ( 64./(T*T) )*( 1 + 3*cosh(8./T) )/( (cosh(8./T) + 3)*(cosh(8./T) + 3) );
-    cout << C_v/8 << endl;
     double exp_absM = 2*(exp(8./T) + 2)/(cosh(8./T) + 3);
     double exp_M2 = 8*(exp(8./T) + 1)/(cosh(8./T) + 3);
     double chi = 0;// (8./T)*(exp(8./T) + 1)/(cosh(8./T) + 3); this is wrong?
