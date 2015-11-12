@@ -61,11 +61,11 @@ def read_file(filename):
 ------------------------------------------------------------------------------------------
 """
 
-T = [2.4]#linspace(1,9,20) #[1.0]
+T = linspace(1,9,20)
 
 L = 2
 N = L**2
-max_nr_of_cycles = 10000 #must delelig 10
+max_nr_of_cycles = 50000 #must delelig 10
 initial = -1
 
 #compiling once:
@@ -98,7 +98,7 @@ for i in range(len(T)):
 """
 figure(1)
 plot(T, nr_of_accepted_config_plot)
-title('temp range: [%s,%s]' %(T[0],T[-1]) )
+title('Number of accepted cycles, temp range: [%s,%s] \n #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
 xlabel('temp')
 ylabel('nr of accepted config')
 """
@@ -108,7 +108,7 @@ ylabel('nr of accepted config')
 """
 #plot against T:
 
-"""
+
 figure(1)
 plot(T, mean_E_plot)
 hold('on')
@@ -165,7 +165,7 @@ ylabel('chi')
 
 
 
-
+"""
 figure(1)
 plot(T, abs(mean_E_plot - exp_E_theory(T,N)))
 title('error mean_E')
@@ -201,122 +201,6 @@ plot(T, abs(chi_plot - chi_theory(T,N)))
 title('error chi')
 xlabel('T')
 ylabel('error')
-"""
-
-
-
-"""
-------------------------------------------------------------------------------------------
-"""
-#plot against MC cycles, accepted:
-
-figure(1)
-plot(cycles, nr_of_accepted_config)
-title('T=%s' %T[0])
-xlabel('MC cycles')
-ylabel('nr of accepted config')
-
-
-"""
-------------------------------------------------------------------------------------------
-"""
-#plot against MC cycles:
-
-"""
-figure(1)
-plot(cycles, mean_E)
-hold('on')
-plot(cycles, exp_E_theory(T[0],N)*ones(len(cycles)))
-title('mean_E')
-legend(['numerical', 'theory'])
-xlabel('MC cycles')
-ylabel('mean_E')
-
-figure(2)
-plot(cycles, mean_E2)
-hold('on')
-plot(cycles, exp_E2_theory(T[0],N)*ones(len(cycles)))
-title('mean_E2')
-legend(['numerical', 'theory'])
-xlabel('MC cycles')
-ylabel('mean_E2')
-
-figure(3)
-plot(cycles, C_v)
-hold('on')
-plot(cycles, C_v_theory(T[0],N)*ones(len(cycles)))
-title('C_v')
-legend(['numerical', 'theory'])
-xlabel('MC cycles')
-ylabel('C_v')
-
-figure(4)
-plot(cycles, mean_absM)
-hold('on')
-plot(cycles, exp_absM_theory(T[0],N)*ones(len(cycles)))
-title('mean_absM')
-legend(['numerical', 'theory'])
-xlabel('MC cycles')
-ylabel('mean_absM')
-
-figure(5)
-plot(cycles, mean_M2)
-hold('on')
-plot(cycles, exp_M2_theory(T[0],N)*ones(len(cycles)))
-title('mean_M2')
-legend(['numerical', 'theory'])
-xlabel('MC cycles')
-ylabel('mean_M2')
-
-figure(6)
-plot(cycles, chi)
-hold('on')
-plot(cycles, chi_theory(T[0],N)*ones(len(cycles)))
-title('chi')
-legend(['numerical', 'theory'])
-xlabel('MC cycles')
-ylabel('chi')
-
-
-figure(1)
-plot(cycles, abs(mean_E - exp_E_theory(T[0],N)))
-title('error mean_E')
-xlabel('MC cycles')
-ylabel('error')
-
-figure(2)
-plot(cycles, abs(mean_E2 - exp_E2_theory(T[0],N)*ones(len(cycles))))
-title('error mean_E2')
-xlabel('MC cycles')
-ylabel('error')
-
-figure(3)
-plot(cycles, abs(C_v - C_v_theory(T[0],N)*ones(len(cycles))))
-title('error C_v')
-xlabel('MC cycles')
-ylabel('error')
-
-figure(4)
-plot(cycles, abs(mean_absM - exp_absM_theory(T[0],N)*ones(len(cycles))))
-title('error mean_absM')
-xlabel('MC cycles')
-ylabel('error')
-
-figure(5)
-plot(cycles, abs(mean_M2 - exp_M2_theory(T[0],N)*ones(len(cycles))))
-title('error mean_M2')
-xlabel('MC cycles')
-ylabel('error')
-
-figure(6)
-plot(cycles, abs(chi - chi_theory(T[0],N)*ones(len(cycles))))
-title('error chi')
-xlabel('MC cycles')
-ylabel('error')
-"""
-
-"""
-------------------------------------------------------------------------------------------
 """
 
 show()
