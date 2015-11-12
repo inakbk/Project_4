@@ -61,19 +61,19 @@ def read_file(filename):
 ------------------------------------------------------------------------------------------
 """
 
-T = [1.0]
+T = 1.0
 
 L = 2
 N = L**2
-max_nr_of_cycles = 10000 #must delelig 10
+max_nr_of_cycles = 50000 #must delelig 10
 initial = -1
 error_plot = True
 
 #compiling once:
-os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
+#os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
 
 Tcount = 100
-os.system('./main %s %s %s %s %s' %(T[0], L, max_nr_of_cycles, initial, Tcount))
+os.system('./main %s %s %s %s %s' %(T, L, max_nr_of_cycles, initial, Tcount))
 filename = 'metropolis_L%s_Tcount%s_initial%s_MC%s.txt' %(L, Tcount, initial, max_nr_of_cycles)
 cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = read_file(filename)
 
@@ -83,8 +83,8 @@ if error_plot == False:
     figure(1)
     plot(cycles, mean_E)
     hold('on')
-    plot(cycles, exp_E_theory(T[0],N)*ones(len(cycles)))
-    title('mean_E, temp range: [%s,%s] \n #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    plot(cycles, exp_E_theory(T,N)*ones(len(cycles)))
+    title('mean_E, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
     legend(['numerical', 'theory'])
     xlabel('MC cycles')
     ylabel('mean_E')
@@ -92,8 +92,8 @@ if error_plot == False:
     figure(2)
     plot(cycles, mean_E2)
     hold('on')
-    plot(cycles, exp_E2_theory(T[0],N)*ones(len(cycles)))
-    title('mean_E2, temp range: [%s,%s] \n #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    plot(cycles, exp_E2_theory(T,N)*ones(len(cycles)))
+    title('mean_E2, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
     legend(['numerical', 'theory'])
     xlabel('MC cycles')
     ylabel('mean_E2')
@@ -101,8 +101,8 @@ if error_plot == False:
     figure(3)
     plot(cycles, C_v)
     hold('on')
-    plot(cycles, C_v_theory(T[0],N)*ones(len(cycles)))
-    title('C_v, temp range: [%s,%s] \n #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    plot(cycles, C_v_theory(T,N)*ones(len(cycles)))
+    title('C_v, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
     legend(['numerical', 'theory'])
     xlabel('MC cycles')
     ylabel('C_v')
@@ -110,8 +110,8 @@ if error_plot == False:
     figure(4)
     plot(cycles, mean_absM)
     hold('on')
-    plot(cycles, exp_absM_theory(T[0],N)*ones(len(cycles)))
-    title('mean_absM, temp range: [%s,%s] \n #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    plot(cycles, exp_absM_theory(T,N)*ones(len(cycles)))
+    title('mean_absM, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
     legend(['numerical', 'theory'])
     xlabel('MC cycles')
     ylabel('mean_absM')
@@ -119,8 +119,8 @@ if error_plot == False:
     figure(5)
     plot(cycles, mean_M2)
     hold('on')
-    plot(cycles, exp_M2_theory(T[0],N)*ones(len(cycles)))
-    title('mean_M2, temp range: [%s,%s] \n #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    plot(cycles, exp_M2_theory(T,N)*ones(len(cycles)))
+    title('mean_M2, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
     legend(['numerical', 'theory'])
     xlabel('MC cycles')
     ylabel('mean_M2')
@@ -128,46 +128,46 @@ if error_plot == False:
     figure(6)
     plot(cycles, chi)
     hold('on')
-    plot(cycles, chi_theory(T[0],N)*ones(len(cycles)))
-    title('chi, temp range: [%s,%s] \n #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    plot(cycles, chi_theory(T,N)*ones(len(cycles)))
+    title('chi, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
     legend(['numerical', 'theory'])
     xlabel('MC cycles')
     ylabel('chi')
 
 if error_plot == True:
     figure(1)
-    plot(cycles, abs(mean_E - exp_E_theory(T[0],N)))
-    title('error mean_E, temp range: [%s,%s] \n #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    plot(cycles, abs(mean_E - exp_E_theory(T,N)))
+    title('error mean_E, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
     xlabel('MC cycles')
     ylabel('error')
 
     figure(2)
-    plot(cycles, abs(mean_E2 - exp_E2_theory(T[0],N)*ones(len(cycles))))
-    title('error mean_E2, temp range: [%s,%s] \n #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    plot(cycles, abs(mean_E2 - exp_E2_theory(T,N)*ones(len(cycles))))
+    title('error mean_E2, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
     xlabel('MC cycles')
     ylabel('error')
 
     figure(3)
-    plot(cycles, abs(C_v - C_v_theory(T[0],N)*ones(len(cycles))))
-    title('error C_v, temp range: [%s,%s] \n #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    plot(cycles, abs(C_v - C_v_theory(T,N)*ones(len(cycles))))
+    title('error C_v, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
     xlabel('MC cycles')
     ylabel('error')
 
     figure(4)
-    plot(cycles, abs(mean_absM - exp_absM_theory(T[0],N)*ones(len(cycles))))
-    title('error mean_absM, temp range: [%s,%s] \n #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    plot(cycles, abs(mean_absM - exp_absM_theory(T,N)*ones(len(cycles))))
+    title('error mean_absM, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
     xlabel('MC cycles')
     ylabel('error')
 
     figure(5)
-    plot(cycles, abs(mean_M2 - exp_M2_theory(T[0],N)*ones(len(cycles))))
-    title('error mean_M2, temp range: [%s,%s] \n #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    plot(cycles, abs(mean_M2 - exp_M2_theory(T,N)*ones(len(cycles))))
+    title('error mean_M2, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
     xlabel('MC cycles')
     ylabel('error')
 
     figure(6)
-    plot(cycles, abs(chi - chi_theory(T[0],N)*ones(len(cycles))))
-    title('error chi, temp range: [%s,%s] \n #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    plot(cycles, abs(chi - chi_theory(T,N)*ones(len(cycles))))
+    title('error chi, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
     xlabel('MC cycles')
     ylabel('error')
 

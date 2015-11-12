@@ -65,12 +65,12 @@ T = linspace(1,9,10)
 
 L = 2
 N = L**2
-max_nr_of_cycles = 10000 #must delelig 10
+max_nr_of_cycles = 1000 #must delelig 10
 initial = 1
-error_plot = False
+error_plot = True
 
 #compiling once:
-os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
+#os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
 
 nr_of_accepted_config_plot = zeros(len(T))
 mean_E_plot = zeros(len(T))
