@@ -95,7 +95,7 @@ void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L,
     int number_of_accepted_cycles = 0;
 
     //reaching equilibrium state first:
-    for(int i=1; i<=10000;++i)
+    for(int i=1; i<=20000;++i)
     {
         //one MC cycle:
         for(int n=0; n<N; ++n)

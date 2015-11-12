@@ -42,7 +42,7 @@ def read_file(filename):
 ------------------------------------------------------------------------------------------
 """
 
-T = linspace(2,2.4,21) #read T form file?
+T = linspace(2.25,2.44,21) #read T form file?
 
 L = 20
 N = L**2
