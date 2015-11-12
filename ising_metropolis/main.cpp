@@ -17,13 +17,15 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    double T = atof(argv[1]);//1.0;
-    int L = atoi(argv[2]);//2;
-    int nr_of_cycles = atoi(argv[3]);//100000;
-    int chosen_initial_state = atoi(argv[4]);; //integer; -1 for random state, 0 for L=2 highest energy and 1 for all spins up.
-    int Tcount = atoi(argv[5]); //to separate files w. respect to temperature
-    bool production = false;
-    if(argc>=7) production = atoi(argv[6]);
+    vec T = {2.0, 2.1, 2.2, 2.3, 2.4};
+    vec Tcount = {0,1,2,3,4}; //to separate files w. respect to temperature
+    int L = 20;
+    int nr_of_cycles = 100000;
+    int chosen_initial_state = 1; //integer; -1 for random state, 0 for L=2 highest energy and 1 for all spins up.
+
+    //bool production = false;
+    //if(argc>=7) production = atoi(argv[6]);
+//----------------------------------------------------------------
 
 //    cout << chosen_initial_state << endl;
 //    std::vector<Random*> randoms;
@@ -31,30 +33,23 @@ int main(int argc, char *argv[])
 //    randoms[omp_get_thread_number()].nextRandom()
 
 //----------------------------------------------------------------
-    // initial state:
-    int E = 0; //in unist of J=1
-    int M = 0;
-    mat state = 1*ones<mat>(L,L);
-    long seed = -1;
-    if(production) seed = -time(NULL); //time in the core in seconds to give new random number each run
+    for(i=0; i<sizeof(T);++i)
+    {
+        int E = 0; //in unist of J=1
+        int M = 0;
+        mat state = 1*ones<mat>(L,L);
+        long seed = -1;
+        //if(production) seed = -time(NULL); //time in the core in seconds to give new random number each run
+        Random random_nr(seed);
 
-    Random random_nr(seed); //-1, -2, -3, -4 reserved for MPI (4 cores)
-    initialState(random_nr, state, E, M, L, chosen_initial_state);
+        initialState(random_nr, state, E, M, L, chosen_initial_state);
 
-//    state.print();
-//    cout << "after initializing " << E << endl;
+        vec dE = {4, 8}; //w is only used when dE>0
+        vec w = exp(-dE/T);
+        allMCcycles(random_nr, state, E, M, T, L, w, nr_of_cycles, chosen_initial_state, Tcount);
+    }
 
-//----------------------------------------------------------------
-    vec dE = {4, 8}; //w is only used when dE>0
-    vec w = exp(-dE/T);
-    allMCcycles(random_nr, state, E, M, T, L, w, nr_of_cycles, chosen_initial_state, Tcount);
 
-    //cout << Tcount << endl;
-    //cout << "------" << endl;
-    //theoreticalValues(T, chosen_initial_state);
-
-//    state.print();
-//    cout << E << endl;
 
     return 0;
 }
