@@ -113,20 +113,24 @@ void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L,
         mean_absM += fabs(M);
         mean_M2 += M*M;
 
-        //normalizing mean values and printing to file (values per spin, deviding by N)
-        double norm = 1./i;
-        myfile << "nr_of_cycles= " << i << endl;
-        myfile << "nr_of_accepted_cycles= " << number_of_accepted_cycles << endl;
+        //only printing to after reached equilibrium
+        if(i==100000)
+        {
+            //normalizing mean values and printing to file (values per spin, deviding by N)
+            double norm = 1./i;
+            myfile << "nr_of_cycles= " << i << endl;
+            myfile << "nr_of_accepted_cycles= " << number_of_accepted_cycles << endl;
 
-        myfile << "mean_E= "<< mean_E*norm/N << endl;
-        myfile << "mean_E2= " << mean_E2*norm/N << endl;
-        myfile << "C_V= " << ( mean_E2*norm - (mean_E*norm)*(mean_E*norm) )/(T*T)/N << endl;
+            myfile << "mean_E= "<< mean_E*norm/N << endl;
+            myfile << "mean_E2= " << mean_E2*norm/N << endl;
+            myfile << "C_V= " << ( mean_E2*norm - (mean_E*norm)*(mean_E*norm) )/(T*T)/N << endl;
 
-        myfile << "mean_absM= " << mean_absM*norm/N << endl;
-        myfile << "mean_M2= " << mean_M2*norm/N << endl;
-        myfile << "chi= " << ( mean_M2*norm - (mean_absM*norm)*(mean_absM*norm) )/T/N << endl;
-        myfile << "T= " << T << endl;
-        myfile << "--------------" << endl;
+            myfile << "mean_absM= " << mean_absM*norm/N << endl;
+            myfile << "mean_M2= " << mean_M2*norm/N << endl;
+            myfile << "chi= " << ( mean_M2*norm - (mean_absM*norm)*(mean_absM*norm) )/T/N << endl;
+            myfile << "T= " << T << endl;
+            myfile << "--------------" << endl;
+        }
     }
 
     myfile.close();
