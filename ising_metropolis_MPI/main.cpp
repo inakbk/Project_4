@@ -11,7 +11,7 @@ using namespace arma;
 int main(int numberOfArguments, char** argumentList)
 {
     int L = 20;
-    int nr_of_cycles = 2000000;
+    int nr_of_cycles = 100000;
     int chosen_initial_state = 1; //integer; -1 for random state, 0 for L=2 highest energy and 1 for all spins up.
     vec dE = {4, 8}; //w is only used when dE>0
 
