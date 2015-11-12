@@ -3,6 +3,7 @@
 #include <armadillo>
 #include "metropolis.h"
 #include "random.h"
+#include <mpi.h>
 
 using namespace std;
 using namespace arma;
