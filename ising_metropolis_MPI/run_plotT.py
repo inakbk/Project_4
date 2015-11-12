@@ -43,32 +43,26 @@ def read_file(filename):
 ------------------------------------------------------------------------------------------
 """
 
-T = zeros(31)#linspace(2.25,2.44,21) #read T form file?
-
-L = 20
-N = L**2
+Tcount = 21
+L = 40
 max_nr_of_cycles = 500000 #must delelig 10
+
+N = L**2
 initial = 1
 plot_exp_val = True
 
-#compiling once:
-#os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
+T_plot = zeros(Tcount)
+nr_of_accepted_config_plot = zeros(Tcount)
+mean_E_plot = zeros(Tcount)
+mean_E2_plot = zeros(Tcount)
+C_v_plot = zeros(Tcount)
+mean_absM_plot = zeros(Tcount)
+mean_M2_plot = zeros(Tcount)
+chi_plot = zeros(Tcount)
 
-T_plot = zeros(len(T))
-nr_of_accepted_config_plot = zeros(len(T))
-mean_E_plot = zeros(len(T))
-mean_E2_plot = zeros(len(T))
-C_v_plot = zeros(len(T))
-mean_absM_plot = zeros(len(T))
-mean_M2_plot = zeros(len(T))
-chi_plot = zeros(len(T))
-
-Tcount = 0
-for i in range(len(T)):
-    #os.system('./main %s %s %s %s %s' %(T[i], L, max_nr_of_cycles, initial, Tcount))
-    filename = 'metropolis_L%s_Tcount%s_initial%s_MC%s.txt' %(L, Tcount, initial, max_nr_of_cycles)
-    T_in_loop, cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = read_file(filename)
-    Tcount += 1    
+for i in range(Tcount):
+    filename = 'Tcount20/metropolis_L%s_Tcount%s_initial%s_MC%s.txt' %(L, i, initial, max_nr_of_cycles)
+    T_in_loop, cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = read_file(filename)   
 
     T_plot[i] = T_in_loop[-1]
     nr_of_accepted_config_plot[i] = nr_of_accepted_config[-1]
@@ -86,45 +80,45 @@ for i in range(len(T)):
 if plot_exp_val == False:
     figure(1)
     plot(T_plot, nr_of_accepted_config_plot)
-    title('Number of accepted cycles \n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    title('Number of accepted cycles \n #MCcycles= %s, L= %s, initial_state=%s' %(max_nr_of_cycles, L, initial))
     xlabel('temp')
     ylabel('nr of accepted config')
 
 if plot_exp_val == True:
     figure(1)
     plot(T_plot, mean_E_plot, '-o')
-    title('mean_E\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
-    xlabel('T')
+    title('mean_E\n #MCcycles= %s, L= %s, initial_state=%s' %(max_nr_of_cycles, L, initial))
+    xlabel('T_plot')
     ylabel('exp E')
     """
     figure(2)
     plot(T_plot, mean_E2_plot, '-o')
-    title('mean_E2\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
-    xlabel('T')
+    title('mean_E2\n #MCcycles= %s, L= %s, initial_state=%s' %(max_nr_of_cycles, L, initial))
+    xlabel('T_plot')
     ylabel('exp E2')
     """
     figure(3)
     plot(T_plot, C_v_plot, '-o')
-    title('C_v\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
-    xlabel('T')
+    title('C_v\n #MCcycles= %s, L= %s, initial_state=%s' %(max_nr_of_cycles, L, initial))
+    xlabel('T_plot')
     ylabel('C_v')
 
     figure(4)
     plot(T_plot, mean_absM_plot, '-o')
-    title('mean_absM\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
-    xlabel('T')
+    title('mean_absM\n #MCcycles= %s, L= %s, initial_state=%s' %(max_nr_of_cycles, L, initial))
+    xlabel('T_plot')
     ylabel('exp abs M')
     """
     figure(5)
     plot(T_plot, mean_M2_plot, '-o')
-    title('mean_M2\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
-    xlabel('T')
+    title('mean_M2\n #MCcycles= %s, L= %s, initial_state=%s' %(max_nr_of_cycles, L, initial))
+    xlabel('T_plot')
     ylabel('exp M2')
     """
     figure(6)
     plot(T_plot, chi_plot, '-o')
-    title('chi\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
-    xlabel('T')
+    title('chi\n #MCcycles= %s, L= %s, initial_state=%s' %(max_nr_of_cycles, L, initial))
+    xlabel('T_plot')
     ylabel('chi')
 
 show()

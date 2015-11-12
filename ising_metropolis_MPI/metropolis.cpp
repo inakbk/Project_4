@@ -48,8 +48,6 @@ void initialState(Random &random_init_nr, mat &state, int &E, int &M, int &L, in
             M += state(i,j);
         }
     }
-//    state.print();
-//    cout << M << endl;
 }
 
 void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec w, int &number_of_accepted_cycles)
@@ -60,9 +58,8 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
 
     //computing diff. in energy and deciding to change spin or not
     int dE = 2*state(iy,ix)*( state(iy, periodic(ix, L, 1)) + state(periodic(iy, L, 1), ix)
-                            + state(iy, periodic(ix, L, -1)) + state(periodic(iy, L, -1), ix) );  //e_init - e_new;    2*s_l^1
-    //cout << "dE: " << dE << endl;
-    if(dE<=0) //could also have let the positive values go to the metropolis test as exp(-dE/T) > r when dE<=0, then we would not need this if test
+                            + state(iy, periodic(ix, L, -1)) + state(periodic(iy, L, -1), ix) );
+    if(dE<=0)
     {
         state(iy,ix) = -1*state(iy,ix);
         E += dE;
@@ -79,7 +76,6 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
             E += dE;
             M += 2*state(iy,ix);
             ++number_of_accepted_cycles;
-            //cout << "Hello, unlikely state chosen. dE:" << dE << " w: " << w[(dE-4)/4] << endl;
         }
     }
 }
@@ -87,7 +83,6 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
 void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec w, int maximum_nr_of_cycles, int chosen_initial_state, int Tcount)
 {
     double N = L*L;
-    // Random random_nr(-5);
     double mean_E = 0;
     double mean_E2 = 0;
     double mean_absM = 0;
@@ -141,22 +136,4 @@ void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L,
     myfile.close();
 }
 
-void theoreticalValues(double T, int chosen_initial_state)
-{
-    double exp_E = -8*sinh(8./T)/(cosh(8./T) + 3);
-    double exp_E2 = 64*cosh(8./T)/(cosh(8./T) + 3);
-    double C_v = ( 64./(T*T) )*( 1 + 3*cosh(8./T) )/( (cosh(8./T) + 3)*(cosh(8./T) + 3) );
-    double exp_absM = 2*(exp(8./T) + 2)/(cosh(8./T) + 3);
-    double exp_M2 = 8*(exp(8./T) + 1)/(cosh(8./T) + 3);
-    double chi = 0;// (8./T)*(exp(8./T) + 1)/(cosh(8./T) + 3); this is wrong?
-
-    cout << "Here comes theoretical values:" << endl;
-    cout << "exp_E: "<< exp_E << endl;
-    cout << "exp_E2: " << exp_E2 << endl;
-    cout << "C_V = " << C_v << endl;
-    cout << "----" << endl;
-    cout << "exp_absM: " << exp_absM << endl;
-    cout << "exp_M2: " << exp_M2 << endl;
-    cout << "chi: " << chi << endl;
-}
 
