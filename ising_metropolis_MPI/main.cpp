@@ -11,7 +11,7 @@ using namespace arma;
 int main(int numberOfArguments, char** argumentList)
 {
     int L = 20;
-    int nr_of_cycles = 1000;
+    int nr_of_cycles = 1000000;
     int chosen_initial_state = 1; //integer; -1 for random state, 0 for L=2 highest energy and 1 for all spins up.
     vec dE = {4, 8}; //w is only used when dE>0
 
@@ -19,11 +19,10 @@ int main(int numberOfArguments, char** argumentList)
     MPI_Init(&numberOfArguments, &argumentList);
     MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
     MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
-//noe
-    cout << "numprocs " << numprocs << endl;
+
     double Tstart = 2.0;
-    double Tend = 2.5;
-    int numTemperatures = 11;
+    double Tend = 2.4;
+    int numTemperatures = 21;
     //double Tstep = (Tend - Tstart)/(numTemperatures-1);
     vec temperatures = linspace<vec>(Tstart,Tend,numTemperatures);
 
@@ -49,20 +48,6 @@ int main(int numberOfArguments, char** argumentList)
     }
 
     MPI_Finalize();
-
-
-
-    //bool production = false;
-    //if(argc>=7) production = atoi(argv[6]);
-//----------------------------------------------------------------
-
-//    cout << chosen_initial_state << endl;
-//    std::vector<Random*> randoms;
-//    randoms.push_back(new Random(-omp_get_thread_number()));
-//    randoms[omp_get_thread_number()].nextRandom()
-
-//----------------------------------------------------------------
-
 
     return 0;
 }

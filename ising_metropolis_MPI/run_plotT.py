@@ -42,16 +42,16 @@ def read_file(filename):
 ------------------------------------------------------------------------------------------
 """
 
-T = linspace(2,3,20)
+T = linspace(2,2.4,21) #read T form file?
 
 L = 20
 N = L**2
-max_nr_of_cycles = 100000 #must delelig 10
+max_nr_of_cycles = 1000000 #must delelig 10
 initial = 1
 plot_exp_val = True
 
 #compiling once:
-os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
+#os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
 
 nr_of_accepted_config_plot = zeros(len(T))
 mean_E_plot = zeros(len(T))
@@ -63,7 +63,7 @@ chi_plot = zeros(len(T))
 
 Tcount = 0
 for i in range(len(T)):
-    os.system('./main %s %s %s %s %s' %(T[i], L, max_nr_of_cycles, initial, Tcount))
+    #os.system('./main %s %s %s %s %s' %(T[i], L, max_nr_of_cycles, initial, Tcount))
     filename = 'metropolis_L%s_Tcount%s_initial%s_MC%s.txt' %(L, Tcount, initial, max_nr_of_cycles)
     cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = read_file(filename)
     Tcount += 1    
