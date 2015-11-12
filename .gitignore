@@ -34,3 +34,13 @@
 *.pdf
 
 *.gz
+
+*.aux
+
+*.log
+
+*.out
+
+*.pdf
+
+*.gz

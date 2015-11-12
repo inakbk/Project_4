@@ -106,11 +106,10 @@ compare teory, lars onsager
 \section{Motivation and purpose}
 
 
-\section{Numerical methods}
-bla bla theory and the programs
-\subsection{Metropolis algorithm}
-
 \section{Theory}
+something about phase transitions and therefore chi and heat capacity is relevant
+
+
 \subsection{The Ising model in two dimentions}
 
 The Ising model is a simple model for ferromagnetism in statistical physics. The model consists of magnetic spins that are allowed to interact with its neigbours. The magnetic dipole moments are allowed to have two values, 1 and -1.
@@ -339,7 +338,7 @@ We then set $J=1$ so that:
 \]
 We will use this new temperature $T'$ in the numerical calculations. We also scale the heat capacity as:
 \[
-C_v' = \frac{C_v}{k_b} = \frac{64}{T'^2} \bigg[\frac{1 + 3\cosh(8/T')}{(\cosh(8/T') + 3)^2} \bigg]
+C_v' = \frac{C_v}{k_b} = \frac{64}{T'^2} \frac{1 + 3\cosh(8/T')}{(\cosh(8/T') + 3)^2} 
 \]
 In terms of $T'$ the expectation values and the susceptibility for the $2\times 2$ system can be written as:
 \begin{align}
@@ -351,8 +350,23 @@ In terms of $T'$ the expectation values and the susceptibility for the $2\times 
 \end{align}
 These theoretical values will be used to test the implementation of the numerical method for the $L=2$ system. 
 
+%theory mc methods/metropolis
+%explaination of code
+
+\section{Numerical methods}
+bla bla theory and the programs
+\subsection{Metropolis algorithm}
+
+\begin{enumerate}
+\item 
+\end{enumerate}
+
 
 \subsection{Coding dE  and w efficiently}
+Finding expressions for the difference in the energy 
+
+
+
 
 
 \section{"Experiment"}

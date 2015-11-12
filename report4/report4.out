@@ -1,11 +1,11 @@
 \BOOKMARK [1][-]{section.1}{Motivation and purpose}{}% 1
-\BOOKMARK [1][-]{section.2}{Numerical methods}{}% 2
-\BOOKMARK [2][-]{subsection.2.1}{Metropolis algorithm}{section.2}% 3
-\BOOKMARK [1][-]{section.3}{Theory}{}% 4
-\BOOKMARK [2][-]{subsection.3.1}{The Ising model in two dimentions}{section.3}% 5
-\BOOKMARK [2][-]{subsection.3.2}{L=2 analytical values}{section.3}% 6
-\BOOKMARK [2][-]{subsection.3.3}{Units, scaled parameters}{section.3}% 7
-\BOOKMARK [2][-]{subsection.3.4}{Coding dE and w efficiently}{section.3}% 8
+\BOOKMARK [1][-]{section.2}{Theory}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{The Ising model in two dimentions}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{L=2 analytical values}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Units, scaled parameters}{section.2}% 5
+\BOOKMARK [1][-]{section.3}{Numerical methods}{}% 6
+\BOOKMARK [2][-]{subsection.3.1}{Metropolis algorithm}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.2}{Coding dE and w efficiently}{section.3}% 8
 \BOOKMARK [1][-]{section.4}{"Experiment"}{}% 9
 \BOOKMARK [2][-]{subsection.4.1}{Testing the implementation og model and algorithm}{section.4}% 10
 \BOOKMARK [2][-]{subsection.4.2}{Studying the number of Monte Carlo cycles}{section.4}% 11

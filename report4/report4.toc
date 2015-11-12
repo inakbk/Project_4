@@ -1,11 +1,11 @@
 \contentsline {section}{\numberline {1}Motivation and purpose}{3}{section.1}
-\contentsline {section}{\numberline {2}Numerical methods}{3}{section.2}
-\contentsline {subsection}{\numberline {2.1}Metropolis algorithm}{3}{subsection.2.1}
-\contentsline {section}{\numberline {3}Theory}{3}{section.3}
-\contentsline {subsection}{\numberline {3.1}The Ising model in two dimentions}{3}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}L=2 analytical values}{3}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Units, scaled parameters}{6}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Coding dE and w efficiently}{7}{subsection.3.4}
+\contentsline {section}{\numberline {2}Theory}{3}{section.2}
+\contentsline {subsection}{\numberline {2.1}The Ising model in two dimentions}{3}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}L=2 analytical values}{3}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Units, scaled parameters}{6}{subsection.2.3}
+\contentsline {section}{\numberline {3}Numerical methods}{7}{section.3}
+\contentsline {subsection}{\numberline {3.1}Metropolis algorithm}{7}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Coding dE and w efficiently}{7}{subsection.3.2}
 \contentsline {section}{\numberline {4}"Experiment"}{7}{section.4}
 \contentsline {subsection}{\numberline {4.1}Testing the implementation og model and algorithm}{7}{subsection.4.1}
 \contentsline {subsection}{\numberline {4.2}Studying the number of Monte Carlo cycles}{7}{subsection.4.2}
