@@ -70,7 +70,7 @@ initial = -1
 error_plot = True
 
 #compiling once:
-#os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
+os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
 
 Tcount = 100
 os.system('./main %s %s %s %s %s' %(T[0], L, max_nr_of_cycles, initial, Tcount))

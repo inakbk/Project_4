@@ -52,7 +52,7 @@ def read_file2(filename):
 ------------------------------------------------------------------------------------------
 """
 
-T = [1.0]#, 2.4]#linspace(1,9,20) #[1.0]
+T = 1.0
 
 L = 20
 N = L**2
@@ -62,30 +62,21 @@ initial = 1
 #compiling once:
 #os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
 
-nr_of_accepted_config_plot = zeros(len(T))
-mean_E_plot = zeros(len(T))
-mean_E2_plot = zeros(len(T))
-C_v_plot = zeros(len(T))
-mean_absM_plot = zeros(len(T))
-mean_M2_plot = zeros(len(T))
-chi_plot = zeros(len(T))
+Tcount = 200
+os.system('./main %s %s %s %s %s' %(T, L, max_nr_of_cycles, initial, Tcount))
+filename = 'metropolis_L%s_Tcount%s_initial%s_MC%s.txt' %(L, Tcount, initial, max_nr_of_cycles)
+filename2 = 'metropolis_energies_L%s_Tcount%s_initial%s_MC%s.txt' %(L, Tcount, initial, max_nr_of_cycles)
+cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = read_file(filename)
+E = read_file2(filename2)
 
-Tcount = 0
-for i in range(len(T)):
-    os.system('./main %s %s %s %s %s' %(T[i], L, max_nr_of_cycles, initial, Tcount))
-    filename = 'metropolis_L%s_Tcount%s_initial%s_MC%s.txt' %(L, Tcount, initial, max_nr_of_cycles)
-    filename2 = 'metropolis_energies_L%s_Tcount%s_initial%s_MC%s.txt' %(L, Tcount, initial, max_nr_of_cycles)
-    cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = read_file(filename)
-    E = read_file2(filename2)
-    Tcount += 1    
+print "sigma= ", sqrt(C_v[-1]*N*T**2)
 
-if T[0] == 1:
+if T == 1:
+    print "T= ", T
     hist(E, bins=10, normed=True, facecolor='green')
 else:
+    print "T= ", T
     hist(E, bins=32, normed=True, facecolor='green')
-    print "hello"
-
-print "sigma= ", sqrt(C_v[-1]*N*T[0]**2)
 
 show()
 
