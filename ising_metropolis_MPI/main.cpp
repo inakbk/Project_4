@@ -19,7 +19,7 @@ int main(int numberOfArguments, char** argumentList)
     MPI_Init(&numberOfArguments, &argumentList);
     MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
     MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
-
+//noe
     cout << "numprocs " << numprocs << endl;
     double Tstart = 2.0;
     double Tend = 2.5;
