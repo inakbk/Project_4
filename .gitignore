@@ -24,3 +24,13 @@
 *.pdf
 
 *.gz
+
+*.log
+
+*.aux
+
+*.out
+
+*.pdf
+
+*.gz

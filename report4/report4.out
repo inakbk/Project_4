@@ -4,7 +4,7 @@
 \BOOKMARK [1][-]{section.3}{Theory}{}% 4
 \BOOKMARK [2][-]{subsection.3.1}{The Ising model in two dimentions}{section.3}% 5
 \BOOKMARK [2][-]{subsection.3.2}{L=2 analytical values}{section.3}% 6
-\BOOKMARK [2][-]{subsection.3.3}{Units, scaled unitless parameters}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.3}{Units, scaled parameters}{section.3}% 7
 \BOOKMARK [2][-]{subsection.3.4}{Coding dE and w efficiently}{section.3}% 8
 \BOOKMARK [1][-]{section.4}{"Experiment"}{}% 9
 \BOOKMARK [2][-]{subsection.4.1}{Testing the implementation og model and algorithm}{section.4}% 10
