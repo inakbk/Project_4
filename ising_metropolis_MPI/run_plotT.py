@@ -9,6 +9,7 @@ def read_file(filename):
     all_lines = infile.readlines()
     infile.close()
 
+    T = zeros(len(all_lines)/10)
     nr_of_cycles = zeros(len(all_lines)/10)
     nr_of_accepted_config = zeros(len(all_lines)/10)
     mean_E = zeros(len(all_lines)/10)
@@ -31,18 +32,18 @@ def read_file(filename):
         mean_absM[j] = all_lines[5+i].split()[1]
         mean_M2[j] = all_lines[6+i].split()[1]
         chi[j] = all_lines[7+i].split()[1]
-        #T = all_lines[8+i].split()[1]
+        T[i] = all_lines[8+i].split()[1]
         #--- on all_lines[9+i].split()[1]
         i += 10
         j += 1
 
-    return nr_of_cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi
+    return T, nr_of_cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi
 
 """
 ------------------------------------------------------------------------------------------
 """
 
-T = linspace(2.25,2.44,21) #read T form file?
+T = zeros(21)#linspace(2.25,2.44,21) #read T form file?
 
 L = 20
 N = L**2
@@ -53,6 +54,7 @@ plot_exp_val = True
 #compiling once:
 #os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
 
+T_plot = zeros(len(T))
 nr_of_accepted_config_plot = zeros(len(T))
 mean_E_plot = zeros(len(T))
 mean_E2_plot = zeros(len(T))
@@ -65,9 +67,10 @@ Tcount = 0
 for i in range(len(T)):
     #os.system('./main %s %s %s %s %s' %(T[i], L, max_nr_of_cycles, initial, Tcount))
     filename = 'metropolis_L%s_Tcount%s_initial%s_MC%s.txt' %(L, Tcount, initial, max_nr_of_cycles)
-    cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = read_file(filename)
+    T_in_cycle, cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = read_file(filename)
     Tcount += 1    
 
+    T_plot[i] = T_in_cycle[-1]
     nr_of_accepted_config_plot[i] = nr_of_accepted_config[-1]
     mean_E_plot[i] = mean_E[-1]
     mean_E2_plot[i] = mean_E2[-1]
@@ -82,44 +85,44 @@ for i in range(len(T)):
 
 if plot_exp_val == False:
     figure(1)
-    plot(T, nr_of_accepted_config_plot)
+    plot(T_plot, nr_of_accepted_config_plot)
     title('Number of accepted cycles \n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
     xlabel('temp')
     ylabel('nr of accepted config')
 
 if plot_exp_val == True:
     figure(1)
-    plot(T, mean_E_plot, '-o')
+    plot(T_plot, mean_E_plot, '-o')
     title('mean_E\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
     xlabel('T')
     ylabel('exp E')
     """
     figure(2)
-    plot(T, mean_E2_plot, '-o')
+    plot(T_plot, mean_E2_plot, '-o')
     title('mean_E2\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
     xlabel('T')
     ylabel('exp E2')
     """
     figure(3)
-    plot(T, C_v_plot, '-o')
+    plot(T_plot, C_v_plot, '-o')
     title('C_v\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
     xlabel('T')
     ylabel('C_v')
 
     figure(4)
-    plot(T, mean_absM_plot, '-o')
+    plot(T_plot, mean_absM_plot, '-o')
     title('mean_absM\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
     xlabel('T')
     ylabel('exp abs M')
     """
     figure(5)
-    plot(T, mean_M2_plot, '-o')
+    plot(T_plot, mean_M2_plot, '-o')
     title('mean_M2\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
     xlabel('T')
     ylabel('exp M2')
     """
     figure(6)
-    plot(T, chi_plot, '-o')
+    plot(T_plot, chi_plot, '-o')
     title('chi\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
     xlabel('T')
     ylabel('chi')
