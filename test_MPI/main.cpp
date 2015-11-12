@@ -13,6 +13,8 @@ int main(int numberOfArguments, char** argumentList)
     MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
     MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
 
+    cout << "numprocs " << numprocs << endl;
+
     double Tstart = 2.0;
     double Tend = 2.5;
     int numTemperatures = 11;
@@ -28,7 +30,8 @@ int main(int numberOfArguments, char** argumentList)
     for(int TIndex = TIndexStart; TIndex < TIndexEnd; TIndex++)
     {
         double T = temperatures[TIndex];
-        cout << "Hello I am processor " << myRank << " of total " << numprocs << " and T is: " << T << endl;
+        cout << "index= " << TIndex << " T= " << T << endl;
+        //cout << "Hello I am processor " << myRank << " of total " << numprocs << " and T is: " << T << endl;
     }
 
     MPI_Finalize();
