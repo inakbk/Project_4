@@ -43,11 +43,11 @@ def read_file(filename):
 ------------------------------------------------------------------------------------------
 """
 
-T = zeros(21)#linspace(2.25,2.44,21) #read T form file?
+T = zeros(31)#linspace(2.25,2.44,21) #read T form file?
 
 L = 20
 N = L**2
-max_nr_of_cycles = 1000000 #must delelig 10
+max_nr_of_cycles = 500000 #must delelig 10
 initial = 1
 plot_exp_val = True
 
@@ -67,10 +67,10 @@ Tcount = 0
 for i in range(len(T)):
     #os.system('./main %s %s %s %s %s' %(T[i], L, max_nr_of_cycles, initial, Tcount))
     filename = 'metropolis_L%s_Tcount%s_initial%s_MC%s.txt' %(L, Tcount, initial, max_nr_of_cycles)
-    T_in_cycle, cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = read_file(filename)
+    T_in_loop, cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = read_file(filename)
     Tcount += 1    
 
-    T_plot[i] = T_in_cycle[-1]
+    T_plot[i] = T_in_loop[-1]
     nr_of_accepted_config_plot[i] = nr_of_accepted_config[-1]
     mean_E_plot[i] = mean_E[-1]
     mean_E2_plot[i] = mean_E2[-1]

@@ -11,7 +11,8 @@ using namespace arma;
 int main(int numberOfArguments, char** argumentList)
 {
     int L = 20;
-    int nr_of_cycles = 100000;
+    int nr_of_cycles = 500000;
+
     int chosen_initial_state = 1; //integer; -1 for random state, 0 for L=2 highest energy and 1 for all spins up.
     vec dE = {4, 8}; //w is only used when dE>0
 
@@ -22,7 +23,7 @@ int main(int numberOfArguments, char** argumentList)
 
     double Tstart = 2.25;
     double Tend = 2.45;
-    int numTemperatures = 21;
+    int numTemperatures = 31;
     //double Tstep = (Tend - Tstart)/(numTemperatures-1);
     vec temperatures = linspace<vec>(Tstart,Tend,numTemperatures);
 
