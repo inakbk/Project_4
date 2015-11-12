@@ -42,12 +42,12 @@ def read_file(filename):
 ------------------------------------------------------------------------------------------
 """
 
-T = 1.0
+T = 2.0
 
-L = 20
+L = 80
 N = L**2
 max_nr_of_cycles = 100000 #must delelig 10
-initial = -1
+initial = 1
 
 #compiling once:
 #os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
@@ -64,7 +64,7 @@ cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = r
 
 figure(0)
 plot(cycles, nr_of_accepted_config)
-title('Number of accepted cycles \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
+title('Number of accepted cycles, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
 xlabel('MC cycles')
 ylabel('nr of accepted config')
 

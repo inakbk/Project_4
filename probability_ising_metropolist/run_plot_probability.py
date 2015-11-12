@@ -56,11 +56,11 @@ T = 1.0
 
 L = 20
 N = L**2
-max_nr_of_cycles = 10000 #must delelig 10
+max_nr_of_cycles = 100000 #must delelig 10
 initial = 1
 
 #compiling once:
-#os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
+os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
 
 Tcount = 200
 os.system('./main %s %s %s %s %s' %(T, L, max_nr_of_cycles, initial, Tcount))

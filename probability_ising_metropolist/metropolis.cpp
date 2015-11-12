@@ -133,7 +133,7 @@ void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L,
         myfile << "--------------" << endl;
 
         //starting counting at 500, equilibrium, saving energies
-        if(i >= 500)
+        if(i >= 5000)
         {
             myfile2 << "E= " << E << endl;
         }

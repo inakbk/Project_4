@@ -84,7 +84,7 @@ void oneFlip(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec
     }
 }
 
-void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L, vec w, int maximum_nr_of_cycles, int chosen_initial_state, int Tcount)
+void allMCcycles(Random &random_nr, mat &state, int &E, int &M, const double T, int L, vec w, int maximum_nr_of_cycles, int chosen_initial_state, int Tcount)
 {
     double N = L*L;
     // Random random_nr(-5);
