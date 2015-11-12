@@ -94,8 +94,16 @@ void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L,
     double mean_M2 = 0;
     int number_of_accepted_cycles = 0;
 
+    //reaching equilibrium state first:
+    for(int i=1; i<=10000;++i)
+    {
+        //one MC cycle:
+        for(int n=0; n<N; ++n)
+        {
+            oneFlip(random_nr, state, E, M, T, L, w, number_of_accepted_cycles);
+        }
+    }
 
-    //cout << Tcount << endl;
     string filename = "metropolis_L" + to_string(L) + "_Tcount" + to_string(Tcount) + "_initial" + to_string(chosen_initial_state) + "_MC" + to_string(maximum_nr_of_cycles) + ".txt";
     ofstream myfile;
     myfile.open(filename);
@@ -108,30 +116,27 @@ void allMCcycles(Random &random_nr, mat &state, int &E, int &M, double T, int L,
             oneFlip(random_nr, state, E, M, T, L, w, number_of_accepted_cycles);
         }
 
+        //calculating mean values now that equilibrium is reached
         mean_E += E;
         mean_E2 += E*E;
         mean_absM += fabs(M);
         mean_M2 += M*M;
-
-        //only printing to after reached equilibrium
-        if(i==100000)
-        {
-            //normalizing mean values and printing to file (values per spin, deviding by N)
-            double norm = 1./i;
-            myfile << "nr_of_cycles= " << i << endl;
-            myfile << "nr_of_accepted_cycles= " << number_of_accepted_cycles << endl;
-
-            myfile << "mean_E= "<< mean_E*norm/N << endl;
-            myfile << "mean_E2= " << mean_E2*norm/N << endl;
-            myfile << "C_V= " << ( mean_E2*norm - (mean_E*norm)*(mean_E*norm) )/(T*T)/N << endl;
-
-            myfile << "mean_absM= " << mean_absM*norm/N << endl;
-            myfile << "mean_M2= " << mean_M2*norm/N << endl;
-            myfile << "chi= " << ( mean_M2*norm - (mean_absM*norm)*(mean_absM*norm) )/T/N << endl;
-            myfile << "T= " << T << endl;
-            myfile << "--------------" << endl;
-        }
     }
+
+    //normalizing mean values and printing to file when done (values per spin, deviding by N)
+    double norm = 1./maximum_nr_of_cycles;
+    myfile << "nr_of_cycles= " << maximum_nr_of_cycles << endl;
+    myfile << "nr_of_accepted_cycles= " << number_of_accepted_cycles << endl;
+
+    myfile << "mean_E= "<< mean_E*norm/N << endl;
+    myfile << "mean_E2= " << mean_E2*norm/N << endl;
+    myfile << "C_V= " << ( mean_E2*norm - (mean_E*norm)*(mean_E*norm) )/(T*T)/N << endl;
+
+    myfile << "mean_absM= " << mean_absM*norm/N << endl;
+    myfile << "mean_M2= " << mean_M2*norm/N << endl;
+    myfile << "chi= " << ( mean_M2*norm - (mean_absM*norm)*(mean_absM*norm) )/T/N << endl;
+    myfile << "T= " << T << endl;
+    myfile << "--------------" << endl;
 
     myfile.close();
 }
