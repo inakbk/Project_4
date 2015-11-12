@@ -4,25 +4,6 @@ import os as os
 """
 ------------------------------------------------------------------------------------------
 """
-def exp_E_theory(T, N):
-    return -8.*sinh(8./T)/(cosh(8./T) + 3)/N
-
-def exp_E2_theory(T, N):
-    return 64.*cosh(8./T)/(cosh(8./T) + 3)/N
-
-def C_v_theory(T, N):
-    return ( 64./(T*T) )*( 1 + 3*cosh(8./T) )/( (cosh(8./T) + 3)*(cosh(8./T) + 3) )/N
-
-def exp_absM_theory(T, N):
-    return 2.*(exp(8./T) + 2)/(cosh(8./T) + 3)/N
-
-def exp_M2_theory(T, N):
-    return 8*(exp(8./T) + 1)/(cosh(8./T) + 3)/N
-
-def chi_theory(T, N):
-    #return (8./T)*(exp(8./T) + 1)/(cosh(8./T) + 3) #this one is only working for small L
-    return (4./T)*( ( 2*(exp(8./T) + 1)*(cosh(8./T) + 3) - (exp(8./T) + 2)**2 )/( cosh(8./T) + 3 )**2 )/N
-
 def read_file(filename):
     infile = open(filename, "r")
     all_lines = infile.readlines()
@@ -61,15 +42,16 @@ def read_file(filename):
 ------------------------------------------------------------------------------------------
 """
 
-T = linspace(1,9,20)
+T = linspace(1,9,10)
 
-L = 2
+L = 20
 N = L**2
-max_nr_of_cycles = 50000 #must delelig 10
+max_nr_of_cycles = 10000 #must delelig 10
 initial = -1
+plot_exp_val = True
 
 #compiling once:
-os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
+#os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
 
 nr_of_accepted_config_plot = zeros(len(T))
 mean_E_plot = zeros(len(T))
@@ -81,7 +63,7 @@ chi_plot = zeros(len(T))
 
 Tcount = 0
 for i in range(len(T)):
-    os.system('./main %s %s %s %s %s' %(T[i], L, max_nr_of_cycles, initial, Tcount))
+    #os.system('./main %s %s %s %s %s' %(T[i], L, max_nr_of_cycles, initial, Tcount))
     filename = 'metropolis_L%s_Tcount%s_initial%s_MC%s.txt' %(L, Tcount, initial, max_nr_of_cycles)
     cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = read_file(filename)
     Tcount += 1    
@@ -94,114 +76,53 @@ for i in range(len(T)):
     mean_M2_plot[i] = mean_M2[-1]
     chi_plot[i] = chi[-1]
 
-#plot against T, accepted:
-"""
-figure(1)
-plot(T, nr_of_accepted_config_plot)
-title('Number of accepted cycles, temp range: [%s,%s] \n #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
-xlabel('temp')
-ylabel('nr of accepted config')
-"""
-
 """
 ------------------------------------------------------------------------------------------
 """
-#plot against T:
 
+if plot_exp_val == False:
+    figure(1)
+    plot(T, nr_of_accepted_config_plot)
+    title('Number of accepted cycles \n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    xlabel('temp')
+    ylabel('nr of accepted config')
 
-figure(1)
-plot(T, mean_E_plot)
-hold('on')
-plot(T, exp_E_theory(T,N))
-title('mean_E')
-legend(['numerical', 'theory'])
-xlabel('T')
-ylabel('exp E')
+if plot_exp_val == True:
+    figure(1)
+    plot(T, mean_E_plot)
+    title('mean_E\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    xlabel('T')
+    ylabel('exp E')
 
-figure(2)
-plot(T, mean_E2_plot)
-hold('on')
-plot(T, exp_E2_theory(T,N))
-title('mean_E2')
-legend(['numerical', 'theory'])
-xlabel('T')
-ylabel('exp E2')
+    figure(2)
+    plot(T, mean_E2_plot)
+    title('mean_E2\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    xlabel('T')
+    ylabel('exp E2')
 
-figure(3)
-plot(T, C_v_plot)
-hold('on')
-plot(T, C_v_theory(T,N))
-title('C_v')
-legend(['numerical', 'theory'])
-xlabel('T')
-ylabel('C_v')
+    figure(3)
+    plot(T, C_v_plot)
+    title('C_v\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    xlabel('T')
+    ylabel('C_v')
 
-figure(4)
-plot(T, mean_absM_plot)
-hold('on')
-plot(T, exp_absM_theory(T,N))
-title('mean_absM')
-legend(['numerical', 'theory'])
-xlabel('T')
-ylabel('exp abs M')
+    figure(4)
+    plot(T, mean_absM_plot)
+    title('mean_absM\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    xlabel('T')
+    ylabel('exp abs M')
 
-figure(5)
-plot(T, mean_M2_plot)
-hold('on')
-plot(T, exp_M2_theory(T,N))
-title('mean_M2')
-legend(['numerical', 'theory'])
-xlabel('T')
-ylabel('exp M2')
+    figure(5)
+    plot(T, mean_M2_plot)
+    title('mean_M2\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    xlabel('T')
+    ylabel('exp M2')
 
-figure(6)
-plot(T, chi_plot)
-hold('on')
-plot(T, chi_theory(T,N))
-title('chi')
-legend(['numerical', 'theory'])
-xlabel('T')
-ylabel('chi')
-
-
-
-"""
-figure(1)
-plot(T, abs(mean_E_plot - exp_E_theory(T,N)))
-title('error mean_E')
-xlabel('T')
-ylabel('error')
-
-figure(2)
-plot(T, abs(mean_E2_plot - exp_E2_theory(T,N)))
-title('error mean_E2')
-xlabel('T')
-ylabel('error')
-
-figure(3)
-plot(T, abs(C_v_plot - C_v_theory(T,N)))
-title('error C_v')
-xlabel('T')
-ylabel('error')
-
-figure(4)
-plot(T, abs(mean_absM_plot - exp_absM_theory(T,N)))
-title('error mean_absM')
-xlabel('T')
-ylabel('error')
-
-figure(5)
-plot(T, abs(mean_M2_plot - exp_M2_theory(T,N)))
-title('error mean_M2')
-xlabel('T')
-ylabel('error')
-
-figure(6)
-plot(T, abs(chi_plot - chi_theory(T,N)))
-title('error chi')
-xlabel('T')
-ylabel('error')
-"""
+    figure(6)
+    plot(T, chi_plot)
+    title('chi\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
+    xlabel('T')
+    ylabel('chi')
 
 show()
 

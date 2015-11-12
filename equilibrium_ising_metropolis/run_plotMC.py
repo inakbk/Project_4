@@ -64,7 +64,7 @@ cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = r
 
 figure(0)
 plot(cycles, nr_of_accepted_config)
-title('T=%s' %T)
+title('Number of accepted cycles \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
 xlabel('MC cycles')
 ylabel('nr of accepted config')
 
