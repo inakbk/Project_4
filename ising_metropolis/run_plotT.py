@@ -42,16 +42,16 @@ def read_file(filename):
 ------------------------------------------------------------------------------------------
 """
 
-T = linspace(1,9,10)
+T = linspace(2,3,20)
 
 L = 20
 N = L**2
-max_nr_of_cycles = 10000 #must delelig 10
+max_nr_of_cycles = 100000 #must delelig 10
 initial = 1
-plot_exp_val = False
+plot_exp_val = True
 
 #compiling once:
-#os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
+os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
 
 nr_of_accepted_config_plot = zeros(len(T))
 mean_E_plot = zeros(len(T))
@@ -89,37 +89,37 @@ if plot_exp_val == False:
 
 if plot_exp_val == True:
     figure(1)
-    plot(T, mean_E_plot)
+    plot(T, mean_E_plot, '-o')
     title('mean_E\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
     xlabel('T')
     ylabel('exp E')
-
+    """
     figure(2)
-    plot(T, mean_E2_plot)
+    plot(T, mean_E2_plot, '-o')
     title('mean_E2\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
     xlabel('T')
     ylabel('exp E2')
-
+    """
     figure(3)
-    plot(T, C_v_plot)
+    plot(T, C_v_plot, '-o')
     title('C_v\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
     xlabel('T')
     ylabel('C_v')
 
     figure(4)
-    plot(T, mean_absM_plot)
+    plot(T, mean_absM_plot, '-o')
     title('mean_absM\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
     xlabel('T')
     ylabel('exp abs M')
-
+    """
     figure(5)
-    plot(T, mean_M2_plot)
+    plot(T, mean_M2_plot, '-o')
     title('mean_M2\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
     xlabel('T')
     ylabel('exp M2')
-
+    """
     figure(6)
-    plot(T, chi_plot)
+    plot(T, chi_plot, '-o')
     title('chi\n temp range: [%s,%s] #MCcycles= %s, L= %s, initial_state=%s' %(T[0],T[-1], max_nr_of_cycles, L, initial))
     xlabel('T')
     ylabel('chi')
