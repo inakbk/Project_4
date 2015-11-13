@@ -10,7 +10,7 @@ using namespace arma;
 
 int main(int numberOfArguments, char** argumentList)
 {
-    int L = 40;
+    int L = 20;
 
     int nr_of_cycles = 500000;
     int chosen_initial_state = 1; //integer; -1 for random state, 0 for L=2 highest energy and 1 for all spins up.
@@ -21,9 +21,9 @@ int main(int numberOfArguments, char** argumentList)
     MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
     MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
 
-    double Tstart = 2.25;
-    double Tend = 2.45;
-    int numTemperatures = 21;
+    double Tstart = 2.0;
+    double Tend = 2.4;
+    int numTemperatures = 11;
     vec temperatures = linspace<vec>(Tstart,Tend,numTemperatures);
 
     int numberOfTemperaturesPerProcessor = numTemperatures/numprocs;

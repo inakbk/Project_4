@@ -43,13 +43,12 @@ def read_file(filename):
 ------------------------------------------------------------------------------------------
 """
 
-Tcount = 21
-L = 40
+Tcount = 11
+L = 20
 max_nr_of_cycles = 500000 #must delelig 10
 
 N = L**2
 initial = 1
-plot_exp_val = True
 
 T_plot = zeros(Tcount)
 nr_of_accepted_config_plot = zeros(Tcount)
@@ -60,67 +59,54 @@ mean_absM_plot = zeros(Tcount)
 mean_M2_plot = zeros(Tcount)
 chi_plot = zeros(Tcount)
 
-for i in range(Tcount):
-    filename = 'Tcount20/metropolis_L%s_Tcount%s_initial%s_MC%s.txt' %(L, i, initial, max_nr_of_cycles)
-    T_in_loop, cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = read_file(filename)   
+for L in [20,40,60,80]:
+    for i in range(Tcount):
+        filename = 'Tcount20/metropolis_L%s_Tcount%s_initial%s_MC%s.txt' %(L, i, initial, max_nr_of_cycles)
+        T_in_loop, cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = read_file(filename)   
 
-    T_plot[i] = T_in_loop[-1]
-    nr_of_accepted_config_plot[i] = nr_of_accepted_config[-1]
-    mean_E_plot[i] = mean_E[-1]
-    mean_E2_plot[i] = mean_E2[-1]
-    C_v_plot[i] = C_v[-1]
-    mean_absM_plot[i] = mean_absM[-1]
-    mean_M2_plot[i] = mean_M2[-1]
-    chi_plot[i] = chi[-1]
+        T_plot[i] = T_in_loop[-1]
+        nr_of_accepted_config_plot[i] = nr_of_accepted_config[-1]
+        mean_E_plot[i] = mean_E[-1]
+        mean_E2_plot[i] = mean_E2[-1]
+        C_v_plot[i] = C_v[-1]
+        mean_absM_plot[i] = mean_absM[-1]
+        mean_M2_plot[i] = mean_M2[-1]
+        chi_plot[i] = chi[-1]
 
-"""
-------------------------------------------------------------------------------------------
-"""
-
-if plot_exp_val == False:
     figure(1)
-    plot(T_plot, nr_of_accepted_config_plot)
-    title('Number of accepted cycles \n #MCcycles= %s, L= %s, initial_state=%s' %(max_nr_of_cycles, L, initial))
-    xlabel('temp')
-    ylabel('nr of accepted config')
-
-if plot_exp_val == True:
-    figure(1)
+    subplot(2,1,1)
     plot(T_plot, mean_E_plot, '-o')
-    title('mean_E\n #MCcycles= %s, L= %s, initial_state=%s' %(max_nr_of_cycles, L, initial))
-    xlabel('T_plot')
-    ylabel('exp E')
-    """
-    figure(2)
-    plot(T_plot, mean_E2_plot, '-o')
-    title('mean_E2\n #MCcycles= %s, L= %s, initial_state=%s' %(max_nr_of_cycles, L, initial))
-    xlabel('T_plot')
-    ylabel('exp E2')
-    """
-    figure(3)
-    plot(T_plot, C_v_plot, '-o')
-    title('C_v\n #MCcycles= %s, L= %s, initial_state=%s' %(max_nr_of_cycles, L, initial))
-    xlabel('T_plot')
-    ylabel('C_v')
+    title('#MCcycles= %s, initial_state=%s' %(max_nr_of_cycles, initial), fontsize=16)
+    ylabel('$<E>/J$', fontsize=18)
 
-    figure(4)
+    subplot(2,1,2)
     plot(T_plot, mean_absM_plot, '-o')
-    title('mean_absM\n #MCcycles= %s, L= %s, initial_state=%s' %(max_nr_of_cycles, L, initial))
-    xlabel('T_plot')
-    ylabel('exp abs M')
-    """
-    figure(5)
-    plot(T_plot, mean_M2_plot, '-o')
-    title('mean_M2\n #MCcycles= %s, L= %s, initial_state=%s' %(max_nr_of_cycles, L, initial))
-    xlabel('T_plot')
-    ylabel('exp M2')
-    """
-    figure(6)
-    plot(T_plot, chi_plot, '-o')
-    title('chi\n #MCcycles= %s, L= %s, initial_state=%s' %(max_nr_of_cycles, L, initial))
-    xlabel('T_plot')
-    ylabel('chi')
+    xlabel('$k_bT$', fontsize=18)
+    ylabel('$<|M|>$', fontsize=18)
 
+    figure(2)
+    subplot(2,1,1)
+    plot(T_plot, C_v_plot, '-o')
+    title('#MCcycles= %s, initial_state=%s' %(max_nr_of_cycles, initial), fontsize=16)
+    ylabel('$C_v/Jk_b$', fontsize=18)
+
+    subplot(2,1,2)
+    plot(T_plot, chi_plot, '-o')
+    xlabel('$k_bT$', fontsize=18)
+    ylabel('$\chi$', fontsize=18)
+figure(1)
+subplot(2,1,1)
+legend(['L=20','L=40','L=60','L=80'], loc='lower right')
+subplot(2,1,2)
+legend(['L=20','L=40','L=60','L=80'], loc='lower left')
+
+figure(2)
+subplot(2,1,1)
+legend(['L=20','L=40','L=60','L=80'])
+subplot(2,1,2)
+legend(['L=20','L=40','L=60','L=80'])
+
+#tight_layout()
 show()
 
 
