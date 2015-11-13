@@ -65,19 +65,56 @@ T = 1.0
 
 L = 2
 N = L**2
-max_nr_of_cycles = 500000 #must delelig 10
+max_nr_of_cycles = 100000 #must delelig 10
 initial = 1
 error_plot = True
 
 #compiling once:
 #os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
 
-Tcount = 0
-os.system('./main %s %s %s %s %s' %(T, L, max_nr_of_cycles, initial, Tcount))
+Tcount = 100
+#os.system('./main %s %s %s %s %s' %(T, L, max_nr_of_cycles, initial, Tcount))
 filename = 'metropolis_L%s_Tcount%s_initial%s_MC%s.txt' %(L, Tcount, initial, max_nr_of_cycles)
 cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = read_file(filename)
 
 #plot against MC cycles:
+
+if error_plot == True:
+    figure(1)
+    subplot(3,1,1)
+    plot(cycles, abs(mean_E - exp_E_theory(T,N)), 'b')
+    title('$k_bT=$ %s, L= %s, initial_state=%s' %(T, L, initial), fontsize=16)
+    ylabel('Absolute error', fontsize=14)
+    legend(['Error $<E>/J$'], fontsize=14)
+
+    subplot(3,1,2)
+    plot(cycles, abs(mean_E2 - exp_E2_theory(T,N)*ones(len(cycles))), 'r')
+    ylabel('Absolute error', fontsize=14)
+    legend(['Error $<E^2>/J^2$'], fontsize=14)
+
+    subplot(3,1,3)
+    plot(cycles, abs(C_v - C_v_theory(T,N)*ones(len(cycles))), 'g')
+    xlabel('$t$', fontsize=18)
+    ylabel('Absolute error', fontsize=14)
+    legend(['Error $C_v/Jk_b$'])
+
+    figure(2)
+    subplot(3,1,1)
+    plot(cycles, abs(mean_absM - exp_absM_theory(T,N)*ones(len(cycles))), 'b')
+    title('$k_bT=$ %s, L= %s, initial_state=%s' %(T, L, initial), fontsize=16)
+    ylabel('Absolute error', fontsize=14)
+    legend(['Error $<|\mathcal{M}|>$'], fontsize=14)
+
+    subplot(3,1,2)
+    plot(cycles, abs(mean_M2 - exp_M2_theory(T,N)*ones(len(cycles))), 'r')
+    ylabel('Absolute error', fontsize=14)
+    legend(['Error $<\mathcal{M}^2>$'], fontsize=14)
+
+    subplot(3,1,3)
+    plot(cycles, abs(chi - chi_theory(T,N)*ones(len(cycles))), 'g')
+    xlabel('$t$', fontsize=18)
+    ylabel('Absolute error', fontsize=14)
+    legend(['Error $\chi$'], fontsize=14)
 
 if error_plot == False:
     figure(1)
@@ -133,43 +170,6 @@ if error_plot == False:
     legend(['numerical', 'theory'])
     xlabel('MC cycles')
     ylabel('chi')
-
-if error_plot == True:
-    figure(1)
-    plot(cycles, abs(mean_E - exp_E_theory(T,N)))
-    title('error mean_E, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
-    xlabel('MC cycles')
-    ylabel('error')
-
-    figure(2)
-    plot(cycles, abs(mean_E2 - exp_E2_theory(T,N)*ones(len(cycles))))
-    title('error mean_E2, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
-    xlabel('MC cycles')
-    ylabel('error')
-
-    figure(3)
-    plot(cycles, abs(C_v - C_v_theory(T,N)*ones(len(cycles))))
-    title('error C_v, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
-    xlabel('MC cycles')
-    ylabel('error')
-
-    figure(4)
-    plot(cycles, abs(mean_absM - exp_absM_theory(T,N)*ones(len(cycles))))
-    title('error mean_absM, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
-    xlabel('MC cycles')
-    ylabel('error')
-
-    figure(5)
-    plot(cycles, abs(mean_M2 - exp_M2_theory(T,N)*ones(len(cycles))))
-    title('error mean_M2, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
-    xlabel('MC cycles')
-    ylabel('error')
-
-    figure(6)
-    plot(cycles, abs(chi - chi_theory(T,N)*ones(len(cycles))))
-    title('error chi, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
-    xlabel('MC cycles')
-    ylabel('error')
 
 show()
 
