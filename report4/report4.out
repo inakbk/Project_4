@@ -8,7 +8,7 @@
 \BOOKMARK [2][-]{subsection.3.2}{Coding E, M and w efficiently}{section.3}% 8
 \BOOKMARK [1][-]{section.4}{"Experiment"}{}% 9
 \BOOKMARK [2][-]{subsection.4.1}{Testing the implementation of the model and algorithm}{section.4}% 10
-\BOOKMARK [2][-]{subsection.4.2}{Studying the number of Monte Carlo cycles}{section.4}% 11
+\BOOKMARK [2][-]{subsection.4.2}{Equilibrium time}{section.4}% 11
 \BOOKMARK [2][-]{subsection.4.3}{Studying .... close to the critical temp}{section.4}% 12
 \BOOKMARK [2][-]{subsection.4.4}{Calculations to find Tc}{section.4}% 13
 \BOOKMARK [1][-]{section.5}{Results and output}{}% 14

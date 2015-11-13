@@ -4,24 +4,6 @@ import os as os
 """
 ------------------------------------------------------------------------------------------
 """
-def exp_E_theory(T, N):
-    return -8.*sinh(8./T)/(cosh(8./T) + 3)/N
-
-def exp_E2_theory(T, N):
-    return 64.*cosh(8./T)/(cosh(8./T) + 3)/N
-
-def C_v_theory(T, N):
-    return ( 64./(T*T) )*( 1 + 3*cosh(8./T) )/( (cosh(8./T) + 3)*(cosh(8./T) + 3) )/N
-
-def exp_absM_theory(T, N):
-    return 2.*(exp(8./T) + 2)/(cosh(8./T) + 3)/N
-
-def exp_M2_theory(T, N):
-    return 8*(exp(8./T) + 1)/(cosh(8./T) + 3)/N
-
-def chi_theory(T, N):
-    #return (8./T)*(exp(8./T) + 1)/(cosh(8./T) + 3) #this one is only working for small L
-    return (4./T)*( ( 2*(exp(8./T) + 1)*(cosh(8./T) + 3) - (exp(8./T) + 2)**2 )/( cosh(8./T) + 3 )**2 )/N
 
 def read_file(filename):
     infile = open(filename, "r")
@@ -63,11 +45,10 @@ def read_file(filename):
 
 T = 1.0
 
-L = 2
+L = 20
 N = L**2
-max_nr_of_cycles = 100000 #must delelig 10
+max_nr_of_cycles = 500000 #must delelig 10
 initial = 1
-error_plot = True
 
 #compiling once:
 #os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
@@ -79,97 +60,49 @@ cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = r
 
 #plot against MC cycles:
 
-if error_plot == True:
-    figure(1)
-    subplot(3,1,1)
-    plot(cycles, abs(mean_E - exp_E_theory(T,N)), 'b')
-    title('$k_bT=$ %s, L= %s, initial_state=%s' %(T, L, initial), fontsize=16)
-    ylabel('Absolute error', fontsize=14)
-    legend(['Error $<E>/J$'], fontsize=14)
+figure(1)
+suptitle('L= %s, $k_bT=$ %s' %(L, T), fontsize=20)
+subplot(2,2,1)
+semilogx(cycles, mean_E, 'b')
+title('Ordered initial state', fontsize=16)
+ylabel('$<E>/J$', fontsize=18)
 
-    subplot(3,1,2)
-    plot(cycles, abs(mean_E2 - exp_E2_theory(T,N)*ones(len(cycles))), 'r')
-    ylabel('Absolute error', fontsize=14)
-    legend(['Error $<E^2>/J^2$'], fontsize=14)
+subplot(2,2,3)
+semilogx(cycles, mean_absM, 'r')
+ylabel('$<|\mathcal{M}|>$', fontsize=18)
+xlabel('$t$', fontsize=18)
 
-    subplot(3,1,3)
-    plot(cycles, abs(C_v - C_v_theory(T,N)*ones(len(cycles))), 'g')
-    xlabel('$t$', fontsize=18)
-    ylabel('Absolute error', fontsize=14)
-    legend(['Error $C_v/Jk_b$'])
+figure(2)
+grid('on')
+subplot(2,1,1)
+semilogx(cycles, nr_of_accepted_config/(cycles*N))
+title('T=%s' %T, fontsize=20)
+legend(['Ordered initial state'], fontsize=14, loc='middle right')
+ylabel('Accepted per spin', fontsize=14)
 
-    figure(2)
-    subplot(3,1,1)
-    plot(cycles, abs(mean_absM - exp_absM_theory(T,N)*ones(len(cycles))), 'b')
-    title('$k_bT=$ %s, L= %s, initial_state=%s' %(T, L, initial), fontsize=16)
-    ylabel('Absolute error', fontsize=14)
-    legend(['Error $<|\mathcal{M}|>$'], fontsize=14)
+initial = -1
+#os.system('./main %s %s %s %s %s' %(T, L, max_nr_of_cycles, initial, Tcount))
+filename = 'metropolis_L%s_Tcount%s_initial%s_MC%s.txt' %(L, Tcount, initial, max_nr_of_cycles)
+cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = read_file(filename)
 
-    subplot(3,1,2)
-    plot(cycles, abs(mean_M2 - exp_M2_theory(T,N)*ones(len(cycles))), 'r')
-    ylabel('Absolute error', fontsize=14)
-    legend(['Error $<\mathcal{M}^2>$'], fontsize=14)
+figure(1)
+subplot(2,2,2)
+semilogx(cycles, mean_E, 'k')
+title('Random initial state', fontsize=16)
 
-    subplot(3,1,3)
-    plot(cycles, abs(chi - chi_theory(T,N)*ones(len(cycles))), 'g')
-    xlabel('$t$', fontsize=18)
-    ylabel('Absolute error', fontsize=14)
-    legend(['Error $\chi$'], fontsize=14)
+subplot(2,2,4)
+semilogx(cycles, mean_absM, 'g')
+xlabel('$t$', fontsize=18)
 
-if error_plot == False:
-    figure(1)
-    plot(cycles, mean_E)
-    hold('on')
-    plot(cycles, exp_E_theory(T,N)*ones(len(cycles)))
-    title('mean_E, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
-    legend(['numerical', 'theory'])
-    xlabel('MC cycles')
-    ylabel('mean_E')
+figure(2)
+subplot(2,1,2)
+semilogx(cycles, nr_of_accepted_config/(cycles*N))
+legend(['Random initial state'], fontsize=14)
+xlabel('$t$', fontsize=18)
+ylabel('Accepted per spin', fontsize=14)
 
-    figure(2)
-    plot(cycles, mean_E2)
-    hold('on')
-    plot(cycles, exp_E2_theory(T,N)*ones(len(cycles)))
-    title('mean_E2, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
-    legend(['numerical', 'theory'])
-    xlabel('MC cycles')
-    ylabel('mean_E2')
-
-    figure(3)
-    plot(cycles, C_v)
-    hold('on')
-    plot(cycles, C_v_theory(T,N)*ones(len(cycles)))
-    title('C_v, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
-    legend(['numerical', 'theory'])
-    xlabel('MC cycles')
-    ylabel('C_v')
-
-    figure(4)
-    plot(cycles, mean_absM)
-    hold('on')
-    plot(cycles, exp_absM_theory(T,N)*ones(len(cycles)))
-    title('mean_absM, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
-    legend(['numerical', 'theory'])
-    xlabel('MC cycles')
-    ylabel('mean_absM')
-
-    figure(5)
-    plot(cycles, mean_M2)
-    hold('on')
-    plot(cycles, exp_M2_theory(T,N)*ones(len(cycles)))
-    title('mean_M2, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
-    legend(['numerical', 'theory'])
-    xlabel('MC cycles')
-    ylabel('mean_M2')
-
-    figure(6)
-    plot(cycles, chi)
-    hold('on')
-    plot(cycles, chi_theory(T,N)*ones(len(cycles)))
-    title('chi, T= %s \n #MCcycles= %s, L= %s, initial_state=%s' %(T, max_nr_of_cycles, L, initial))
-    legend(['numerical', 'theory'])
-    xlabel('MC cycles')
-    ylabel('chi')
+#tight_layout(pad=0.4, w_pad=0.5, h_pad=1.0)
+tight_layout()
 
 show()
 

@@ -8,7 +8,7 @@
 \contentsline {subsection}{\numberline {3.2}Coding $\Delta E$, $\Delta \mathcal {M}$ and w efficiently}{8}{subsection.3.2}
 \contentsline {section}{\numberline {4}"Experiment"}{9}{section.4}
 \contentsline {subsection}{\numberline {4.1}Testing the implementation of the model and algorithm}{9}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Studying the number of Monte Carlo cycles}{9}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.2}Equilibrium time}{9}{subsection.4.2}
 \contentsline {subsection}{\numberline {4.3}Studying .... close to the critical temp}{9}{subsection.4.3}
 \contentsline {subsection}{\numberline {4.4}Calculations to find $T_c$}{9}{subsection.4.4}
 \contentsline {section}{\numberline {5}Results and output}{9}{section.5}

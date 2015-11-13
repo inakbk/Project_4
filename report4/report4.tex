@@ -440,8 +440,6 @@ something something random initial state ??? p. 439, dependence T
 \section{"Experiment"}
 \subsection{Testing the implementation of the model and algorithm}
 
-
-
 \begin{figure}[htp]
 \caption{noe? everything per spin}
 \centering
@@ -455,7 +453,6 @@ something something random initial state ??? p. 439, dependence T
 \includegraphics[width=\textwidth]{figures_L2/theoryM.png}
 \label{fig:theory M}
 \end{figure}
-
 
 \begin{figure}[htp]
 \caption{noe? everything per spin}
@@ -472,9 +469,43 @@ something something random initial state ??? p. 439, dependence T
 \end{figure}
 
 see that equilibrium/ok error at t 20000
+equilibrium goes very fast for the L2 system, but the error gets small after 20000 because need enough statistics to equal out the large starting values? (no started in lowest energy?)
+
 most of error is in squared
 
-\subsection{Studying the number of Monte Carlo cycles}
+so it is reasonable to always use at least 20000
+
+\subsection{Equilibrium time}
+
+\begin{figure}[htp]
+\caption{noe? everything per spin}
+\centering
+\includegraphics[width=\textwidth]{equilibrium/equilibrium_T1_MC.png}
+\label{fig: equilibrium T1}
+\end{figure}
+
+\begin{figure}[htp]
+\caption{noe? everything per spin}
+\centering
+\includegraphics[width=\textwidth]{equilibrium/equilibrium_T2_MC.png}
+\label{fig: equilibrium T2}
+\end{figure}
+
+
+\begin{figure}[htp]
+\caption{noe? everything per spin}
+\centering
+\includegraphics[width=\textwidth]{equilibrium/accepted_T1_MC.png}
+\label{fig: accepted T1}
+\end{figure}
+
+\begin{figure}[htp]
+\caption{noe? everything per spin}
+\centering
+\includegraphics[width=\textwidth]{equilibrium/accepted_T2_MC.png}
+\label{fig:  accepted T2}
+\end{figure}
+
 
 
 \subsection{Studying .... close to the critical temp}
