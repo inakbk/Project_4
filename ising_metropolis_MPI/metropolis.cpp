@@ -30,10 +30,9 @@ void initialState(Random &random_init_nr, mat &state, int &E, int &M, int &L, in
         {
             for(int j=0; j<L; ++j)
             {
-                if(random_init_nr.nextDouble() < 0.5) // changing elements randomly, same prob. to be < og > 0.5?
+                if(random_init_nr.nextDouble() < 0.5)
                 {
                     state(i,j) = -1;
-                    //cout << "hello!!! random elem. (" << i << ", " << j << ")" << endl;
                 }
             }
         }
