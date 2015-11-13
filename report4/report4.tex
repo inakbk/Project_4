@@ -356,17 +356,85 @@ These theoretical values will be used to test the implementation of the numerica
 \section{Numerical methods}
 bla bla theory and the programs
 \subsection{Metropolis algorithm}
+See notes?
+
+Start out with an initial state, random or ordered
 
 \begin{enumerate}
-\item 
+\item The system are in a spin state with energy E
+\item Create a trial state with the trial energy $E_t$ by flipping one spin
+\item Compute $\Delta E = E_t - E$
+\begin{itemize}
+\item If $\Delta E \leq 0$
+\begin{itemize}
+\item Accept the trial state as the new state 
+\end{itemize}
+\item If $\Delta E >0$ calculate $w = e^{-\beta \Delta E}$ and create a random number $r$
+\begin{itemize}
+\item If $r\leq w$ (the metropolis test): Accept the trial state as the new state 
+\item Else discard the trial state (do nothing with the state)
+\end{itemize}
+\end{itemize}
+\item Do 1.-3. $L\times L$ times (one MC cycle)
+\item Update mean values 
+\item Reapeat 1.-6. untill enough statistics is sampled, the desired number of MC cycles
 \end{enumerate}
 
 
-\subsection{Coding dE  and w efficiently}
-Finding expressions for the difference in the energy 
+\textbf{Psedocode:}
+\begin{lstlisting}
+for numberOfTemperatures:
+{
+	//create initial state here
+	//calculate initial energy and magnetization here
+	for numberoOfMCcycles:
+	{
+		for numberOfspins:
+		{
+			//do one spin flip here
+		}
+		//update mean values here
+		//print mean values to file here
+	}	
+	//or print values to file here
+}
+
+//then read data from file and plot in python
+\end{lstlisting}
 
 
+for some of the files temperature loop is left in python code, which also compiles and runs the cpp code
 
+should discard contributions to mean vals before equilibrium
+
+
+\subsection{Coding $\Delta E$, $\Delta \mathcal{M}$  and w efficiently}
+We wish to run the simulations for large numbers of Monte Carlo cycles $~10^5$. It is therefore very important to code the calculation of $\Delta E$ efficiently because it will be calculated $N$ times each Monte Carlo cycle. 
+
+The difference in the energy can be expressed as:
+\begin{align*}
+\Delta E = E_2 - E_1 = -J\sum_{<kl>}^N s_{k,2}s_{l,2} + J\sum_{<kl>}^N s_{k,1}s_{l,1}
+\end{align*}
+where the $l$ index is the spin that was flipped and $k$ the neighbours of $l$.  We only flip one spin at a time, so the neighbours of $s_l$ are unchanged meaning that $s_{k,2} = s_{k,1} = s_k$. The difference in energy can then be written as:
+\[
+\Delta E = J\sum_{<kl>}^N s_ks_{l,1} - J\sum_{<kl>}^N s_ks_{l,2} = J\sum_{<kl>}^N s_k(s_{l,1} - s_{l,2} )
+\]
+The spin can only take two values, so $s_{l,1}$ is either 1 or -1. If $s_{l,1}=1$ then after the flip $s_{l,2} = -1$ and $s_{l,1} - s_{l,2} = 1 - (-1) = 2$. If $s_{l,1}=-1$ then after the flip $s_{l,2} = 1$ and $s_{l,1} - s_{l,2} = -1 - 1 = -2$. We can therefore write $s_{l,1} - s_{l,2} = 2s_{l,1}$ and then we obtain:
+\[
+\Delta E = J\sum_{<kl>}^N s_k\cdot 2s_{l,1} = 2Js_{l,1}\sum_{<k>}^N s_k
+\]
+which is the same as in theory????when doing by hand energy?
+
+Similarly for the magnetization:
+\begin{align*}
+\Delta \mathcal{M} &= \mathcal{M}_2 - \mathcal{M}_1 = \sum_i^N s_{i,2} - \sum_i^N s_{i,1} = \sum_i^N (s_{i,2} -  s_{i,1}) = s_{l,2} - s_{l,1} = -2s_{l,1}\\
+\Rightarrow \mathcal{M}_2 &= \mathcal{M}_1 - 2s_{l,1}
+\end{align*}
+
+This way of calculating the difference in energy and magnetization makes the algorithm for flipping one spin run faster than orther solutions. We also want to avoid to calculate the exponential of $Delta E $, the value of $w=e^{-\beta\delta E}$ for every time the trial energy is higher than the current energy. We can avoid this by noticing that there are only 5 possible values $\Delta E$ can take when we only flip one spin at a time (in the two dimentional case) $\Delta E \in \{-8, -4, 0, 4, 8\}$. So the energy minimum have to change in steps of 4, and maximum in steps of 8 when we flip one spin at a time. Then there are also only 5 possible values of $w$ for a given temperature. We can exploit this further by realizing that we only use $w$ when $\Delta E > 0 \Rightarrow \Delta E \in \{4, 8\}$. For a given temperature we then calculate the two values of $w$ once and pass it on to the metropolis test which uses the value corresponding to $\Delta E$. 
+
+
+something something random initial state ??? p. 439, dependence T
 
 
 \section{"Experiment"}
