@@ -8,9 +8,9 @@
 \contentsline {subsection}{\numberline {3.2}Coding $\Delta E$, $\Delta \mathcal {M}$ and w efficiently}{8}{subsection.3.2}
 \contentsline {section}{\numberline {4}"Experiment"}{9}{section.4}
 \contentsline {subsection}{\numberline {4.1}Testing the implementation of the model and algorithm}{9}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Equilibrium time}{9}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Probability}{9}{subsection.4.3}
-\contentsline {subsection}{\numberline {4.4}Studying .... close to the critical temp}{9}{subsection.4.4}
-\contentsline {subsection}{\numberline {4.5}Calculations to find $T_c$}{9}{subsection.4.5}
-\contentsline {section}{\numberline {5}Results and output}{9}{section.5}
-\contentsline {section}{\numberline {6}Discussion and experiences}{9}{section.6}
+\contentsline {subsection}{\numberline {4.2}Equilibrium time}{12}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Probability}{18}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Studying .... close to the critical temp}{20}{subsection.4.4}
+\contentsline {subsection}{\numberline {4.5}Calculations to find $T_c$}{20}{subsection.4.5}
+\contentsline {section}{\numberline {5}Results and output}{20}{section.5}
+\contentsline {section}{\numberline {6}Discussion and experiences}{20}{section.6}

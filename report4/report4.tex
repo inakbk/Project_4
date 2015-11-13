@@ -439,78 +439,108 @@ something something random initial state ??? p. 439, dependence T
 
 \section{"Experiment"}
 \subsection{Testing the implementation of the model and algorithm}
+First we will compare the results for the metropolis algorithm with the theoretical values for the $L=2$ case calculated in section (?). All calculations and results in this report is per spin, meaning that we have divided the values with the total number of spins $N=L^2$. 
+
+In figure \ref{fig:theory E} we see the expectation value of the energy (top), energy squared (middle) and the heat capacity (bottom) as a function of the temperature. The simulation was run for $5\cdot10^5$ Monte Carlo Cycles. The simulation was started with an initial state with all spins up. In figure 
 
 \begin{figure}[htp]
-\caption{noe? everything per spin}
 \centering
-\includegraphics[width=\textwidth]{figures_L2/theoryE.png}
+\includegraphics[width=0.8\textwidth]{figures_L2/theoryE.png}
+\caption{Expectation value of the energy (top), energy squared (middle) and the heat capacity (bottom) per spin as a function of the temperature. The numerical calculation was run for $5\cdot10^5$ Monte Carlo Cycles with a initial state of all spins up (\texttt{initial\_state=1}) with $L=2$. The numerical (blue line) and the teoretical (green line) values are plotted together.}
 \label{fig:theory E}
 \end{figure}
 
 \begin{figure}[htp]
-\caption{noe? everything per spin}
 \centering
-\includegraphics[width=\textwidth]{figures_L2/theoryM.png}
+\includegraphics[width=0.8\textwidth]{figures_L2/theoryM.png}
+\caption{ Expectation value of the absolute magnetization (top), magnetization squared (middle) and the susceptibility (bottom) per spin as a function of the temperature. The numerical calculation was run for $5\cdot10^5$ Monte Carlo Cycles with a initial state of all spins up (\texttt{initial\_state=1}) with $L=2$. The numerical (blue line) and the teoretical (green line) values are plotted together.}
 \label{fig:theory M}
 \end{figure}
 
+The numerical values agree very well with the theoretical values. In figure \ref{fig: error E} we see the absolute error in the Expectation value of the energy (top), energy squared (middle) and the heat capacity (bottom) per spin as a function of Monte Carlo cycles. In figure \ref{fig: error M} we see the absolute error in the expectation value of the absolute magnetization (top), magnetization squared (middle) and the susceptibility (bottom) as a function of Monte Carlo Cycles. The temperature in both plot \ref{fig: error E} and \ref{fig: error M} was held at $T=1$.
+
+The spin system with $L=2$ is very small so it takes very few MC cycles to reach the equlilibrium state, which for low temperatures are close to the lowes energy state. I does therefore not matter which initial state the system start out with. The error in the numerical calculcations will not depend on the initial state, but on the amount of statistics, how many MC cycles. In the simulation run in figure \ref{fig: error E} we have used a initial state of all spins up (\texttt{initial\_state=1}) which is the state with the lowest energy.  
+
+In the figures \ref{fig: error E} and \ref{fig: error M} we see that the error falls quicly and stabilizes after $~2\cdot 10^5$ MC cycles. The heat capacity has the largest error with absolute error below 0.01 after stabilizing. Most of the error comes from the expectation value of the energy squared while the error in the expectation value of the energy is much smaller, $~0.002$. The error in the suceptibility falls below 0.002, smallest error is for the the expectation value of the absolute magnetization of less than 0.0005.
+
+From looking at figure \ref{fig: error E} and \ref{fig: error M} it seems reasonable to choose the number of MC cycles to be more than $2\cdot10^5$.
+
 \begin{figure}[htp]
-\caption{noe? everything per spin}
 \centering
-\includegraphics[width=\textwidth]{figures_L2/error_E_MC.png}
+\includegraphics[width=0.8\textwidth]{figures_L2/error_E_MC.png}
+\caption{Absolute error in the expectation value of the energy (top), energy squared (middle) and the heat capacity (bottom) a function of Monte Carlo Cycles with a initial state of all spins up (\texttt{initial\_state=1}) with $L=2$. The temperature was held at $T=1$. }
 \label{fig: error E}
 \end{figure}
 
 \begin{figure}[htp]
-\caption{noe? everything per spin}
 \centering
 \includegraphics[width=\textwidth]{figures_L2/error_M_MC.png}
+\caption{Absolute error in the expectation value of the absolute magnetization (top), magnetization squared (middle) and the susceptibility (bottom) as a function of Monte Carlo Cycles with a initial state of all spins up (\texttt{initial0.8\_state=1}) with $L=2$. The temperature was held at $T=1$. }
 \label{fig: error M}
 \end{figure}
 
-see that equilibrium/ok error at t 20000
-equilibrium goes very fast for the L2 system, but the error gets small after 20000 because need enough statistics to equal out the large starting values? (no started in lowest energy?)
-
-most of error is in squared
-
-so it is reasonable to always use at least 20000
-
 \subsection{Equilibrium time}
+We will now look at a larger system with $L=20$ and study the equilibrium time, how many Monte Carlo cycles the system uses to reach the stable equilibrium state. The calculations of mean values should starte after the equilibrium state is reached so that the statistics are not 'ruined' by the path from the initial state to the equilibrium state. We will therefore try to decide the equilibrium time. We will look at two temperatures, $T\in \{1.0, 2.4\}$ and start in both a random and ordered initial state. For the ordered state we will have all spins up. 
+
+In figure \ref{fig: equilibrium T1} we see the expectation value of the energy per spin as a function of Monte Carlo cycles at the top and the expectation value of the absolute magnetization per spin as a function of Monte Carlo cycles on the bottom. The plots to the left are with the initial state ordered and we can clearly see that the system stabelazies around a value both for the mean energy and mean absolute magnetization. 
+
+The plots to the right in figure \ref{fig: equilibrium T1} started with a random initial state and have a different unexpected behaviour. We see that the expectation values have a 'hump' before the stabilizing. The same strange behaviour can be observed in figure \ref{fig: equilibrium T2} which is the same plot, but for a higher temperature $T=2.4$. We see that the plots with random initial state are very smooth and do not have any statistically behaviour. 
 
 \begin{figure}[htp]
-\caption{noe? everything per spin}
 \centering
 \includegraphics[width=\textwidth]{equilibrium/equilibrium_T1_MC.png}
+\caption{Top: Expectation value of the energy per spin as a function of Monte Carlo cycles. Bottom:  Expectation value of the absolute magnetization per spin as a function of Monte Carlo cycles. To the left the initial state is ordered and to the right the initial state is random. The size of the lattice is $L=20$ and the temperature is $T=1$.}
 \label{fig: equilibrium T1}
 \end{figure}
 
 \begin{figure}[htp]
-\caption{noe? everything per spin}
 \centering
 \includegraphics[width=\textwidth]{equilibrium/equilibrium_T2_MC.png}
+\caption{Top: Expectation value of the energy per spin as a function of Monte Carlo cycles. Bottom:  Expectation value of the absolute magnetization per spin as a function of Monte Carlo cycles. To the left the initial state is ordered and to the right the initial state is random. The size of the lattice is $L=20$ and the temperature is $T=2.4$.}
 \label{fig: equilibrium T2}
 \end{figure}
 
+In figure \ref{fig: accepted T1} we see the accepted configurations per spin as a function of MC cycles for both ordered and random initial state for the temperature $T=1$. We see that the number of accepted configurations per spin grows as number of MC cycles increase and then flats out. For the random initial state we see the oposite behaviour, the number of accepted configurations decrease as a function of MC cycles. We would expect that for a low temperature as $T=1$ the equilibrium state are closer to the orderes state than the random state. It is natural that for the random initial state the number of accepted configurations are very large in the start as the system is 'trying' to reach the equilibrium state, and when the equilibrium state is found the number of accepted states flats out. 
+
+The corresponding plot for $T=2.4$ is shown in figure \ref{fig:  accepted T2}. We see that the number of accepted counfigurations flats out for the ordered and random initial state here too. But the Random initial state have a very sooth slope, which the low temperature case did not have. 
+
 
 \begin{figure}[htp]
-\caption{noe? everything per spin}
-\centering
 \includegraphics[width=\textwidth]{equilibrium/accepted_T1_MC.png}
+\caption{Accepted configurations per spin as a function of MC cycles. Top: Ordered initial state (all spinst up). Bottom: Random initial state. The temperature is $T=1$.}
+\centering
 \label{fig: accepted T1}
 \end{figure}
 
 \begin{figure}[htp]
-\caption{noe? everything per spin}
-\centering
 \includegraphics[width=\textwidth]{equilibrium/accepted_T2_MC.png}
+\caption{Accepted configurations per spin as a function of MC cycles. Top: Ordered initial state (all spinst up). Bottom: Random initial state. The temperature is $T=2.4$.}
+\centering
 \label{fig:  accepted T2}
 \end{figure}
 
-\subsection{Probability}
+
+
+In this subsection we have looked at the behaviour of the $L=20$ system as a function of Monte Carlo cycles. There are some unexpected non-stastistical behaviour in the plost with the random initial state that we have no explaination for. We have therefor decided to always start with the ordered initial state in the firther calculations. For larger temperatures and $L$ this could mean that we would have to use unneccecary many MC cycles to reach the equilbrium state, but we choose to ignore this in this paper. 
+
+For both temperatures the system stabilized for $~10^5$ MC cycles so we will use a equilibrium time of $t_{eq} = 2\cdot10^5$ MC cycles in this paper. 
+
+In figure \ref{fig:  accepted Trange} we see the number of accepted configurations per spin as a function temperature for the ordered initial state. We start the simulation in the ordered state. It is as axpected that the number of accepted configurations increase with temperarure when the total number of Monte Carlo cycles is much larger ($500000$) than the euilibrium time. This is because when the temperature is low it is very unlikely to flip a spin after the equilibrium state is reached because the state is very close to the ground state. The probability to flip a spin increases as the temperarure increases because the spread in energy is larger, $\sigma_E$ is larger. Thus the number of accepted cycles increase as a function of temperature.
+
 \begin{figure}[htp]
-\caption{noe? everything per spin}
+\includegraphics[width=\textwidth]{equilibrium/accepted_Trange_initial1.png}
+\caption{Accepted configurations per spin as a function temperature. Top: Ordered initial state (all spinst up). Bottom: Random initial state. The total number of monte carlo cycles is 500000 for the $L=20$ and ordered initial state. }
 \centering
+\label{fig:  accepted Trange}
+\end{figure}
+
+\subsection{Probability}
+In this subsection we will look at the probability for a given energy and see it this matches our physical intuition about the system. We will look at the case $L=20$ and the temperatures $T\in \{1.0, 2.0, 1.4\}$.
+
+\begin{figure}[htp]
 \includegraphics[width=\textwidth]{equilibrium/probability.png}
+\caption{Probability as a function of energy per spin for the temperatures $T\in \{1.0, 2.0, 1.4\}$ with the coresponding standard deviations $\sigma_E \in \{0.15, 1.71, 2.8 \}$. }
+\centering
 \label{fig:  probability}
 \end{figure}
 
