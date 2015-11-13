@@ -69,28 +69,17 @@ cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = r
 E = read_file2(filename2)
 E = E/N #per spin
 
-hold('off')
 figure(1)
-#subplot(3,1,1)
-title('cdw', fontsize=16)
-#prob, bins = histogram(E, bins=10, normed=True)#, facecolor='blue')#, range=[-800,-780])
-
+subplot(3,1,1)
+#title('cdw', fontsize=16)
 number_of_bins = 5
-
 count, Energy_bins = histogram(E, bins=number_of_bins)
-print count
-print Energy_bins
-
 probability = count/float(sum(count))
+bar(left=Energy_bins[:-1], height=probability, width=abs(Energy_bins[0] - Energy_bins[1]), color='b')
+legend(['$T=$ %s, $\sigma_E$= %.2f' %(T, sqrt(C_v[-1]*T**2))], fontsize=16)
+ylabel('$P(E)$', fontsize=16)
 
-bar(left=Energy_bins[:-1], height=probability, width=abs(Energy_bins[0] - Energy_bins[1]))
 
-#hist(prob, bins=[bins[0],bins[-1]], facecolor='blue', range=[-2, -1.9])
-
-#legend(['$T=$ %s, $\sigma_E$= %.2f' %(T, sqrt(C_v[-1]*N*T**2))], fontsize=16)
-#ylabel('Probability', fontsize=16)
-
-"""
 T = 2.0
 Tcount = 1
 #os.system('./main %s %s %s %s %s' %(T, L, max_nr_of_cycles, initial, Tcount))
@@ -101,9 +90,13 @@ E = read_file2(filename2)
 E = E/N
 
 subplot(3,1,2)
-hist(E, bins=77, normed=True, facecolor='green')#, range=[-800,-680])
-legend(['$T=$ %s, $\sigma_E$= %.2f' %(T, sqrt(C_v[-1]*N*T**2))], fontsize=16)
-#ylabel('Probability', fontsize=16)
+
+number_of_bins = 77
+count, Energy_bins = histogram(E, bins=number_of_bins)
+probability = count/float(sum(count))
+bar(left=Energy_bins[:-1], height=probability, width=abs(Energy_bins[0] - Energy_bins[1]), color='g')
+legend(['$T=$ %s, $\sigma_E$= %.2f' %(T, sqrt(C_v[-1]*T**2))], fontsize=16)
+ylabel('$P(E)$', fontsize=16)
 
 T = 2.4
 Tcount = 2
@@ -115,11 +108,16 @@ E = read_file2(filename2)
 E = E/N
 
 subplot(3,1,3)
-hist(E, bins=116, normed=True, facecolor='red')#, range=[-800,-200])
-legend(['$T=$ %s, $\sigma_E$= %.1f' %(T, sqrt(C_v[-1]*N*T**2))], fontsize=16, loc='upper left')
+
+number_of_bins = 116
+count, Energy_bins = histogram(E, bins=number_of_bins)
+probability = count/float(sum(count))
+bar(left=Energy_bins[:-1], height=probability, width=abs(Energy_bins[0] - Energy_bins[1]), color='r')
+
+legend(['$T=$ %s, $\sigma_E$= %.1f' %(T, sqrt(C_v[-1]*T**2))], fontsize=16, loc='upper left')
 xlabel('Energy per spin', fontsize=16)
-#ylabel('Probability', fontsize=16)
-"""
+ylabel('$P(E)$', fontsize=16)
+
 show()
 
 
