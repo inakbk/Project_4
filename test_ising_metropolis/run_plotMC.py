@@ -65,14 +65,14 @@ T = 1.0
 
 L = 2
 N = L**2
-max_nr_of_cycles = 50000 #must delelig 10
-initial = -1
+max_nr_of_cycles = 500000 #must delelig 10
+initial = 1
 error_plot = True
 
 #compiling once:
 #os.system('g++ -o main *.cpp -larmadillo -llapack -lblas -L/usr/local/lib -I/usr/local/include -O3 -std=c++11')
 
-Tcount = 100
+Tcount = 0
 os.system('./main %s %s %s %s %s' %(T, L, max_nr_of_cycles, initial, Tcount))
 filename = 'metropolis_L%s_Tcount%s_initial%s_MC%s.txt' %(L, Tcount, initial, max_nr_of_cycles)
 cycles, nr_of_accepted_config, mean_E, mean_E2, C_v, mean_absM, mean_M2, chi = read_file(filename)
