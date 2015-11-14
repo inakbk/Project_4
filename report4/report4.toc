@@ -7,7 +7,7 @@
 \contentsline {section}{\numberline {3}Numerical methods}{8}{section.3}
 \contentsline {subsection}{\numberline {3.1}Metropolis algorithm}{8}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Coding $\Delta E$, $\Delta \mathcal {M}$ and w efficiently}{10}{subsection.3.2}
-\contentsline {section}{\numberline {4}"Experiment"}{10}{section.4}
+\contentsline {section}{\numberline {4}Implementation and results}{10}{section.4}
 \contentsline {subsection}{\numberline {4.1}Testing the implementation of the model and algorithm}{10}{subsection.4.1}
 \contentsline {subsection}{\numberline {4.2}Equilibrium time}{13}{subsection.4.2}
 \contentsline {subsection}{\numberline {4.3}Probability}{18}{subsection.4.3}
