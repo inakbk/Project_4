@@ -30,8 +30,6 @@
 \lstset{showtabs=false}
 \lstset{breaklines}
 
-
-
 %lager heftig forside:
 \newcommand*{\titleAT}{\begingroup % Create the command for including the title page in the document
 \newlength{\drop} % Command for generating a specific amount of whitespace
@@ -63,23 +61,10 @@
 \vspace{0.25\drop} % Whitespace between the thin horizontal line and the author name
 
 \begin{abstract}
-The aim of this project is to numerically solve ..... by using the .... algorithm. 
+The aim of this project is to numerically find the critical temperature for the two dimentional Ising model by using the metropolis algorithm. We will first test the implementation of the algorithm carefully, first by comparing with theoretical values calculated for a small system. Then we will see if the algorithm behaves as expected according to our physical intuition for a larger system.
 
+When we have found a estimate for the critical temperature we will compare it to Lars Onsagers analytical result.
 
-the Ising model in two dimensions, without an external magnetic 
-field
-
-Title: Studying phase transitions (critical T) using the ising model (metropolis alg)?
-
-compare teory, lars onsager
-
-
-
-%Before solving the problem for two electrons we will look at a simpler system, one electron in a three-dimensional harmonic oscillator potential. Then we will move on to the two electrons in a three-dimensional harmonic oscillator, but first without the Coulomb interaction. For each case we will reformulate the Schr\"odingers equation for this system to a dimentionless form and then to a descrete eigenvalue equation. This eigenvalue problem will we solve numerically with the Jacobi rotation algorithm and compare with the Armadillo library functions for the one electron system. 
-
-%The Jacobi rotation algorithm will be implemented numerically on a general form so that it can be applied to any eigenvalue problem with a symetrix matix. We will test the implementation of the Jacobi method on an arbitrary symetric matrix before moving on to solve the physical problems. 
-
-%When the procedure used on the two simplest cases are tested and understood we will apply the metods on the two electron system with a Coulomb interaction and plot the probability distrubution for different strengths of the interaction. 
 \end{abstract}
 \vspace*{0.25\drop} % Whitespace under the publisher text
 
@@ -107,7 +92,7 @@ compare teory, lars onsager
 \section{Introduction}
 A second order phase transition at the critical temperature $T_c$ is described by a macroscopic change to a system. At the critical temperature some termodynamic values approaches zero with an infinite slope and 'disappeares'. Other variables are discontinous or diverge at the critical temperature in the termodynamic limit. 
 
-In this paper we will study such a phase transistion by using the Ising model and the metropolis algorithm to simulate results. 
+In this paper we will study such a phase transistion by using the Ising model and the metropolis algorithm to simulate results. The approach used in this paper is also applicabile for other physical models and therefore very useful.
 
 \section{Theory}
 
@@ -129,7 +114,7 @@ The partition function for such a system is then given by:
 Z = \sum_{i=1}^M e^{-\beta E_i}
 \]
 
-\subsection{Obtaining analytical values for the simple $L=2$ system}
+\subsection{Obtaining analytical values for the simple $L=2$ system} \label{sec:theory_L2}
 First we assume that there is only two spins in each dimention (x and y), we set $L=2 \Rightarrow N = 2\cdot 2 = 4\Rightarrow M= 2^4 = 16$. So there is 16 possible energies of the spin system when $L=2$. So to calculate the partition function we have to find the energies:
 \[
 Z = e^{-\beta E_1} + ... e^{-\beta E_{16}}
@@ -391,7 +376,20 @@ The critical temperature scales then as
  T_C(L)-T_C(L=\infty) = aL^{-1/\nu},
  \label{eq:tc}
 \end{equation}
-with  $a$ a constant and  $\nu$ defined in Eq.~(\ref{eq:xi}). This is the equation we will use to estimate the critical temperature with the numerical results and compare with Lars Onsagers theoretical results $T_c \approx 2.269$. 
+with  $a$ a constant and  $\nu=1$ defined in Eq.~(\ref{eq:xi}). This is the equation we will use to estimate the critical temperature with the numerical results and compare with Lars Onsagers theoretical results $T_c \approx 2.269$. 
+
+Let us first rewrite the equation \ref{eq:tc} and using $T_C(L=\infty)x$ for the variable that we wish to estimate and using two different values of $L$. We then combine
+\[
+ T_C(L)-x = a/L\\
+\]
+with
+\[
+ T_C(L^*)-x = a/L^*\\
+\]
+and obtain
+\[
+x = \frac{T_c(L^*)L^* - T_c(L)L}{L^* - L}
+\]
 
 \section{Numerical methods}
 \subsection{Metropolis algorithm}
@@ -441,10 +439,26 @@ for numberOfTemperatures:
 
 This is the set up that is used in this project. Some of the versions of the algorithm the temperature loop is left to the python code, which also compiles and runs the cpp code. This is one way of paralellizing the code. In the final version of the program we have paralellized the code using \texttt{openMPI}. 
 
-oversikt mapper ?
-
-
 We will also implement the algorithm so that we discard all contributions to the expectation valsues before the system have reached equilibrium. To do this we have to test the algorithm and study how many Monte Carlo cycles the system uses to reach the equilibrium state. 
+
+The folder structure are as follows:
+\begin{itemize}
+\item Folders used for testing:
+\begin{itemize}
+\item \texttt{test\_ising\_metropolis} for the $L=2$ system
+\item \texttt{equilibrium\_ising\_metropolis} to study the equlibrium time and the number of accepted cycles
+\item \texttt{probability\_ising\_metropolist} to study the probability for a given energy and temperature
+\end{itemize}
+\item Final folder to find the critical temperature $T_c$:
+\begin{itemize}
+\item \texttt{ising\_metropolis\_MPI}
+\end{itemize}
+\item Folder for this report:
+\begin{itemize}
+\item \texttt{report4}
+\end{itemize}
+\end{itemize}
+where all folders are found at \texttt{https://github.com/inakbk/Project\_4}.
 
 \subsection{Coding $\Delta E$, $\Delta \mathcal{M}$  and w efficiently}
 We wish to run the simulations for large numbers of Monte Carlo cycles $~10^5$. It is therefore very important to code the calculation of $\Delta E$ efficiently because it will be calculated $N$ times each Monte Carlo cycle. 
@@ -474,7 +488,7 @@ With this methods implemented in the algorithms the execution time is much faste
 
 \section{"Experiment"}
 \subsection{Testing the implementation of the model and algorithm}
-First we will compare the results for the metropolis algorithm with the theoretical values for the $L=2$ case calculated in section (?). All calculations and results in this report is per spin, meaning that we have divided the values with the total number of spins $N=L^2$. 
+First we will compare the results for the metropolis algorithm with the theoretical values for the $L=2$ case calculated in section \ref{sec:theory_L2}. All calculations and results in this report is per spin, meaning that we have divided the values with the total number of spins $N=L^2$. 
 
 In figure \ref{fig:theory E} we see the expectation value of the energy (top), energy squared (middle) and the heat capacity (bottom) as a function of the temperature. The simulation was run for $5\cdot10^5$ Monte Carlo Cycles. The simulation was started with an initial state with all spins up. In figure 
 
@@ -645,51 +659,20 @@ We see that the absolute error in the estimate of the critical temperature is as
 
 \section{Discussion and experiences}
 
-This method for obtaining the critical temperature
+This method for obtaining the critical temperature have proved itself to be useful and quite accurate as the error in the estimate was very low! 
 
+But there is room for improvement. We could have run the methods for many times with different seeds in the random generator function for that we would obtain a even larger amount of statistics. It is possible to do this by letting the seed be the negative time in the core in seconds:
+\begin{lstlisting}
+seed = -time(NULL);
+\end{lstlisting}
+when we which to produce large amounts of data. 
 
-could haves?
+We could also have let all the negative values of $\Delta E$ go to the metropolis test to aviod the if test for $\Delta E\leq 0$. This is because $e^{-\Delta E/T} > 1$ when $\Delta E\leq 0$ and then the metropolis test $e^{-\Delta E/T} > r$ will never be true. 
 
+We could also have regulated the equilibrium time so that it corresponded to the lattice seze $L$ and the temperature. As we could also have chosen the initial state according to the temperature. Both cases would have saved a lot of execution time. But that was not a priority in this project because the lattice sizes run are not so huge. Imagine running for lattice sizes of order a 1000...
 
+Either way we sould be happy about estimating the critical temperature with quite good precition.
 
-\newpage
-
-
-
-
-
-
-
-
-\begin{enumerate}
-\item [e)]  We wish to study the behavior of the Ising model in two dimensions close to the 
-critical temperature as a function of the lattice size $L\times L$.
-Calculate the expectation values 
-for $\langle E\rangle$ and $\langle |{\cal M}|\rangle$,
-the specific heat $C_V$ and the susceptibility $\chi$
-as functions  of $T$ for $L=20$, $L=40$, $L=60$ and $L=80$ for $T\in [2.0,2.4]$
-with a step in temperature $\Delta T=0.05$ or smaller. 
-Plot  $\langle E\rangle$, $\langle 1{\cal M}1\rangle$, $C_V$ and $\chi$ 
-as functions of $T$. Can you see an indication of a phase transition?
-
-Use the absolute value $\langle |{\cal M}|\rangle$ when you evaluate $\chi$.
-
-You should parallelize the code using either OpenMP or MPI.
-\item[f)]  Use Eq.~(\ref{eq:tc}) and the exact result
-$\nu=1$ in order to estimate $T_C$ in the thermodynamic limit $L\rightarrow \infty$
-using your simulations with $L=20$, $L=40$, $L=60$ and $L=80$
-The exact result for the critical temperature (after Lars Onsager) is
-$kT_C/J=2/ln(1+\sqrt{2})\approx 2.269$ with $\nu=1$.
-\end{enumerate}
-
-\section*{Background literature}
-If you wish to read more about the Ising model and statistical physics here are two suggestions.
-\begin{enumerate}
-\item M.~Plischke and B.~Bergersen, Equilibrium Statistical Physics,
-Prentice-Hall, see chapters 5 and 6.
-\item M.~E.~J.~Newman and T.~Barkema, Monte Carlo methods in statistical physics, Oxford, see chapters 3 and 4.
-
-\end{enumerate}
 \end{document}
 
 
