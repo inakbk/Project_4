@@ -1,16 +1,16 @@
-\contentsline {section}{\numberline {1}Motivation and purpose}{3}{section.1}
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}
 \contentsline {section}{\numberline {2}Theory}{3}{section.2}
 \contentsline {subsection}{\numberline {2.1}The Ising model in two dimentions}{3}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}L=2 analytical values}{3}{subsection.2.2}
-\contentsline {subsection}{\numberline {2.3}Units, scaled parameters}{6}{subsection.2.3}
-\contentsline {section}{\numberline {3}Numerical methods}{7}{section.3}
-\contentsline {subsection}{\numberline {3.1}Metropolis algorithm}{7}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Coding $\Delta E$, $\Delta \mathcal {M}$ and w efficiently}{8}{subsection.3.2}
-\contentsline {section}{\numberline {4}"Experiment"}{9}{section.4}
-\contentsline {subsection}{\numberline {4.1}Testing the implementation of the model and algorithm}{9}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Equilibrium time}{12}{subsection.4.2}
+\contentsline {subsection}{\numberline {2.2}Obtaining analytical values for the simple $L=2$ system}{3}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Units and scaled parameters}{7}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Second order phase transistions}{7}{subsection.2.4}
+\contentsline {section}{\numberline {3}Numerical methods}{8}{section.3}
+\contentsline {subsection}{\numberline {3.1}Metropolis algorithm}{8}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Coding $\Delta E$, $\Delta \mathcal {M}$ and w efficiently}{9}{subsection.3.2}
+\contentsline {section}{\numberline {4}"Experiment"}{10}{section.4}
+\contentsline {subsection}{\numberline {4.1}Testing the implementation of the model and algorithm}{10}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Equilibrium time}{13}{subsection.4.2}
 \contentsline {subsection}{\numberline {4.3}Probability}{18}{subsection.4.3}
-\contentsline {subsection}{\numberline {4.4}Studying .... close to the critical temp}{20}{subsection.4.4}
-\contentsline {subsection}{\numberline {4.5}Calculations to find $T_c$}{20}{subsection.4.5}
-\contentsline {section}{\numberline {5}Results and output}{20}{section.5}
-\contentsline {section}{\numberline {6}Discussion and experiences}{20}{section.6}
+\contentsline {subsection}{\numberline {4.4}Calculations to find $T_c$}{19}{subsection.4.4}
+\contentsline {subsection}{\numberline {4.5}Estimating the critical temperature}{22}{subsection.4.5}
+\contentsline {section}{\numberline {5}Discussion and experiences}{22}{section.5}

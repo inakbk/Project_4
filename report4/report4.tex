@@ -11,6 +11,7 @@
 \usepackage{cite} % [2,3,4] --> [2--4]
 \usepackage{shadow}
 \usepackage{hyperref}
+\usepackage{caption}
 
 \setcounter{tocdepth}{2}
 
@@ -43,7 +44,7 @@
 \vspace{0.5\drop} % Whitespace between the top lines and title
 \centering % Center all text
 \textcolor{black}{ % Red font color
-{\Huge Studying second order phase transitions by using the Ising model in two dimentions and the metropolis algorithm}\\[0.75\baselineskip] % Title line 1
+{\Huge Studying second order phase transitions in the Ising model in two dimentions with the metropolis algorithm}\\[0.75\baselineskip] % Title line 1
 %{\Large Tema:}\\[0.75\baselineskip] % Title line 2
 %{\Huge Lydmåling og hørselstesting} % Title line 3
 } 
@@ -83,7 +84,7 @@ compare teory, lars onsager
 \vspace*{0.25\drop} % Whitespace under the publisher text
 
 \begin{center}
-{ \scriptsize \noindent All source codes can be found at: \texttt{https://github.com/inakbk/Project\_2}. }
+{ \scriptsize \noindent All source codes can be found at: \texttt{https://github.com/inakbk/Project\_4}. }
 \end{center}
 
 \rule{\textwidth}{0.4pt}\par % Thin horizontal line
@@ -103,46 +104,33 @@ compare teory, lars onsager
 \tableofcontents
 \newpage
 
-\section{Motivation and purpose}
+\section{Introduction}
+A second order phase transition at the critical temperature $T_c$ is described by a macroscopic change to a system. At the critical temperature some termodynamic values approaches zero with an infinite slope and 'disappeares'. Other variables are discontinous or diverge at the critical temperature in the termodynamic limit. 
 
+In this paper we will study such a phase transistion by using the Ising model and the metropolis algorithm to simulate results. 
 
 \section{Theory}
-something about phase transitions and therefore chi and heat capacity is relevant
-
 
 \subsection{The Ising model in two dimentions}
-
 The Ising model is a simple model for ferromagnetism in statistical physics. The model consists of magnetic spins that are allowed to interact with its neigbours. The magnetic dipole moments are allowed to have two values, 1 and -1.
 
-In this project we will study the ising model i two dimentions wich allows the identification of phase transitions (define). We will also set the external magnetic field to zero troughout this paper.
-% in two dimensions second order phase transition. 
+In this project we will study the ising model i two dimentions wich allows the identification of a second order phase transition. We have chosen to set the external magnetic field to zero troughout this paper.
 
-%\subsection{Phase transitions} %?
-
-
-The Ising model gives that the energy (for the whole system?) can be expressed as
+The Ising model gives that the energy for the whole system can be expressed as
 \begin{equation}
   E=-J\sum_{<kl>}^{N}s_ks_l
 \end{equation}
-where the value of the spins are  $s_k=\pm 1$ and $N$ is the total number of spins. The variable $J$ is a coupling constant expressing the strength of the interaction between neighboring spins.
+where the value of the spins are  $s_k=\pm 1$ and $N$ is the total number of spins. The variable $J$ is a coupling constant expressing the strength of the interaction between neighboring spins. We will divide all variables by the number of spins to obtain all results per spin. 
 
-The symbol $<kl>$ indicates that we sum over nearest neighbors only. We will assume that we have a ferromagnetic ordering, viz $J> 0$ and use periodic boundary conditions. 
+The symbol $<kl>$ indicates that we sum over nearest neighbors only. We will assume that we have a ferromagnetic ordering, viz $J> 0$ and use periodic boundary conditions. We choose to use a square lattice of $L$ spins in x and y direction. The total number of spins is then $N = L^2$ and the total number of microstates, the different configurations the spins can have is given by $M=2^N$
 
-(invlude matrix of spins and define variable $L$, $N$ and $M$)
-
-%analytical values to test:
-First we assume that there is only two spins in each dimention (x and y), we set $L=2$. Then the closed form expression for the partition function is given by:
+The partition function for such a system is then given by:
 \[
 Z = \sum_{i=1}^M e^{-\beta E_i}
 \]
-where $M$ is the number of microstates or combinations of spins.
 
-
-\subsection{L=2 analytical values}
-
-$N = L\cdot L = 4$
-
-There is $M= L^N = 2^N = 16$ microstates, or possible combinations and energies of the spin system. So to calculate the partition function we have to find the energies:
+\subsection{Obtaining analytical values for the simple $L=2$ system}
+First we assume that there is only two spins in each dimention (x and y), we set $L=2 \Rightarrow N = 2\cdot 2 = 4\Rightarrow M= 2^4 = 16$. So there is 16 possible energies of the spin system when $L=2$. So to calculate the partition function we have to find the energies:
 \[
 Z = e^{-\beta E_1} + ... e^{-\beta E_{16}}
 \]
@@ -161,7 +149,11 @@ E &= -J\bigg( s(0,0)\cdot \big[s(1,0) + s(0,1) \big] + s(0,1)\cdot\big[s(1,1) + 
  \label{eq: energy spins}
 \end{align}
 
-The 16 states with corresponding energies calculated with equation \ref{eq: energy spins} is then: \\
+The 16 states with corresponding energies calculated with equation \ref{eq: energy spins} is given in table \ref{tab: energies}.
+
+\begin{table}
+\centering
+\caption{All possible spin combinations and energies for the $L=2$ system.}
 \begin{tabular}{cccc}
 $E_1 = 0$ & $E_2 = 0$ & $E_3 = 0$& $E_4 = 0$ \\ 
 $\left[ \begin{array}{cc} 1 & 1 \\
@@ -231,8 +223,10 @@ $
                              	    1  & 1 \\
 \end{array} \right]$
 \end{tabular}
-\\
-We then see that there is only three possible values for the energies, $E \in \{-8J, 0, 8J\}$ with corresponding multiplicity $\{2, 12, 2\}$. The partition function can then be calculated:
+\label{tab: energies}
+\end{table}
+
+Looking at table \ref{tab: energies} we see that there is only three possible values for the energies, $E \in \{-8J, 0, 8J\}$ with corresponding multiplicity $\{2, 12, 2\}$. The partition function can then be calculated:
 \begin{align*}
 Z &= 2e^{-\beta (-8J)} + 12e^{-\beta \cdot 0} + 2 e^{-\beta \cdot 8J} = 2(e^{\beta \cdot 8J}  + e^{-\beta \cdot 8J}) + 12 \\
 &= 4\cosh(8J\beta) + 12
@@ -262,6 +256,9 @@ C_v &= \frac{1}{k_bT}\bigg[ \frac{64J^2 \cosh(8J\beta)}{\cosh(8J\beta) + 3} - \b
 
 We define the magnetization $\mathcal{M}$ as the sum of all the spins $s$. It is easy to see that for the $2\times 2$ system there are only 5 possible values for the magnetization, $\mathcal{M} \in \{-4, -2, 0, 2, 4\}$.  The corresponding energy and multiplicity is given in table \ref{tab: multiplic}. 
 
+\begin{table}
+\centering
+\caption{Magnetization with the corresponding energy and multiplicity for the $L=2$ system.}
 \begin{tabular}{|c|c|c|c|}
 \hline 
 \# spins up & Multiplicy & Energy & Magnetization \\ 
@@ -278,8 +275,9 @@ We define the magnetization $\mathcal{M}$ as the sum of all the spins $s$. It is
 \hline 
 0 & 1 & -8J & -4 \\ 
 \hline 
-\end{tabular} \label{tab: multiplic}
-
+\end{tabular} 
+\label{tab: multiplic}
+\end{table}
 The expectation value of the magnetization and the magnetization squared can be calculated as
 \begin{align}
 \langle \mathcal{M} \rangle &= \frac{1}{Z}\sum_{i=1}^M \mathcal{M}  e^{-\beta E_i} \label{eq: exp M} \\
@@ -293,6 +291,9 @@ When looking at equation \ref{eq: exp M} and table \ref{tab: multiplic} we quicl
 
 There are 3 possible values for the absolute value of the magnetization, $|\mathcal{M}| \in \{0, 2, 4\}$.  The corresponding energy and multiplicity is given in table \ref{tab: multiplic2}. 
 
+\begin{table}
+\centering
+\caption{Absolute magnetization with the corresponding energy and multiplicity for the $L=2$ system.}
 \begin{tabular}{|c|c|c|}
 \hline 
 Absolute Magnetization & Energy &  Multiplicy\\ 
@@ -305,7 +306,9 @@ Absolute Magnetization & Energy &  Multiplicy\\
 \hline 
 0 & 8J & 2 \\ 
 \hline 
-\end{tabular} \label{tab: multiplic2}
+\end{tabular} 
+\label{tab: multiplic2}
+\end{table}
 
 We are then ready to calculate the expectation value of the absolute value of the magnetization by using the multiplicity for each energy and corresponding magnetization:
 \begin{align}
@@ -325,7 +328,7 @@ And finally the suceptibility is given by
 &= 4\beta \bigg[ \frac{2(e^{8J\beta} + 1\big)(\cosh(8j\beta) + 3) - (e^{8J\beta}+ 2)^2}{(\cosh(8j\beta) + 3)^2} \bigg] 
 \end{align*}
 
-\subsection{Units, scaled parameters}
+\subsection{Units and scaled parameters}
 We will now write the equations for the expectation values, the heat capacity and the susceptibility in terms of a scaled temperature
 \begin{align*}
 T' &= T \frac{k_b}{J} \\
@@ -350,16 +353,49 @@ In terms of $T'$ the expectation values and the susceptibility for the $2\times 
 \end{align}
 These theoretical values will be used to test the implementation of the numerical method for the $L=2$ system. 
 
-%theory mc methods/metropolis
-%explaination of code
+\subsection{Second order phase transistions}
+Near $T_C$, where the phase transition happens, we can characterize the behavior of many physical quantities by a power law behavior.
+As an example the mean magnetization is given by
+\begin{equation}
+  \langle {\cal M}(T) \rangle \sim \left(T-T_C\right)^{\beta},
+\end{equation}
+where $\beta=1/8$ is a so-called critical exponent. A similar relation
+applies to the heat capacity 
+\begin{equation} 
+  C_V(T) \sim \left|T_C-T\right|^{\alpha},
+\end{equation}
+and the susceptibility
+\begin{equation}
+  \chi(T) \sim \left|T_C-T\right|^{\gamma},
+\end{equation}
+with $\alpha = 0$ and $\gamma = 7/4$.
+Another important quantity is the correlation length, which is expected
+to be of the order of the lattice spacing for $T>> T_C$. Because the spins
+become more and more correlated as $T$ approaches $T_C$, the correlation
+length increases as we get closer to the critical temperature. The divergent
+behavior of $\xi$ near $T_C$ 
+is
+\begin{equation}
+  \xi(T) \sim \left|T_C-T\right|^{-\nu}.
+  \label{eq:xi}
+\end{equation}
+A second-order phase transition is characterized by a
+correlation length which spans the whole system.
+Since we are always limited to a finite lattice, $\xi$ will
+be proportional with the size of the lattice. 
+Through so-called finite size scaling relations
+it is possible to relate the behavior at finite lattices with the 
+results for an infinitely large lattice.
+The critical temperature scales then as
+\begin{equation}
+ T_C(L)-T_C(L=\infty) = aL^{-1/\nu},
+ \label{eq:tc}
+\end{equation}
+with  $a$ a constant and  $\nu$ defined in Eq.~(\ref{eq:xi}). This is the equation we will use to estimate the critical temperature with the numerical results and compare with Lars Onsagers theoretical results $T_c \approx 2.269$. 
 
 \section{Numerical methods}
-bla bla theory and the programs
 \subsection{Metropolis algorithm}
-See notes?
-
-Start out with an initial state, random or ordered
-
+We imagine to start out with an initial spin state that is random or ordered. We will then use the following approach to simulate the system develop in time:
 \begin{enumerate}
 \item The system are in a spin state with energy E
 \item Create a trial state with the trial energy $E_t$ by flipping one spin
@@ -380,8 +416,9 @@ Start out with an initial state, random or ordered
 \item Reapeat 1.-6. untill enough statistics is sampled, the desired number of MC cycles
 \end{enumerate}
 
+One Monte Carlo cycle corresponds to one loop that have the possibility to flip all the spins in the lattice. 
 
-\textbf{Psedocode:}
+The algorithm can also be expressed as a Psedocode:
 \begin{lstlisting}
 for numberOfTemperatures:
 {
@@ -402,11 +439,12 @@ for numberOfTemperatures:
 //then read data from file and plot in python
 \end{lstlisting}
 
+This is the set up that is used in this project. Some of the versions of the algorithm the temperature loop is left to the python code, which also compiles and runs the cpp code. This is one way of paralellizing the code. In the final version of the program we have paralellized the code using \texttt{openMPI}. 
 
-for some of the files temperature loop is left in python code, which also compiles and runs the cpp code
+oversikt mapper ?
 
-should discard contributions to mean vals before equilibrium
 
+We will also implement the algorithm so that we discard all contributions to the expectation valsues before the system have reached equilibrium. To do this we have to test the algorithm and study how many Monte Carlo cycles the system uses to reach the equilibrium state. 
 
 \subsection{Coding $\Delta E$, $\Delta \mathcal{M}$  and w efficiently}
 We wish to run the simulations for large numbers of Monte Carlo cycles $~10^5$. It is therefore very important to code the calculation of $\Delta E$ efficiently because it will be calculated $N$ times each Monte Carlo cycle. 
@@ -423,7 +461,6 @@ The spin can only take two values, so $s_{l,1}$ is either 1 or -1. If $s_{l,1}=1
 \[
 \Delta E = J\sum_{<kl>}^N s_k\cdot 2s_{l,1} = 2Js_{l,1}\sum_{<k>}^N s_k
 \]
-which is the same as in theory????when doing by hand energy?
 
 Similarly for the magnetization:
 \begin{align*}
@@ -431,11 +468,9 @@ Similarly for the magnetization:
 \Rightarrow \mathcal{M}_2 &= \mathcal{M}_1 - 2s_{l,1}
 \end{align*}
 
-This way of calculating the difference in energy and magnetization makes the algorithm for flipping one spin run faster than orther solutions. We also want to avoid to calculate the exponential of $Delta E $, the value of $w=e^{-\beta\delta E}$ for every time the trial energy is higher than the current energy. We can avoid this by noticing that there are only 5 possible values $\Delta E$ can take when we only flip one spin at a time (in the two dimentional case) $\Delta E \in \{-8, -4, 0, 4, 8\}$. So the energy minimum have to change in steps of 4, and maximum in steps of 8 when we flip one spin at a time. Then there are also only 5 possible values of $w$ for a given temperature. We can exploit this further by realizing that we only use $w$ when $\Delta E > 0 \Rightarrow \Delta E \in \{4, 8\}$. For a given temperature we then calculate the two values of $w$ once and pass it on to the metropolis test which uses the value corresponding to $\Delta E$. 
+This way of calculating the difference in energy and magnetization makes the algorithm for flipping one spin run faster than orther solutions. We also want to avoid to calculate the exponential of $\Delta E $, the value of $w=e^{-\beta\Delta E}$ for every time the trial energy is higher than the current energy. We can avoid this by noticing that there are only 5 possible values $\Delta E$ can take when we only flip one spin at a time (in the two dimentional case) $\Delta E \in \{-8, -4, 0, 4, 8\}$. So the energy minimum have to change in steps of 4, and maximum in steps of 8 when we flip one spin at a time. Then there are also only 5 possible values of $w$ for a given temperature. We can exploit this further by realizing that we only use $w$ when $\Delta E > 0 \Rightarrow \Delta E \in \{4, 8\}$. For a given temperature we then calculate the two values of $w$ once and pass it on to the metropolis test which uses the value corresponding to $\Delta E$. 
 
-
-something something random initial state ??? p. 439, dependence T
-
+With this methods implemented in the algorithms the execution time is much faster. 
 
 \section{"Experiment"}
 \subsection{Testing the implementation of the model and algorithm}
@@ -474,7 +509,7 @@ From looking at figure \ref{fig: error E} and \ref{fig: error M} it seems reason
 
 \begin{figure}[htp]
 \centering
-\includegraphics[width=\textwidth]{figures_L2/error_M_MC.png}
+\includegraphics[width=0.8\textwidth]{figures_L2/error_M_MC.png}
 \caption{Absolute error in the expectation value of the absolute magnetization (top), magnetization squared (middle) and the susceptibility (bottom) as a function of Monte Carlo Cycles with a initial state of all spins up (\texttt{initial0.8\_state=1}) with $L=2$. The temperature was held at $T=1$. }
 \label{fig: error M}
 \end{figure}
@@ -488,14 +523,14 @@ The plots to the right in figure \ref{fig: equilibrium T1} started with a random
 
 \begin{figure}[htp]
 \centering
-\includegraphics[width=\textwidth]{equilibrium/equilibrium_T1_MC.png}
+\includegraphics[width=0.8\textwidth]{equilibrium/equilibrium_T1_MC.png}
 \caption{Top: Expectation value of the energy per spin as a function of Monte Carlo cycles. Bottom:  Expectation value of the absolute magnetization per spin as a function of Monte Carlo cycles. To the left the initial state is ordered and to the right the initial state is random. The size of the lattice is $L=20$ and the temperature is $T=1$.}
 \label{fig: equilibrium T1}
 \end{figure}
 
 \begin{figure}[htp]
 \centering
-\includegraphics[width=\textwidth]{equilibrium/equilibrium_T2_MC.png}
+\includegraphics[width=0.8\textwidth]{equilibrium/equilibrium_T2_MC.png}
 \caption{Top: Expectation value of the energy per spin as a function of Monte Carlo cycles. Bottom:  Expectation value of the absolute magnetization per spin as a function of Monte Carlo cycles. To the left the initial state is ordered and to the right the initial state is random. The size of the lattice is $L=20$ and the temperature is $T=2.4$.}
 \label{fig: equilibrium T2}
 \end{figure}
@@ -506,14 +541,14 @@ The corresponding plot for $T=2.4$ is shown in figure \ref{fig:  accepted T2}. W
 
 
 \begin{figure}[htp]
-\includegraphics[width=\textwidth]{equilibrium/accepted_T1_MC.png}
+\includegraphics[width=0.8\textwidth]{equilibrium/accepted_T1_MC.png}
 \caption{Accepted configurations per spin as a function of MC cycles. Top: Ordered initial state (all spinst up). Bottom: Random initial state. The temperature is $T=1$.}
 \centering
 \label{fig: accepted T1}
 \end{figure}
 
 \begin{figure}[htp]
-\includegraphics[width=\textwidth]{equilibrium/accepted_T2_MC.png}
+\includegraphics[width=0.8\textwidth]{equilibrium/accepted_T2_MC.png}
 \caption{Accepted configurations per spin as a function of MC cycles. Top: Ordered initial state (all spinst up). Bottom: Random initial state. The temperature is $T=2.4$.}
 \centering
 \label{fig:  accepted T2}
@@ -528,148 +563,103 @@ For both temperatures the system stabilized for $~10^5$ MC cycles so we will use
 In figure \ref{fig:  accepted Trange} we see the number of accepted configurations per spin as a function temperature for the ordered initial state. We start the simulation in the ordered state. It is as axpected that the number of accepted configurations increase with temperarure when the total number of Monte Carlo cycles is much larger ($500000$) than the euilibrium time. This is because when the temperature is low it is very unlikely to flip a spin after the equilibrium state is reached because the state is very close to the ground state. The probability to flip a spin increases as the temperarure increases because the spread in energy is larger, $\sigma_E$ is larger. Thus the number of accepted cycles increase as a function of temperature.
 
 \begin{figure}[htp]
-\includegraphics[width=\textwidth]{equilibrium/accepted_Trange_initial1.png}
+\includegraphics[width=0.8\textwidth]{equilibrium/accepted_Trange_initial1.png}
 \caption{Accepted configurations per spin as a function temperature. Top: Ordered initial state (all spinst up). Bottom: Random initial state. The total number of monte carlo cycles is 500000 for the $L=20$ and ordered initial state. }
 \centering
 \label{fig:  accepted Trange}
 \end{figure}
 
 \subsection{Probability}
-In this subsection we will look at the probability for a given energy and see it this matches our physical intuition about the system. We will look at the case $L=20$ and the temperatures $T\in \{1.0, 2.0, 1.4\}$.
+In this subsection we will look at the probability for a given energy and see it this matches our physical intuition about the system. We will look at the case $L=20$ and the temperatures $T\in \{1.0, 2.0, 1.4\}$. We have used the values for the energy after the system have reached the equilibrium state. This is solved by letting the simulation run for the equilibrium time first and then start to store the energies as the time goes. 
+
+In figure \ref{fig:  probability} we see the probability plotted as a function of energy per spin for the temperatures $T\in \{1.0, 2.0, 1.4\}$ with the coresponding standard deviations $\sigma_E \in \{0.15, 1.71, 2.8 \}$. We see that for the lowest energy it is extremely likely to find the system in the ground state. This coresponds well to the very low standard deviation $\sigma_E = 0.15$. This means that the distance between the mean energy and the other energies are small. Almost every state is in the ground state at low temperatures, then the spread in energy must be small. We see that for the temperature $T=2.0$ the probability is more spread out. It is also more likely to find the system in a slightly higher energy than for the lowest temperature. For the highest temperature $T=2.4$ we see that the probability have shifted even further to higher temperature. The spread of the energies corresponds well with the standard deviation $\sigma_E = 2.8$. It seems reasonable that the system fluctuates around a higher energy when the temperature is higher, and that it closes up to the ground state when the temperature is low. 
 
 \begin{figure}[htp]
-\includegraphics[width=\textwidth]{equilibrium/probability.png}
+\includegraphics[width=0.8\textwidth]{equilibrium/probability.png}
 \caption{Probability as a function of energy per spin for the temperatures $T\in \{1.0, 2.0, 1.4\}$ with the coresponding standard deviations $\sigma_E \in \{0.15, 1.71, 2.8 \}$. }
 \centering
 \label{fig:  probability}
 \end{figure}
 
-\subsection{Studying .... close to the critical temp}
-
+We have now seen that our system behaves as expected for the ordered initial state. The theoretical values correspond well with the numerical values, the system reaches the equilibrium state and fluctuates around it and the probability as a function of energy behaves as expected for high and low energies. Therefore it seems reasonable to assume that the numerical algorithm is implemented correctly. 
 
 \subsection{Calculations to find $T_c$}
+We will now use this algorithm to find the critical temperature for the two dimentional system. We will plot the expextation value for the energy and absolute magnetization, the heat capacity and the suceptibility as a function of temperature for four different values of the lattice, $L\in \{20, 40, 60, 80\}$. We will then try to see if we can see a phase transition and from this calculate the critical temperature for which the phase transition happens. 
 
+In figure \ref{fig:  T_C_20E_M} we see the expextation value for the energy and absolute magnetization, the heat capacity and the suceptibility as a function of temperature for $L=20$. We see that the energy increases as a function of temperature. This is reasonable as seen in the probability plot, for a higher energy the spin state is more random. We also see that the absolute magnetisation is close to 1 for low temperatures. This is natural as then the system is close to the ground state with either spins up or down, $|\mathcal{M}|=1$. For high temeperatures the system is again in a more random state with as many spins up as down. So it is reasonable that the absolute magnetisation goes to zero for higher temperatures. This is also a sign for a phase transition, that a variable 'disappeares'. 
 
-\section{Results and output}
+\begin{figure}[htp]
+\includegraphics[width=0.8\textwidth]{T_c/first_L20.png}
+\caption{The expextation value for the energy and absolute magnetization, the heat capacity and the suceptibility as a function of temperature for $L=20$. The total number of MC cycles is 500000 and the initial state is ordered. }
+\centering
+\label{fig:  T_C_20E_M}
+\end{figure}
 
+\begin{figure}[htp]
+\includegraphics[width=0.8\textwidth]{T_c/E_M.png}
+\caption{The expextation value for the energy and absolute magnetization as a function of temperature for $L\in \{20, 40, 60, 80\}$. The total number of MC cycles is 500000 and the initial state is ordered. }
+\centering
+\label{fig:  T_C_E_M}
+\end{figure}
+
+In figure \ref{fig:  T_C_E_M} we also see the expextation value for the energy and absolute magnetization as a function of temperature for all lattice sizes, $L\in \{20, 40, 60, 80\}$. We see that the tendency is the same for all the different values of $L$. 
+
+In figure \ref{fig:  T_C_20E_M} we also see that both the heat capacity and the suceptibility have a maximum at about the same temperature. This is also a sign for a phase transition. In figure \ref{fig:  T_C_rest} we see that this maximum becomes sharper for increasing lattice size. 
+
+\begin{figure}[htp]
+\includegraphics[width=0.8\textwidth]{T_c/chi_Cv.png}
+\caption{The heat capacity and the suceptibility as a function of temperature for $L\in \{20, 40, 60, 80\}$. The total number of MC cycles is 500000 and the initial state is ordered.}
+\centering
+\label{fig:  T_C_rest}
+\end{figure}
+
+The values for the critical temperature read from figure \ref{fig:  T_C_rest} are listed in table \ref{tab: T_c}. The values for $T_c$ varies as a function of $L$ and is read from both the plot of the heat capacity and the suceptibility.
+
+\begin{table}
+\centering
+\caption{Table of the values for the critical temperature read from figure \ref{fig:  T_C_rest}. The values for $T_c$ varies as a function of $L$ and is read from both the plot of the heat capacity and the suceptibility.}
+\begin{tabular}{|c|c|c|}
+\hline 
+$L$ & $T_C (C_V)$ & $T_c(\chi)$ \\ 
+\hline 
+20 & 2.32 & 2.34 \\ 
+\hline 
+40 & 2.29 & 2.31 \\ 
+\hline 
+60 & 2.28 & 2.30 \\ 
+\hline 
+80 & 2.27 & 2.3 \\ 
+\hline 
+\end{tabular}
+\label{tab: T_c}
+\end{table}
+
+\subsection{Estimating the critical temperature}
+We will now use equation \ref{eq:tc} and calculate the best estimate for the critical temperature $T_c$ and compare with Lars Onsagers theoretical result $T_c = 2.269$. This is done in the python script \texttt{calculate\_Tc.py}. We run this python script and obtain the output:
+\begin{lstlisting}
+Numerical T_c =  2.27
+Theoretical T_c =  2.269
+Error in estimate =  0.001
+\end{lstlisting}
+We see that the absolute error in the estimate of the critical temperature is as small as 0.001! 
 
 \section{Discussion and experiences}
 
+This method for obtaining the critical temperature
 
+
+could haves?
 
 
 
 \newpage
 
-\begin{enumerate}
-
-\item[a)] Assume we have only two spins in each dimension, that is $L=2$.
-Find the closed form expression for the partition function and the corresponding
-expectations values for
-for $E$, $|{\cal M}|$, the specific heat $C_V$ and the susceptibility $\chi$ 
-as functions of  $T$ using periodic boundary conditions.
 
 
 
-\item[b)] 
-Write now a code for the Ising model which computes the mean energy 
-$E$, mean magnetization 
-$|{\cal M}|$, the specific heat $C_V$ and the susceptibility $\chi$ 
-as functions of  $T$ using periodic boundary conditions for 
-$L=2$ in the $x$ and $y$ directions. 
-Compare your results with the expressions from a)
-for  a  temperature $T=1.0$ (in units of $kT/J$). 
-
-How many Monte Carlo cycles do you need in order to achieve a good agreeement?
 
 
-\item[c)]
- 
-We choose now a square lattice with $L=20$ spins in the $x$ and $y$ directions. 
 
-In [b) we did not study carefully how many Monte Carlo cycles were needed in order to reach the most likely state. Here
-we want to perform a study of the time (here it corresponds to the number 
-of Monte Carlo cycles) one needs before one reaches an equilibrium situation 
-and can start computing various expectations values. Our 
-first attempt is a rough and plain graphical
-one, where we plot various expectations values as functions of the number of Monte Carlo cycles.
-
-Choose first a temperature of $T=1.0$ (in units of $kT/J$) and study the 
-mean energy and magnetisation (absolute value) as functions of the number of Monte Carlo cycles.
-Use both an ordered (all spins pointing in one direction) and a random
-spin orientation as starting configuration. 
-How many Monte Carlo cycles do you need before you reach an equilibrium situation?
-Repeat this analysis for $T=2.4$. 
-
-Make also a plot of the total number of accepted configurations 
-as function of the total number of Monte Carlo cycles. How does the number of
-accepted configurations behave as function of temperature $T$?
-
-
-\item[d)] Compute thereafter the probability 
-$P(E)$ for the previous system with $L=20$ and the same temperatures.
-You compute this probability by simply counting the number of times a 
-given energy appears in your computation. Start the computation after 
-the steady state situation has been reached.
-Compare your results with the computed variance in energy 
-$\sigma^2_E$ and discuss the behavior you observe. 
-\end{enumerate}
-
-Near $T_C$ we can characterize the behavior of many physical quantities
-by a power law behavior.
-As an example the mean magnetization is given by
-\begin{equation}
-  \langle {\cal M}(T) \rangle \sim \left(T-T_C\right)^{\beta},
-\end{equation}
-where $\beta=1/8$ is a so-called critical exponent. A similar relation
-applies to the heat capacity 
-\begin{equation}
-  C_V(T) \sim \left|T_C-T\right|^{\alpha},
-\end{equation}
-and the susceptibility
-\begin{equation}
-  \chi(T) \sim \left|T_C-T\right|^{\gamma},
-\end{equation}
-with $\alpha = 0$ and $\gamma = 7/4$.
-Another important quantity is the correlation length, which is expected
-to be of the order of the lattice spacing for $T>> T_C$. Because the spins
-become more and more correlated as $T$ approaches $T_C$, the correlation
-length increases as we get closer to the critical temperature. The divergent
-behavior of $\xi$ near $T_C$ 
-is
-\begin{equation}
-  \xi(T) \sim \left|T_C-T\right|^{-\nu}.
-  \label{eq:xi}
-\end{equation}
-A second-order phase transition is characterized by a
-correlation length which spans the whole system.
-Since we are always limited to a finite lattice, $\xi$ will
-be proportional with the size of the lattice. 
-Through so-called finite size scaling relations
-it is possible to relate the behavior at finite lattices with the 
-results for an infinitely large lattice.
-The critical temperature scales then as
-\begin{equation}
- T_C(L)-T_C(L=\infty) = aL^{-1/\nu},
- \label{eq:tc}
-\end{equation}
-with  $a$ a constant and  $\nu$ defined in Eq.~(\ref{eq:xi}).
-We set $T=T_C$ and obtain a mean magnetisation
-\begin{equation}
-  \langle {\cal M}(T) \rangle \sim \left(T-T_C\right)^{\beta}
-  \rightarrow L^{-\beta/\nu},
-  \label{eq:scale1}
-\end{equation}
-a heat capacity
-\begin{equation}
-  C_V(T) \sim \left|T_C-T\right|^{-\gamma} \rightarrow L^{\alpha/\nu},
-  \label{eq:scale2}
-\end{equation}
-and susceptibility
-\begin{equation}
-  \chi(T) \sim \left|T_C-T\right|^{-\alpha} \rightarrow L^{\gamma/\nu}.
-  \label{eq:scale3}
-\end{equation}
 
 \begin{enumerate}
 \item [e)]  We wish to study the behavior of the Ising model in two dimensions close to the 
